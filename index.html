@@ -130,34 +130,15 @@
   .service-card p{font-size:14.5px;color:var(--ink-soft);margin:0;}
 
   /* Contact */
-  #contact .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;}
+  #contact .wrap{text-align:center;}
+  #contact .section-head{margin:0 auto;}
   .contact-email{
-    display:inline-flex;align-items:center;gap:10px;margin-top:10px;
-    font-size:19px;font-weight:700;text-decoration:none;color:var(--ink);
-    border-bottom:2px solid var(--accent);padding-bottom:2px;
+    display:inline-flex;align-items:center;gap:12px;margin-top:8px;
+    font-size:clamp(24px,3.4vw,34px);font-weight:800;text-decoration:none;color:var(--ink);
+    border-bottom:3px solid var(--accent);padding-bottom:6px;letter-spacing:-0.01em;
   }
-  .contact-email svg{width:18px;height:18px;flex:none;color:var(--accent);}
-  .contact-note{color:var(--ink-soft);font-size:14.5px;margin-top:22px;max-width:40ch;}
-
-  form{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);padding:30px;}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
-  .field label{font-size:13px;font-weight:600;color:var(--ink-soft);}
-  .field input,.field textarea{
-    font:inherit;font-size:15px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);
-    background:#fff;color:var(--ink);resize:vertical;
-  }
-  .field input:focus,.field textarea:focus{outline:2px solid var(--accent);outline-offset:1px;}
-  .field textarea{min-height:110px;}
-  .hp-field{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden;}
-  .btn-submit{
-    width:100%;background:var(--accent);color:#fff;border:none;padding:14px 22px;border-radius:999px;
-    font-weight:700;font-size:15px;cursor:pointer;transition:opacity .15s;
-  }
-  .btn-submit:hover{opacity:.9;}
-  .form-status{font-size:14px;margin-top:14px;min-height:20px;}
-  .form-status.ok{color:#1a7a3c;}
-  .form-status.err{color:#b3261e;}
+  .contact-email svg{width:24px;height:24px;flex:none;color:var(--accent);}
+  .contact-note{color:var(--ink-soft);font-size:14.5px;margin-top:22px;}
 
   footer{border-top:1px solid var(--line);padding:34px 0;}
   footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
@@ -170,8 +151,6 @@
     .hero .wrap{grid-template-columns:1fr;}
     .hero-art{order:-1;aspect-ratio:16/10;}
     .services-grid{grid-template-columns:1fr;}
-    #contact .wrap{grid-template-columns:1fr;}
-    .form-row{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -257,46 +236,16 @@
 
   <section id="contact">
     <div class="wrap">
+      <span class="eyebrow-alt">Contact</span>
+      <h2>Let's talk</h2>
+      <p class="section-sub">Have an operations challenge you'd like a second opinion on? Reach out.</p>
       <div>
-        <span class="eyebrow-alt">Contact</span>
-        <h2>Let's talk</h2>
-        <p class="section-sub">Have an operations challenge you'd like a second opinion on? Reach out.</p>
         <a class="contact-email" href="mailto:k@kennethjensen.me">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
           k@kennethjensen.me
         </a>
-        <p class="contact-note">Or use the form — I read every message and reply personally, usually within a day or two.</p>
       </div>
-
-      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <div class="form-row">
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" autocomplete="email" required>
-          </div>
-        </div>
-        <div class="field">
-          <label for="company">Company</label>
-          <input id="company" name="company" type="text" autocomplete="organization">
-        </div>
-        <div class="field">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" required></textarea>
-        </div>
-
-        <!-- Honeypot spam trap: hidden from real users, bots tend to fill every field -->
-        <div class="hp-field" aria-hidden="true">
-          <label for="website">Website</label>
-          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
-        </div>
-
-        <button class="btn-submit" type="submit">Send message</button>
-        <p class="form-status" id="form-status" role="status"></p>
-      </form>
+      <p class="contact-note">I read every message and reply personally, usually within a day or two.</p>
     </div>
   </section>
 </main>
@@ -310,46 +259,6 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  const form = document.getElementById('contact-form');
-  const status = document.getElementById('form-status');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // Honeypot check: if the hidden field has a value, silently drop the submission.
-    if (form.website.value.trim() !== '') {
-      status.textContent = 'Thanks — your message has been sent.';
-      status.className = 'form-status ok';
-      form.reset();
-      return;
-    }
-
-    const submitBtn = form.querySelector('.btn-submit');
-    submitBtn.disabled = true;
-    status.textContent = 'Sending…';
-    status.className = 'form-status';
-
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        status.textContent = 'Thanks — your message has been sent. I\'ll be in touch soon.';
-        status.className = 'form-status ok';
-        form.reset();
-      } else {
-        throw new Error('submit failed');
-      }
-    } catch (err) {
-      status.textContent = 'Something went wrong. Please email k@kennethjensen.me directly.';
-      status.className = 'form-status err';
-    } finally {
-      submitBtn.disabled = false;
-    }
-  });
 </script>
 
 </body>
