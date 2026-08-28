@@ -3,10 +3,354 @@
 <head>
 <meta charset="utf-8">
 <title>Kenneth Jensen — Operations Consulting</title>
+<meta name="description" content="Kenneth Jensen — senior operations consultant. 20+ years building operational frameworks, driving operational excellence, and serving as a fractional COO.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#141414;
+    --ink-soft:#5b5f66;
+    --bg:#ffffff;
+    --bg-alt:#faf8f6;
+    --accent:#e8631f;
+    --accent-soft:#fdeee4;
+    --line:#ece8e4;
+    --radius:14px;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  img,svg{display:block;max-width:100%;}
+
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:20;
+    background:rgba(255,255,255,.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 0;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-0.02em;text-decoration:none;}
+  .brand-mark{width:26px;height:26px;flex:none;}
+  .nav-links{display:flex;align-items:center;gap:32px;list-style:none;margin:0;padding:0;}
+  .nav-links a{text-decoration:none;font-weight:500;font-size:15px;color:var(--ink-soft);transition:color .15s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-cta{
+    background:var(--accent);color:#fff;padding:10px 20px;border-radius:999px;
+    font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap;
+    transition:opacity .15s;
+  }
+  .nav-cta:hover{opacity:.88;}
+  .nav-toggle{display:none;}
+
+  /* Hero / About */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:96px 0 88px;
+  }
+  .hero .wrap{
+    display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:18px;
+  }
+  h1{
+    font-size:clamp(34px,4.6vw,52px);
+    line-height:1.08;
+    letter-spacing:-0.02em;
+    font-weight:800;
+    margin:0 0 22px;
+  }
+  .lede{font-size:18px;color:var(--ink-soft);max-width:52ch;margin:0 0 18px;}
+  .body-copy{font-size:16px;color:var(--ink-soft);max-width:56ch;margin:0 0 28px;}
+  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px;}
+  .badge{
+    border:1px solid var(--line);background:var(--bg-alt);
+    padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-soft);
+  }
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--accent);color:#fff;padding:14px 26px;border-radius:999px;
+    font-weight:700;font-size:15px;text-decoration:none;display:inline-block;
+    transition:opacity .15s;
+  }
+  .btn-primary:hover{opacity:.88;}
+  .btn-ghost{
+    padding:14px 26px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;
+    display:inline-block;border:1px solid var(--line);color:var(--ink);
+    transition:border-color .15s,color .15s;
+  }
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  .hero-art{
+    position:relative;aspect-ratio:1/1;border-radius:28px;
+    background:linear-gradient(155deg,#fff2e9 0%,var(--accent-soft) 55%,#fde3d0 100%);
+    border:1px solid var(--line);
+  }
+  .hero-art svg{position:absolute;inset:0;width:100%;height:100%;}
+
+  /* Section shells */
+  section{padding:84px 0;}
+  .section-head{max-width:640px;margin:0 0 44px;}
+  .eyebrow-alt{
+    display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:12px;
+  }
+  h2{font-size:clamp(26px,3.2vw,36px);letter-spacing:-0.02em;font-weight:800;margin:0 0 12px;}
+  .section-sub{color:var(--ink-soft);font-size:16px;margin:0;}
+
+  #services{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .service-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px 26px;
+  }
+  .service-icon{
+    width:44px;height:44px;border-radius:12px;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+  }
+  .service-icon svg{width:22px;height:22px;}
+  .service-card h3{font-size:18px;font-weight:700;margin:0 0 10px;letter-spacing:-0.01em;}
+  .service-card p{font-size:14.5px;color:var(--ink-soft);margin:0;}
+
+  /* Contact */
+  #contact .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;}
+  .contact-email{
+    display:inline-flex;align-items:center;gap:10px;margin-top:10px;
+    font-size:19px;font-weight:700;text-decoration:none;color:var(--ink);
+    border-bottom:2px solid var(--accent);padding-bottom:2px;
+  }
+  .contact-email svg{width:18px;height:18px;flex:none;color:var(--accent);}
+  .contact-note{color:var(--ink-soft);font-size:14.5px;margin-top:22px;max-width:40ch;}
+
+  form{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);padding:30px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  .field label{font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .field input,.field textarea{
+    font:inherit;font-size:15px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;color:var(--ink);resize:vertical;
+  }
+  .field input:focus,.field textarea:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .field textarea{min-height:110px;}
+  .hp-field{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden;}
+  .btn-submit{
+    width:100%;background:var(--accent);color:#fff;border:none;padding:14px 22px;border-radius:999px;
+    font-weight:700;font-size:15px;cursor:pointer;transition:opacity .15s;
+  }
+  .btn-submit:hover{opacity:.9;}
+  .form-status{font-size:14px;margin-top:14px;min-height:20px;}
+  .form-status.ok{color:#1a7a3c;}
+  .form-status.err{color:#b3261e;}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;}
+  footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+  .footer-left{font-size:14px;color:var(--ink-soft);}
+  .footer-right a{font-size:14px;color:var(--ink-soft);text-decoration:none;}
+  .footer-right a:hover{color:var(--accent);}
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .hero .wrap{grid-template-columns:1fr;}
+    .hero-art{order:-1;aspect-ratio:16/10;}
+    .services-grid{grid-template-columns:1fr;}
+    #contact .wrap{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+  }
+</style>
 </head>
 <body>
-<h1>Kenneth Jensen</h1>
-<p>Site coming soon.</p>
+
+<header>
+  <nav class="nav wrap">
+    <a class="brand" href="#top">
+      <svg class="brand-mark" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 1L24 7.5V18.5L13 25L2 18.5V7.5L13 1Z" stroke="#e8631f" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      Kenneth Jensen
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Get in touch</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" id="about">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Senior Operations Consultant</span>
+        <h1>20+ years turning operations into an advantage.</h1>
+        <p class="lede">I'm Kenneth Jensen. For more than two decades I've worked across asset-heavy and asset-light businesses — from the shop floor to the boardroom.</p>
+        <p class="body-copy">I thrive where I can build operational frameworks, drive operational excellence, and support businesses as a fractional or part-time COO. I like getting my hands into the machinery, but I take just as much pride in shaping the bigger strategy — so day-to-day operations and long-term direction move in the same direction.</p>
+        <div class="badges">
+          <span class="badge">20+ Years Experience</span>
+          <span class="badge">Asset-Heavy &amp; Asset-Light</span>
+          <span class="badge">Hands-On + Strategic</span>
+        </div>
+        <div class="hero-ctas">
+          <a class="btn-primary" href="#contact">Get in touch</a>
+          <a class="btn-ghost" href="#services">See services</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M200 40L340 120V280L200 360L60 280V120L200 40Z" stroke="#e8631f" stroke-width="1.5" opacity="0.35"/>
+          <path d="M200 100L285 150V250L200 300L115 250V150L200 100Z" stroke="#e8631f" stroke-width="1.5" opacity="0.55"/>
+          <circle cx="200" cy="200" r="46" fill="#e8631f" opacity="0.9"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow-alt">Services</span>
+        <h2>How I can help</h2>
+        <p class="section-sub">Flexible engagement, focused on outcomes — not headcount.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#e8631f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </div>
+          <h3>Operational Frameworks</h3>
+          <p>Designing and embedding scalable operating frameworks that connect daily execution to long-term strategy.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#e8631f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          </div>
+          <h3>Operational Excellence</h3>
+          <p>Driving continuous improvement across asset-heavy and asset-light operations — hands-on, where it matters most.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#e8631f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          </div>
+          <h3>Fractional / Part-Time COO</h3>
+          <p>Senior operational leadership on a flexible basis — strategic oversight without the full-time overhead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow-alt">Contact</span>
+        <h2>Let's talk</h2>
+        <p class="section-sub">Have an operations challenge you'd like a second opinion on? Reach out.</p>
+        <a class="contact-email" href="mailto:k@kennethjensen.me">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          k@kennethjensen.me
+        </a>
+        <p class="contact-note">Or use the form — I read every message and reply personally, usually within a day or two.</p>
+      </div>
+
+      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <!-- Honeypot spam trap: hidden from real users, bots tend to fill every field -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button class="btn-submit" type="submit">Send message</button>
+        <p class="form-status" id="form-status" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-left">© <span id="year"></span> Kenneth Jensen — Operations Consulting</div>
+    <div class="footer-right"><a href="mailto:k@kennethjensen.me">k@kennethjensen.me</a></div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Honeypot check: if the hidden field has a value, silently drop the submission.
+    if (form.website.value.trim() !== '') {
+      status.textContent = 'Thanks — your message has been sent.';
+      status.className = 'form-status ok';
+      form.reset();
+      return;
+    }
+
+    const submitBtn = form.querySelector('.btn-submit');
+    submitBtn.disabled = true;
+    status.textContent = 'Sending…';
+    status.className = 'form-status';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        status.textContent = 'Thanks — your message has been sent. I\'ll be in touch soon.';
+        status.className = 'form-status ok';
+        form.reset();
+      } else {
+        throw new Error('submit failed');
+      }
+    } catch (err) {
+      status.textContent = 'Something went wrong. Please email k@kennethjensen.me directly.';
+      status.className = 'form-status err';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+
 </body>
 </html>
