@@ -1,0 +1,84 @@
+{
+  "generatedAt": "2026-09-07T06:35:12.049Z",
+  "dataAsOf": "2026-09-05T10:36:07.935Z",
+  "totalTracked": 162,
+  "sitesConfigured": 9,
+  "trend": {
+    "periodDays": 7,
+    "currentCount": 46,
+    "previousCount": 48,
+    "percentChange": -4.166666666666666
+  },
+  "countries": [
+    {
+      "value": "Denmark",
+      "count": 93
+    },
+    {
+      "value": "Sweden",
+      "count": 4
+    },
+    {
+      "value": "Remote",
+      "count": 2
+    }
+  ],
+  "unlocatedCount": 63,
+  "sourceSites": [
+    {
+      "value": "jobindex.dk",
+      "count": 141
+    },
+    {
+      "value": "thehub.io",
+      "count": 12
+    },
+    {
+      "value": "cphaihub.com",
+      "count": 3
+    },
+    {
+      "value": "landing.jobs",
+      "count": 2
+    },
+    {
+      "value": "deunemployment.com",
+      "count": 2
+    },
+    {
+      "value": "remoteok.com",
+      "count": 2
+    }
+  ],
+  "workStyle": [
+    {
+      "value": "Remote",
+      "count": 5
+    },
+    {
+      "value": "Hybrid",
+      "count": 1
+    }
+  ],
+  "employmentType": [
+    {
+      "value": "Full-time",
+      "count": 1
+    }
+  ],
+  "experienceLevel": [
+    {
+      "value": "Mid",
+      "count": 1
+    },
+    {
+      "value": "Senior",
+      "count": 1
+    }
+  ],
+  "language": [],
+  "tags": [],
+  "classifiedCount": 0,
+  "withSalaryCount": 0,
+  "withCityCount": 0
+}
