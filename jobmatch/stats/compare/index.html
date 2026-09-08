@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Compare Periods, JobMatch Stats</title>
+<meta name="description" content="Compare any two periods of JobMatch's Operations job tracker side by side — roles tracked, where they are, who posts them, and how each period differs.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%23e8631f'%3E%3Ccircle cx='16' cy='16' r='5' stroke-width='4'/%3E%3C/g%3E%3Cg fill='%23e8631f'%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(45 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(90 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(135 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(180 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(225 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(270 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(315 16 16)'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#141414;
+    --ink-soft:#5b5f66;
+    --ink-faint:#9a9da3;
+    --bg:#ffffff;
+    --bg-alt:#faf8f6;
+    --accent:#e8631f;
+    --accent-soft:#fdeee4;
+    --line:#ece8e4;
+    --up:#1a8a5f;
+    --down:#c0392b;
+    --a:#e8631f;
+    --a-soft:#fdeee4;
+    --b:#1f4d8f;
+    --b-soft:#eaf0fa;
+    --radius:14px;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .num{font-family:'JetBrains Mono','Inter',monospace;font-variant-numeric:tabular-nums;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  img,svg{display:block;max-width:100%;}
+
+  header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-0.02em;text-decoration:none;}
+  .brand-mark{width:26px;height:26px;flex:none;}
+  .nav-right{display:flex;align-items:center;gap:22px;}
+  .nav-right a{font-size:14px;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .15s;}
+  .nav-right a:hover{color:var(--ink);}
+  .nav-right a.current{color:var(--accent);font-weight:700;}
+
+  .hero{padding:72px 0 40px;}
+  .eyebrow{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+  h1{font-size:clamp(30px,4.2vw,46px);line-height:1.1;letter-spacing:-0.02em;font-weight:800;margin:0 0 18px;max-width:20ch;}
+  .lede{font-size:17px;color:var(--ink-soft);max-width:62ch;margin:0 0 8px;}
+
+  section{padding:0 0 64px;}
+  section + section{border-top:1px solid var(--line);padding-top:48px;}
+
+  .controls{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);padding:28px 30px;}
+  .controls-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:24px;}
+  .period-length label{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-right:10px;}
+  .period-length select{
+    font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:#fff;
+    border:1px solid var(--line);border-radius:8px;padding:8px 12px;
+  }
+  .copy-link{
+    display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ink);
+    background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;
+    transition:border-color .15s;
+  }
+  .copy-link:hover{border-color:var(--ink);}
+  .copy-link svg{width:14px;height:14px;flex:none;}
+  .copy-link.copied{color:var(--up);border-color:var(--up);}
+
+  .period-picker-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .period-picker{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px 22px;}
+  .period-picker-label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;margin-bottom:14px;}
+  .period-dot{width:10px;height:10px;border-radius:50%;flex:none;}
+  .period-a .period-dot{background:var(--a);}
+  .period-b .period-dot{background:var(--b);}
+  .period-a .period-picker-label{color:var(--a);}
+  .period-b .period-picker-label{color:var(--b);}
+  .period-range-text{font-size:15px;font-weight:700;margin-bottom:14px;}
+  input[type="range"]{width:100%;accent-color:var(--ink-soft);margin-bottom:12px;display:block;}
+  .period-a input[type="range"]{accent-color:var(--a);}
+  .period-b input[type="range"]{accent-color:var(--b);}
+  input[type="date"]{
+    font:inherit;font-size:13px;color:var(--ink-soft);background:var(--bg-alt);
+    border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%;
+  }
+
+  .section-head{max-width:640px;margin:0 0 32px;}
+  .eyebrow-alt{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  h2{font-size:clamp(22px,2.6vw,28px);letter-spacing:-0.02em;font-weight:800;margin:0 0 10px;}
+  .section-sub{color:var(--ink-soft);font-size:15px;margin:0;max-width:60ch;}
+
+  .legend{display:flex;gap:22px;margin-bottom:28px;font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .legend .dot{width:9px;height:9px;border-radius:50%;}
+  .legend .dot.a{background:var(--a);}
+  .legend .dot.b{background:var(--b);}
+
+  .headline-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:40px;}
+  .headline-card{background:#fff;padding:24px;text-align:center;}
+  .headline-card .label{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px;}
+  .headline-card .values{display:flex;align-items:baseline;justify-content:center;gap:10px;}
+  .headline-card .a-val{font-size:30px;font-weight:800;color:var(--a);}
+  .headline-card .vs{font-size:13px;color:var(--ink-faint);}
+  .headline-card .b-val{font-size:30px;font-weight:800;color:var(--b);}
+  .headline-card .delta{margin-top:8px;font-size:13px;font-weight:700;}
+  .headline-card .delta.up{color:var(--up);}
+  .headline-card .delta.down{color:var(--down);}
+  .headline-card .delta.flat{color:var(--ink-faint);}
+
+  .compare-rows{display:flex;flex-direction:column;gap:18px;}
+  .compare-row{display:grid;grid-template-columns:130px 1fr;gap:16px;align-items:center;}
+  .compare-row-label{font-size:14px;font-weight:600;}
+  .compare-bars{display:flex;flex-direction:column;gap:6px;}
+  .compare-bar-line{display:grid;grid-template-columns:1fr 60px;gap:10px;align-items:center;}
+  .compare-track{height:9px;background:var(--bg-alt);border-radius:999px;overflow:hidden;}
+  .compare-fill{height:100%;border-radius:999px;transition:width .4s ease;}
+  .compare-fill.a{background:var(--a);}
+  .compare-fill.b{background:var(--b);}
+  .compare-value{font-size:12.5px;color:var(--ink-soft);text-align:right;}
+
+  .empty-state{color:var(--ink-faint);font-size:14px;font-style:italic;}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;}
+  footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+  .footer-left{font-size:13.5px;color:var(--ink-soft);}
+  .footer-right a{font-size:14px;color:var(--ink-soft);text-decoration:none;margin-left:20px;}
+  .footer-right a:hover{color:var(--accent);}
+
+  @media (max-width:760px){
+    .period-picker-grid{grid-template-columns:1fr;}
+    .headline-grid{grid-template-columns:1fr;}
+    .compare-row{grid-template-columns:1fr;}
+  }
+  @media (max-width:520px){
+    .nav{flex-wrap:wrap;row-gap:8px;}
+    .nav-right{gap:14px;font-size:13px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav wrap">
+    <a class="brand" href="../../">
+      <svg class="brand-mark" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 1L24 7.5V18.5L13 25L2 18.5V7.5L13 1Z" stroke="#e8631f" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      JobMatch
+    </a>
+    <div class="nav-right">
+      <a href="../">Stats</a>
+      <a href="./" class="current">Compare</a>
+      <a href="../../../">← kennethjensen.me</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Period Comparison</span>
+      <h1>Compare two periods, side by side.</h1>
+      <p class="lede">Pick any two windows of time and see how JobMatch's tracked roles differed — where they were, who posted them, how they were classified. Drag a slider or type a date; the link in your address bar updates as you go, so you can share the exact comparison you're looking at.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="controls">
+        <div class="controls-top">
+          <div class="period-length">
+            <label for="period-days">Period length</label>
+            <select id="period-days">
+              <option value="7">7 days</option>
+              <option value="14">14 days</option>
+              <option value="30" selected>30 days</option>
+              <option value="90">90 days</option>
+            </select>
+          </div>
+          <button class="copy-link" id="copy-link" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            <span id="copy-link-text">Copy share link</span>
+          </button>
+        </div>
+        <div class="period-picker-grid">
+          <div class="period-picker period-a">
+            <div class="period-picker-label"><span class="period-dot"></span>Period A</div>
+            <div class="period-range-text" id="a-range-text">–</div>
+            <input type="range" id="a-slider">
+            <input type="date" id="a-date">
+          </div>
+          <div class="period-picker period-b">
+            <div class="period-picker-label"><span class="period-dot"></span>Period B</div>
+            <div class="period-range-text" id="b-range-text">–</div>
+            <input type="range" id="b-slider">
+            <input type="date" id="b-date">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="results">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow-alt">The Comparison</span>
+        <h2>How the two periods differ</h2>
+        <p class="section-sub" id="results-sub">Computed live from JobMatch's own tracked roles, entirely in your browser.</p>
+      </div>
+
+      <div class="legend">
+        <span><span class="dot a"></span><span id="legend-a">Period A</span></span>
+        <span><span class="dot b"></span><span id="legend-b">Period B</span></span>
+      </div>
+
+      <div class="headline-grid" id="headline-grid"></div>
+
+      <div class="compare-rows" id="compare-rows"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-left">© <span id="year"></span> JobMatch — same live tracker as the main stats page</div>
+    <div class="footer-right">
+      <a href="../">Back to stats</a>
+      <a href="mailto:k@kennethjensen.me">k@kennethjensen.me</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const MS_PER_DAY = 86400000;
+const DEFAULT_PERIOD_DAYS = 30;
+
+function fmtInt(n){ return new Intl.NumberFormat('en-US').format(n); }
+function fmtCount(n, singular, plural){ return fmtInt(n) + ' ' + (n === 1 ? singular : (plural || singular + 's')); }
+
+// URL date format is MM-DD-YYYY, per how this page is meant to be linked —
+// deliberately not ISO, so a pasted link reads the same way an American
+// calendar date would.
+function formatDateParam(date){
+  const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const dd = String(date.getUTCDate()).padStart(2, '0');
+  const yyyy = date.getUTCFullYear();
+  return `${mm}-${dd}-${yyyy}`;
+}
+function parseDateParam(str){
+  const m = /^(\d{1,2})-(\d{1,2})-(\d{4})$/.exec(str || '');
+  if (!m) return null;
+  const [, mm, dd, yyyy] = m;
+  const date = new Date(Date.UTC(Number(yyyy), Number(mm) - 1, Number(dd)));
+  return isNaN(date.getTime()) ? null : date;
+}
+function toDateInputValue(date){ return date.toISOString().slice(0, 10); }
+function fmtDateLabel(date){
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+}
+function addDays(date, days){ return new Date(date.getTime() + days * MS_PER_DAY); }
+function daysBetween(a, b){ return Math.round((b.getTime() - a.getTime()) / MS_PER_DAY); }
+function clamp(n, min, max){ return Math.min(Math.max(n, min), max); }
+
+function periodWindow(periodDays, endDate){
+  return { start: addDays(endDate, -periodDays), end: endDate };
+}
+
+let jobs = [];
+let earliestDate = null;
+let todayDate = null;
+
+const els = {
+  periodDays: document.getElementById('period-days'),
+  aSlider: document.getElementById('a-slider'),
+  bSlider: document.getElementById('b-slider'),
+  aDate: document.getElementById('a-date'),
+  bDate: document.getElementById('b-date'),
+  aRangeText: document.getElementById('a-range-text'),
+  bRangeText: document.getElementById('b-range-text'),
+  legendA: document.getElementById('legend-a'),
+  legendB: document.getElementById('legend-b'),
+  headlineGrid: document.getElementById('headline-grid'),
+  compareRows: document.getElementById('compare-rows'),
+  copyLink: document.getElementById('copy-link'),
+  copyLinkText: document.getElementById('copy-link-text'),
+};
+
+function sliderValueToDate(value){ return addDays(earliestDate, Number(value)); }
+function dateToSliderValue(date){ return clamp(daysBetween(earliestDate, date), 0, daysBetween(earliestDate, todayDate)); }
+
+function setSliderRanges(){
+  const max = daysBetween(earliestDate, todayDate);
+  [els.aSlider, els.bSlider].forEach((el) => { el.min = 0; el.max = Math.max(max, 1); el.step = 1; });
+  [els.aDate, els.bDate].forEach((el) => {
+    el.min = toDateInputValue(earliestDate);
+    el.max = toDateInputValue(todayDate);
+  });
+}
+
+function currentPeriodDays(){ return Number(els.periodDays.value) || DEFAULT_PERIOD_DAYS; }
+
+function endDateFor(which){
+  const slider = which === 'a' ? els.aSlider : els.bSlider;
+  return sliderValueToDate(slider.value);
+}
+
+function syncFromSlider(which){
+  const date = endDateFor(which);
+  (which === 'a' ? els.aDate : els.bDate).value = toDateInputValue(date);
+  render();
+}
+function syncFromDateInput(which){
+  const input = which === 'a' ? els.aDate : els.bDate;
+  const date = new Date(input.value + 'T00:00:00Z');
+  if (isNaN(date.getTime())) return;
+  (which === 'a' ? els.aSlider : els.bSlider).value = dateToSliderValue(date);
+  render();
+}
+
+function updateUrl(){
+  const days = currentPeriodDays();
+  const params = new URLSearchParams();
+  params.set('date1', formatDateParam(endDateFor('a')));
+  params.set('date2', formatDateParam(endDateFor('b')));
+  if (days !== DEFAULT_PERIOD_DAYS) params.set('days', String(days));
+  const url = `${location.pathname}?${params.toString()}`;
+  history.replaceState(null, '', url);
+}
+
+function countBy(records, getField){
+  const m = new Map();
+  for (const r of records){
+    const v = getField(r);
+    if (v == null) continue;
+    m.set(v, (m.get(v) || 0) + 1);
+  }
+  return Array.from(m.entries()).map(([value, count]) => ({ value, count })).sort((a, b) => b.count - a.count);
+}
+
+function summarizePeriod(start, end){
+  const inPeriod = jobs.filter((r) => {
+    const d = new Date(r.date);
+    return d >= start && d < end;
+  });
+  const tagCounts = new Map();
+  inPeriod.forEach((r) => (r.tags || []).forEach((t) => tagCounts.set(t, (tagCounts.get(t) || 0) + 1)));
+  const tags = Array.from(tagCounts.entries()).map(([value, count]) => ({ value, count })).sort((a, b) => b.count - a.count);
+  return {
+    total: inPeriod.length,
+    countries: countBy(inPeriod, (r) => r.country),
+    sites: countBy(inPeriod, (r) => r.sourceSite),
+    workStyle: countBy(inPeriod, (r) => r.workStyle),
+    language: countBy(inPeriod, (r) => r.language),
+    tags,
+    withSalary: inPeriod.filter((r) => r.salaryMin != null || r.salaryMax != null).length,
+  };
+}
+
+function deltaText(a, b){
+  if (a === 0 && b === 0) return { text: 'no change', cls: 'flat' };
+  if (a === 0) return { text: `+${fmtInt(b)}`, cls: 'up' };
+  const pct = ((b - a) / a) * 100;
+  const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat';
+  const sign = pct > 0 ? '+' : '';
+  return { text: `${sign}${pct.toFixed(0)}% vs Period A`, cls };
+}
+
+function headlineCard(label, aVal, bVal){
+  const card = document.createElement('div');
+  card.className = 'headline-card';
+  const delta = deltaText(aVal, bVal);
+  card.innerHTML =
+    `<div class="label">${label}</div>` +
+    `<div class="values"><span class="a-val num">${fmtInt(aVal)}</span><span class="vs">vs</span><span class="b-val num">${fmtInt(bVal)}</span></div>` +
+    `<div class="delta ${delta.cls}">${delta.text}</div>`;
+  return card;
+}
+
+function compareBarLine(label, count, max, cls){
+  const line = document.createElement('div');
+  line.className = 'compare-bar-line';
+  const pct = max > 0 ? Math.max(2, (count / max) * 100) : 0;
+  line.innerHTML =
+    `<span class="compare-track"><span class="compare-fill ${cls}" style="width:${pct}%"></span></span>` +
+    `<span class="compare-value num">${fmtInt(count)}</span>`;
+  return line;
+}
+
+function compareRow(label, aItems, bItems, limit = 5){
+  const row = document.createElement('div');
+  row.className = 'compare-row';
+  const names = new Set([...aItems.slice(0, limit).map((i) => i.value), ...bItems.slice(0, limit).map((i) => i.value)]);
+  if (names.size === 0){
+    row.innerHTML = `<span class="compare-row-label">${label}</span><span class="empty-state">No data in either period yet.</span>`;
+    return row;
+  }
+  const aMap = new Map(aItems.map((i) => [i.value, i.count]));
+  const bMap = new Map(bItems.map((i) => [i.value, i.count]));
+  const maxCount = Math.max(1, ...Array.from(names).map((n) => Math.max(aMap.get(n) || 0, bMap.get(n) || 0)));
+  const bars = document.createElement('div');
+  bars.className = 'compare-bars';
+  Array.from(names).slice(0, limit).forEach((name) => {
+    const wrap = document.createElement('div');
+    wrap.style.marginBottom = '4px';
+    const nameEl = document.createElement('div');
+    nameEl.style.fontSize = '12.5px';
+    nameEl.style.color = 'var(--ink-soft)';
+    nameEl.style.marginBottom = '3px';
+    nameEl.textContent = name;
+    wrap.appendChild(nameEl);
+    wrap.appendChild(compareBarLine('A', aMap.get(name) || 0, maxCount, 'a'));
+    wrap.appendChild(compareBarLine('B', bMap.get(name) || 0, maxCount, 'b'));
+    bars.appendChild(wrap);
+  });
+  row.innerHTML = `<span class="compare-row-label">${label}</span>`;
+  row.appendChild(bars);
+  return row;
+}
+
+function render(){
+  const days = currentPeriodDays();
+  const aEnd = endDateFor('a');
+  const bEnd = endDateFor('b');
+  const aWindow = periodWindow(days, aEnd);
+  const bWindow = periodWindow(days, bEnd);
+
+  els.aRangeText.textContent = `${fmtDateLabel(aWindow.start)} – ${fmtDateLabel(aWindow.end)}`;
+  els.bRangeText.textContent = `${fmtDateLabel(bWindow.start)} – ${fmtDateLabel(bWindow.end)}`;
+  els.legendA.textContent = `Period A · ${fmtDateLabel(aWindow.start)} – ${fmtDateLabel(aWindow.end)}`;
+  els.legendB.textContent = `Period B · ${fmtDateLabel(bWindow.start)} – ${fmtDateLabel(bWindow.end)}`;
+
+  const a = summarizePeriod(aWindow.start, aWindow.end);
+  const b = summarizePeriod(bWindow.start, bWindow.end);
+
+  els.headlineGrid.innerHTML = '';
+  els.headlineGrid.appendChild(headlineCard('Roles tracked', a.total, b.total));
+  els.headlineGrid.appendChild(headlineCard('Roles with a salary', a.withSalary, b.withSalary));
+  els.headlineGrid.appendChild(headlineCard(
+    'Top country',
+    a.countries[0] ? a.countries[0].count : 0,
+    b.countries[0] ? b.countries[0].count : 0
+  ));
+
+  els.compareRows.innerHTML = '';
+  els.compareRows.appendChild(compareRow('Countries', a.countries, b.countries));
+  els.compareRows.appendChild(compareRow('Source sites', a.sites, b.sites));
+  els.compareRows.appendChild(compareRow('Work style', a.workStyle, b.workStyle));
+  els.compareRows.appendChild(compareRow('Tags', a.tags, b.tags));
+  els.compareRows.appendChild(compareRow('Language', a.language, b.language));
+
+  updateUrl();
+}
+
+function initFromUrlOrDefault(){
+  const params = new URLSearchParams(location.search);
+  const days = Number(params.get('days')) || DEFAULT_PERIOD_DAYS;
+  els.periodDays.value = String([7, 14, 30, 90].includes(days) ? days : DEFAULT_PERIOD_DAYS);
+
+  const date1 = parseDateParam(params.get('date1'));
+  const date2 = parseDateParam(params.get('date2'));
+
+  const bEnd = date2 && date2 <= todayDate && date2 >= earliestDate ? date2 : todayDate;
+  const aEnd = date1 && date1 <= todayDate && date1 >= earliestDate ? date1 : addDays(bEnd, -currentPeriodDaysFromSelect());
+
+  els.aSlider.value = dateToSliderValue(aEnd);
+  els.bSlider.value = dateToSliderValue(bEnd);
+  els.aDate.value = toDateInputValue(sliderValueToDate(els.aSlider.value));
+  els.bDate.value = toDateInputValue(sliderValueToDate(els.bSlider.value));
+}
+function currentPeriodDaysFromSelect(){ return Number(els.periodDays.value) || DEFAULT_PERIOD_DAYS; }
+
+function wireEvents(){
+  els.aSlider.addEventListener('input', () => syncFromSlider('a'));
+  els.bSlider.addEventListener('input', () => syncFromSlider('b'));
+  els.aDate.addEventListener('change', () => syncFromDateInput('a'));
+  els.bDate.addEventListener('change', () => syncFromDateInput('b'));
+  els.periodDays.addEventListener('change', render);
+  els.copyLink.addEventListener('click', () => {
+    navigator.clipboard.writeText(location.href).then(() => {
+      els.copyLink.classList.add('copied');
+      els.copyLinkText.textContent = 'Link copied';
+      setTimeout(() => {
+        els.copyLink.classList.remove('copied');
+        els.copyLinkText.textContent = 'Copy share link';
+      }, 1800);
+    }).catch(() => {});
+  });
+}
+
+fetch('../jobs.json')
+  .then((res) => { if (!res.ok) throw new Error('jobs.json not found'); return res.json(); })
+  .then((data) => {
+    jobs = data;
+    todayDate = new Date(Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), new Date().getUTCDate()));
+    const dates = jobs.map((r) => new Date(r.date)).filter((d) => !isNaN(d.getTime()));
+    earliestDate = dates.length ? new Date(Math.min(...dates.map((d) => d.getTime()))) : addDays(todayDate, -DEFAULT_PERIOD_DAYS);
+    // Truncate to a UTC day boundary so slider day-math stays exact.
+    earliestDate = new Date(Date.UTC(earliestDate.getUTCFullYear(), earliestDate.getUTCMonth(), earliestDate.getUTCDate()));
+
+    setSliderRanges();
+    initFromUrlOrDefault();
+    wireEvents();
+    render();
+  })
+  .catch(() => {
+    document.getElementById('results-sub').textContent = 'Comparison data is temporarily unavailable, check back shortly.';
+  });
+</script>
+
+</body>
+</html>

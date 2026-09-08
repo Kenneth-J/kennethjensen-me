@@ -107,6 +107,10 @@
     .stat-grid{grid-template-columns:repeat(2,1fr);}
     .bar-row{grid-template-columns:110px 1fr 60px;}
   }
+  @media (max-width:520px){
+    .nav{flex-wrap:wrap;row-gap:8px;}
+    .nav-right{gap:14px;font-size:13px;}
+  }
 </style>
 </head>
 <body>
@@ -121,6 +125,7 @@
     </a>
     <div class="nav-right">
       <a href="./" class="current">Stats</a>
+      <a href="compare/">Compare</a>
       <a href="../../">← kennethjensen.me</a>
     </div>
   </nav>
