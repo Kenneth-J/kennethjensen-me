@@ -77,10 +77,18 @@
   .bar-row{display:grid;grid-template-columns:150px 1fr 90px;align-items:center;gap:14px;}
   .bar-label{font-size:14px;font-weight:600;}
   .bar-track{height:10px;background:var(--bg-alt);border-radius:999px;overflow:hidden;}
-  .bar-fill{height:100%;background:var(--accent);border-radius:999px;transition:width .5s ease;}
+  .bar-fill{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .5s ease;}
   .bar-fill.muted{background:var(--line);}
   .bar-value{font-size:13px;color:var(--ink-soft);text-align:right;white-space:nowrap;}
   .bar-note{font-size:13px;color:var(--ink-soft);margin-top:16px;}
+
+  .seniority-bars{display:flex;flex-direction:column;gap:16px;}
+  .seniority-row{display:grid;grid-template-columns:110px 1fr 84px;align-items:center;gap:16px;}
+  .seniority-label{display:flex;align-items:center;gap:9px;font-size:14.5px;font-weight:700;}
+  .seniority-dot{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 0 4px var(--bg-alt);}
+  .seniority-track{height:24px;background:var(--bg-alt);border-radius:999px;overflow:hidden;position:relative;}
+  .seniority-fill{display:block;height:100%;border-radius:999px;transition:width .7s cubic-bezier(.4,0,.2,1);min-width:0;}
+  .seniority-value{font-size:13px;color:var(--ink-soft);text-align:right;white-space:nowrap;}
 
   .chip-row{display:flex;flex-wrap:wrap;gap:10px;}
   .chip{border:1px solid var(--line);background:var(--bg-alt);padding:9px 16px;border-radius:999px;font-size:13.5px;color:var(--ink-soft);}
@@ -106,6 +114,7 @@
   @media (max-width:760px){
     .stat-grid{grid-template-columns:repeat(2,1fr);}
     .bar-row{grid-template-columns:110px 1fr 60px;}
+    .seniority-row{grid-template-columns:88px 1fr 64px;gap:10px;}
   }
   @media (max-width:520px){
     .nav{flex-wrap:wrap;row-gap:8px;}
@@ -176,6 +185,17 @@
     </div>
   </section>
 
+  <section id="seniority">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow-alt">Career ladder</span>
+        <h2>Seniority, Entry to C-Level</h2>
+        <p class="section-sub">Every classified role's title gets a seniority read — Entry, Junior, Mid, Senior, or C-Level, always shown in that order rather than by count. Bar length is share of every seniority-classified role.</p>
+      </div>
+      <div class="seniority-bars" id="seniority-bars"></div>
+    </div>
+  </section>
+
   <section id="filling-in">
     <div class="wrap">
       <div class="section-head">
@@ -224,6 +244,27 @@ function statCard(value, unit, label, sub, subClass){
     '<div class="stat-label">' + label + '</div>' +
     (sub ? '<div class="stat-sub' + (subClass ? ' ' + subClass : '') + '">' + sub + '</div>' : '');
   return card;
+}
+
+// Fixed career-ladder order — deliberately not sorted by count, unlike
+// every other bar chart on this page, so the shape of the funnel/pyramid
+// itself is the point.
+const SENIORITY_TIERS = [
+  { value: 'Entry', color: '#fde3d1' },
+  { value: 'Junior', color: '#f6b78c' },
+  { value: 'Mid', color: '#ef8a47' },
+  { value: 'Senior', color: '#e8631f' },
+  { value: 'C-Level', color: '#a83f10' },
+];
+
+function seniorityRow(label, widthPercent, valueText, color){
+  const row = document.createElement('div');
+  row.className = 'seniority-row';
+  row.innerHTML =
+    '<span class="seniority-label"><span class="seniority-dot" style="background:' + color + '"></span>' + label + '</span>' +
+    '<span class="seniority-track"><span class="seniority-fill" style="width:' + widthPercent + '%;background:' + color + '"></span></span>' +
+    '<span class="seniority-value num">' + valueText + '</span>';
+  return row;
 }
 
 function barRow(label, count, widthPercent, valueText, muted){
@@ -309,6 +350,21 @@ function render(data){
       chip.innerHTML = '<b>' + fmtInt(unclassifiedWorkStyle) + '</b> not noted';
       chips.appendChild(chip);
     }
+  }
+
+  // Seniority ladder bars — fixed Entry → C-Level order (see SENIORITY_TIERS)
+  const seniorityBars = document.getElementById('seniority-bars');
+  const levelCounts = {};
+  data.experienceLevel.forEach((l) => { levelCounts[l.value] = l.count; });
+  const seniorityTotal = SENIORITY_TIERS.reduce((sum, t) => sum + (levelCounts[t.value] || 0), 0);
+  if (seniorityTotal === 0) {
+    seniorityBars.innerHTML = '<p class="empty-state">No roles classified by seniority yet.</p>';
+  } else {
+    SENIORITY_TIERS.forEach((tier) => {
+      const count = levelCounts[tier.value] || 0;
+      const pct = Math.round((count / seniorityTotal) * 100);
+      seniorityBars.appendChild(seniorityRow(tier.value, count > 0 ? Math.max(2, pct) : 0, fmtInt(count) + ' · ' + pct + '%', tier.color));
+    });
   }
 
   // Filling-in panel
