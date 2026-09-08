@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-09-08T14:12:09.861Z",
-  "dataAsOf": "2026-09-08T14:12:07.385Z",
-  "totalTracked": 211,
+  "generatedAt": "2026-09-08T15:13:34.290Z",
+  "dataAsOf": "2026-09-08T15:13:32.371Z",
+  "totalTracked": 214,
   "sitesConfigured": 10,
   "trend": {
     "periodDays": 7,
-    "currentCount": 61,
+    "currentCount": 64,
     "previousCount": 57,
-    "percentChange": 7.017543859649122
+    "percentChange": 12.280701754385964
   },
   "countries": [
     {
       "value": "Denmark",
-      "count": 139
+      "count": 141
     },
     {
       "value": "Sweden",
       "count": 4
     }
   ],
-  "unlocatedCount": 68,
+  "unlocatedCount": 69,
   "sourceSites": [
     {
       "value": "jobindex.dk",
-      "count": 150
+      "count": 153
     },
     {
       "value": "jobnet.dk",
@@ -77,7 +77,7 @@
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 30
+      "count": 32
     },
     {
       "value": "Entry",
@@ -95,40 +95,44 @@
   "language": [
     {
       "value": "da",
-      "count": 73
+      "count": 85
     },
     {
       "value": "en",
-      "count": 55
-    },
-    {
-      "value": "sv",
-      "count": 2
+      "count": 35
     }
   ],
   "tags": [
     {
       "value": "Logistics",
-      "count": 31
+      "count": 33
     },
     {
       "value": "Supply Chain",
-      "count": 25
+      "count": 24
     },
     {
       "value": "People",
-      "count": 16
+      "count": 19
     },
     {
       "value": "Defence",
-      "count": 7
+      "count": 10
     },
     {
       "value": "AI",
-      "count": 5
+      "count": 7
     },
     {
-      "value": "University",
+      "value": "Security",
+      "count": 4
+    },
+    {
+      "value": "Excel",
+      "count": 4
+    },
+    {
+      "value": "Consulting",
       "count": 3
     },
     {
@@ -140,19 +144,23 @@
       "count": 2
     },
     {
+      "value": "University",
+      "count": 2
+    },
+    {
+      "value": "Python",
+      "count": 2
+    },
+    {
       "value": "Asset Heavy",
       "count": 2
     },
     {
-      "value": "SaaS only",
-      "count": 2
+      "value": "Phd",
+      "count": 1
     },
     {
-      "value": "Security",
-      "count": 2
-    },
-    {
-      "value": "Consulting",
+      "value": "Autonomy",
       "count": 1
     },
     {
@@ -160,11 +168,15 @@
       "count": 1
     },
     {
+      "value": "SaaS only",
+      "count": 1
+    },
+    {
       "value": "Agriculture",
       "count": 1
     }
   ],
-  "classifiedCount": 145,
+  "classifiedCount": 149,
   "withSalaryCount": 3,
-  "withCityCount": 116
+  "withCityCount": 118
 }
