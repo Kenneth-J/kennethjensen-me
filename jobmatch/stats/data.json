@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-08T15:13:34.290Z",
-  "dataAsOf": "2026-09-08T15:13:32.371Z",
+  "generatedAt": "2026-09-08T15:26:00.838Z",
+  "dataAsOf": "2026-09-08T15:25:58.970Z",
   "totalTracked": 214,
   "sitesConfigured": 10,
   "trend": {
@@ -113,7 +113,7 @@
     },
     {
       "value": "People",
-      "count": 19
+      "count": 20
     },
     {
       "value": "Defence",
@@ -121,18 +121,14 @@
     },
     {
       "value": "AI",
-      "count": 7
-    },
-    {
-      "value": "Security",
-      "count": 4
+      "count": 8
     },
     {
       "value": "Excel",
       "count": 4
     },
     {
-      "value": "Consulting",
+      "value": "Security",
       "count": 3
     },
     {
@@ -148,7 +144,7 @@
       "count": 2
     },
     {
-      "value": "Python",
+      "value": "Consulting",
       "count": 2
     },
     {
@@ -156,7 +152,7 @@
       "count": 2
     },
     {
-      "value": "Phd",
+      "value": "Python",
       "count": 1
     },
     {
