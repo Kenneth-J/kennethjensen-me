@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-08T13:56:47.728Z",
-  "dataAsOf": "2026-09-08T13:56:45.690Z",
+  "generatedAt": "2026-09-08T14:12:09.861Z",
+  "dataAsOf": "2026-09-08T14:12:07.385Z",
   "totalTracked": 211,
   "sitesConfigured": 10,
   "trend": {
@@ -92,9 +92,79 @@
       "count": 1
     }
   ],
-  "language": [],
-  "tags": [],
-  "classifiedCount": 135,
+  "language": [
+    {
+      "value": "da",
+      "count": 73
+    },
+    {
+      "value": "en",
+      "count": 55
+    },
+    {
+      "value": "sv",
+      "count": 2
+    }
+  ],
+  "tags": [
+    {
+      "value": "Logistics",
+      "count": 31
+    },
+    {
+      "value": "Supply Chain",
+      "count": 25
+    },
+    {
+      "value": "People",
+      "count": 16
+    },
+    {
+      "value": "Defence",
+      "count": 7
+    },
+    {
+      "value": "AI",
+      "count": 5
+    },
+    {
+      "value": "University",
+      "count": 3
+    },
+    {
+      "value": "Finance",
+      "count": 3
+    },
+    {
+      "value": "Research",
+      "count": 2
+    },
+    {
+      "value": "Asset Heavy",
+      "count": 2
+    },
+    {
+      "value": "SaaS only",
+      "count": 2
+    },
+    {
+      "value": "Security",
+      "count": 2
+    },
+    {
+      "value": "Consulting",
+      "count": 1
+    },
+    {
+      "value": "Legal",
+      "count": 1
+    },
+    {
+      "value": "Agriculture",
+      "count": 1
+    }
+  ],
+  "classifiedCount": 145,
   "withSalaryCount": 3,
   "withCityCount": 116
 }
