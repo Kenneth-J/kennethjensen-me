@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-08T15:26:00.838Z",
-  "dataAsOf": "2026-09-08T15:25:58.970Z",
+  "generatedAt": "2026-09-08T15:38:02.126Z",
+  "dataAsOf": "2026-09-08T15:31:24.586Z",
   "totalTracked": 214,
-  "sitesConfigured": 10,
+  "sitesConfigured": 12,
   "trend": {
     "periodDays": 7,
     "currentCount": 64,
@@ -99,7 +99,7 @@
     },
     {
       "value": "en",
-      "count": 35
+      "count": 36
     }
   ],
   "tags": [
@@ -121,11 +121,19 @@
     },
     {
       "value": "AI",
-      "count": 8
+      "count": 9
     },
     {
       "value": "Excel",
       "count": 4
+    },
+    {
+      "value": "Research",
+      "count": 3
+    },
+    {
+      "value": "University",
+      "count": 3
     },
     {
       "value": "Security",
@@ -134,14 +142,6 @@
     {
       "value": "Finance",
       "count": 3
-    },
-    {
-      "value": "Research",
-      "count": 2
-    },
-    {
-      "value": "University",
-      "count": 2
     },
     {
       "value": "Consulting",
