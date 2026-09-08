@@ -449,13 +449,13 @@ function render(){
   els.headlineGrid.appendChild(headlineCard('Roles tracked', a.total, b.total));
   els.headlineGrid.appendChild(headlineCard('Roles with a salary', a.withSalary, b.withSalary));
   els.headlineGrid.appendChild(headlineCard(
-    'Top country',
+    'Top working country',
     a.countries[0] ? a.countries[0].count : 0,
     b.countries[0] ? b.countries[0].count : 0
   ));
 
   els.compareRows.innerHTML = '';
-  els.compareRows.appendChild(compareRow('Countries', a.countries, b.countries));
+  els.compareRows.appendChild(compareRow('Working countries', a.countries, b.countries));
   els.compareRows.appendChild(compareRow('Source sites', a.sites, b.sites));
   els.compareRows.appendChild(compareRow('Work style', a.workStyle, b.workStyle));
   els.compareRows.appendChild(compareRow('Tags', a.tags, b.tags));
