@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-09-07T12:33:00.800Z",
-  "dataAsOf": "2026-09-07T12:32:58.835Z",
-  "totalTracked": 168,
-  "sitesConfigured": 9,
+  "generatedAt": "2026-09-08T07:18:36.548Z",
+  "dataAsOf": "2026-09-08T07:18:00.120Z",
+  "totalTracked": 171,
+  "sitesConfigured": 10,
   "trend": {
     "periodDays": 7,
-    "currentCount": 53,
+    "currentCount": 51,
     "previousCount": 48,
-    "percentChange": 10.416666666666668
+    "percentChange": 6.25
   },
   "countries": [
     {
       "value": "Denmark",
-      "count": 97
+      "count": 99
     },
     {
       "value": "Sweden",
       "count": 4
     }
   ],
-  "unlocatedCount": 67,
+  "unlocatedCount": 68,
   "sourceSites": [
     {
       "value": "jobindex.dk",
-      "count": 145
+      "count": 147
     },
     {
       "value": "thehub.io",
@@ -31,6 +31,10 @@
     },
     {
       "value": "cphaihub.com",
+      "count": 3
+    },
+    {
+      "value": "nodesk.co",
       "count": 3
     },
     {
@@ -44,16 +48,12 @@
     {
       "value": "remoteok.com",
       "count": 2
-    },
-    {
-      "value": "nodesk.co",
-      "count": 2
     }
   ],
   "workStyle": [
     {
       "value": "Remote",
-      "count": 7
+      "count": 8
     },
     {
       "value": "Hybrid",
@@ -63,7 +63,7 @@
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 3
+      "count": 4
     }
   ],
   "experienceLevel": [
@@ -80,5 +80,5 @@
   "tags": [],
   "classifiedCount": 0,
   "withSalaryCount": 3,
-  "withCityCount": 96
+  "withCityCount": 98
 }
