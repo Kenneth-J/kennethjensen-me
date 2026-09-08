@@ -1,33 +1,24 @@
 {
-  "generatedAt": "2026-09-08T08:03:57.375Z",
-  "dataAsOf": "2026-09-08T08:03:54.778Z",
-  "totalTracked": 206,
+  "generatedAt": "2026-09-08T13:25:02.769Z",
+  "dataAsOf": "2026-09-08T13:25:00.545Z",
+  "totalTracked": 210,
   "sitesConfigured": 10,
   "trend": {
     "periodDays": 7,
-    "currentCount": 56,
+    "currentCount": 60,
     "previousCount": 57,
-    "percentChange": -1.7543859649122806
+    "percentChange": 5.263157894736842
   },
-  "countries": [
-    {
-      "value": "Denmark",
-      "count": 134
-    },
-    {
-      "value": "Sweden",
-      "count": 4
-    }
-  ],
-  "unlocatedCount": 68,
+  "countries": [],
+  "unlocatedCount": 210,
   "sourceSites": [
     {
       "value": "jobindex.dk",
-      "count": 147
+      "count": 150
     },
     {
       "value": "jobnet.dk",
-      "count": 35
+      "count": 36
     },
     {
       "value": "thehub.io",
@@ -67,7 +58,7 @@
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 34
+      "count": 35
     },
     {
       "value": "Part-time",
@@ -76,11 +67,19 @@
   ],
   "experienceLevel": [
     {
-      "value": "Mid",
-      "count": 1
+      "value": "Senior",
+      "count": 25
     },
     {
-      "value": "Senior",
+      "value": "Entry",
+      "count": 9
+    },
+    {
+      "value": "Junior",
+      "count": 2
+    },
+    {
+      "value": "Mid",
       "count": 1
     }
   ],
@@ -88,5 +87,5 @@
   "tags": [],
   "classifiedCount": 0,
   "withSalaryCount": 3,
-  "withCityCount": 112
+  "withCityCount": 115
 }
