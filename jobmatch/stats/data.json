@@ -1,26 +1,34 @@
 {
-  "generatedAt": "2026-09-08T15:38:02.126Z",
-  "dataAsOf": "2026-09-08T15:31:24.586Z",
-  "totalTracked": 214,
+  "generatedAt": "2026-09-08T15:56:50.037Z",
+  "dataAsOf": "2026-09-08T15:56:47.162Z",
+  "totalTracked": 402,
   "sitesConfigured": 12,
   "trend": {
     "periodDays": 7,
-    "currentCount": 64,
-    "previousCount": 57,
-    "percentChange": 12.280701754385964
+    "currentCount": 102,
+    "previousCount": 93,
+    "percentChange": 9.67741935483871
   },
   "countries": [
+    {
+      "value": "Sweden",
+      "count": 171
+    },
     {
       "value": "Denmark",
       "count": 141
     },
     {
-      "value": "Sweden",
-      "count": 4
+      "value": "Norway",
+      "count": 21
     }
   ],
   "unlocatedCount": 69,
   "sourceSites": [
+    {
+      "value": "arbetsformedlingen.se",
+      "count": 167
+    },
     {
       "value": "jobindex.dk",
       "count": 153
@@ -28,6 +36,10 @@
     {
       "value": "jobnet.dk",
       "count": 37
+    },
+    {
+      "value": "arbeidsplassen.nav.no",
+      "count": 21
     },
     {
       "value": "thehub.io",
@@ -56,6 +68,10 @@
   ],
   "workStyle": [
     {
+      "value": "On-site",
+      "count": 167
+    },
+    {
       "value": "Remote",
       "count": 8
     },
@@ -67,112 +83,132 @@
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 36
+      "count": 193
     },
     {
       "value": "Part-time",
-      "count": 5
+      "count": 11
     }
   ],
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 32
+      "count": 95
     },
     {
       "value": "Entry",
-      "count": 9
+      "count": 11
     },
     {
       "value": "Junior",
-      "count": 2
+      "count": 4
     },
     {
       "value": "Mid",
+      "count": 1
+    },
+    {
+      "value": "C-Level",
       "count": 1
     }
   ],
   "language": [
     {
+      "value": "en",
+      "count": 127
+    },
+    {
       "value": "da",
       "count": 85
     },
     {
-      "value": "en",
-      "count": 36
+      "value": "sv",
+      "count": 80
+    },
+    {
+      "value": "no",
+      "count": 3
     }
   ],
   "tags": [
     {
       "value": "Logistics",
-      "count": 33
+      "count": 90
     },
     {
       "value": "Supply Chain",
-      "count": 24
+      "count": 74
     },
     {
       "value": "People",
-      "count": 20
-    },
-    {
-      "value": "Defence",
-      "count": 10
-    },
-    {
-      "value": "AI",
-      "count": 9
-    },
-    {
-      "value": "Excel",
-      "count": 4
-    },
-    {
-      "value": "Research",
-      "count": 3
-    },
-    {
-      "value": "University",
-      "count": 3
+      "count": 42
     },
     {
       "value": "Security",
-      "count": 3
+      "count": 40
     },
     {
-      "value": "Finance",
-      "count": 3
+      "value": "AI",
+      "count": 30
     },
     {
-      "value": "Consulting",
-      "count": 2
-    },
-    {
-      "value": "Asset Heavy",
-      "count": 2
-    },
-    {
-      "value": "Python",
-      "count": 1
+      "value": "Defence",
+      "count": 29
     },
     {
       "value": "Autonomy",
-      "count": 1
+      "count": 20
     },
     {
-      "value": "Legal",
-      "count": 1
+      "value": "Python",
+      "count": 18
+    },
+    {
+      "value": "Finance",
+      "count": 12
+    },
+    {
+      "value": "Excel",
+      "count": 8
+    },
+    {
+      "value": "Research",
+      "count": 6
+    },
+    {
+      "value": "Consulting",
+      "count": 6
+    },
+    {
+      "value": "Asset Heavy",
+      "count": 6
     },
     {
       "value": "SaaS only",
-      "count": 1
+      "count": 6
+    },
+    {
+      "value": "University",
+      "count": 4
+    },
+    {
+      "value": "Food",
+      "count": 4
+    },
+    {
+      "value": "IoT",
+      "count": 3
+    },
+    {
+      "value": "Legal",
+      "count": 2
     },
     {
       "value": "Agriculture",
       "count": 1
     }
   ],
-  "classifiedCount": 149,
+  "classifiedCount": 337,
   "withSalaryCount": 3,
-  "withCityCount": 118
+  "withCityCount": 241
 }
