@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-09T17:19:27.268Z",
-  "dataAsOf": "2026-09-09T17:19:23.608Z",
-  "totalTracked": 520,
+  "generatedAt": "2026-09-09T17:36:12.140Z",
+  "dataAsOf": "2026-09-09T17:36:09.191Z",
+  "totalTracked": 521,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 168,
+    "currentCount": 169,
     "previousCount": 113,
-    "percentChange": 48.67256637168141
+    "percentChange": 49.557522123893804
   },
   "countries": [
     {
@@ -16,7 +16,7 @@
     },
     {
       "value": "Denmark",
-      "count": 155
+      "count": 156
     },
     {
       "value": "Lithuania",
@@ -51,7 +51,7 @@
     },
     {
       "value": "jobindex.dk",
-      "count": 162
+      "count": 163
     },
     {
       "value": "jobnet.dk",
@@ -141,7 +141,7 @@
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 132
+      "count": 133
     },
     {
       "value": "Entry",
@@ -167,7 +167,7 @@
     },
     {
       "value": "da",
-      "count": 96
+      "count": 97
     },
     {
       "value": "sv",
@@ -205,7 +205,7 @@
     },
     {
       "value": "Security",
-      "count": 50
+      "count": 51
     },
     {
       "value": "AI",
@@ -268,7 +268,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 455,
+  "classifiedCount": 456,
   "withSalaryCount": 71,
-  "withCityCount": 309
+  "withCityCount": 310
 }
