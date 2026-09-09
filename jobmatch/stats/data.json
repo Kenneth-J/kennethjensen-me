@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-09-09T11:31:21.145Z",
-  "dataAsOf": "2026-09-09T11:31:18.356Z",
-  "totalTracked": 507,
+  "generatedAt": "2026-09-09T15:16:50.060Z",
+  "dataAsOf": "2026-09-09T15:16:47.658Z",
+  "totalTracked": 516,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 174,
-    "previousCount": 99,
-    "percentChange": 75.75757575757575
+    "currentCount": 164,
+    "previousCount": 113,
+    "percentChange": 45.13274336283185
   },
   "countries": [
     {
       "value": "Sweden",
-      "count": 176
+      "count": 179
     },
     {
       "value": "Denmark",
-      "count": 150
+      "count": 153
     },
     {
       "value": "Lithuania",
-      "count": 36
+      "count": 37
     },
     {
       "value": "Latvia",
@@ -28,46 +28,46 @@
     },
     {
       "value": "Norway",
-      "count": 24
+      "count": 25
     },
     {
       "value": "Estonia",
       "count": 9
     },
     {
-      "value": "Greenland",
+      "value": "Finland",
       "count": 7
     },
     {
-      "value": "Finland",
-      "count": 6
+      "value": "Greenland",
+      "count": 7
     }
   ],
   "unlocatedCount": 71,
   "sourceSites": [
     {
       "value": "arbetsformedlingen.se",
-      "count": 172
+      "count": 175
     },
     {
       "value": "jobindex.dk",
-      "count": 159
+      "count": 162
     },
     {
       "value": "jobnet.dk",
       "count": 38
     },
     {
+      "value": "cvbankas.lt",
+      "count": 27
+    },
+    {
       "value": "cv.lv",
       "count": 26
     },
     {
-      "value": "cvbankas.lt",
-      "count": 26
-    },
-    {
       "value": "arbeidsplassen.nav.no",
-      "count": 24
+      "count": 25
     },
     {
       "value": "thehub.io",
@@ -87,7 +87,7 @@
     },
     {
       "value": "tyomarkkinatori.fi",
-      "count": 6
+      "count": 7
     },
     {
       "value": "cphaihub.com",
@@ -117,7 +117,7 @@
   "workStyle": [
     {
       "value": "On-site",
-      "count": 187
+      "count": 190
     },
     {
       "value": "Hybrid",
@@ -131,7 +131,7 @@
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 203
+      "count": 226
     },
     {
       "value": "Part-time",
@@ -141,7 +141,7 @@
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 127
+      "count": 130
     },
     {
       "value": "Entry",
@@ -163,15 +163,15 @@
   "language": [
     {
       "value": "en",
-      "count": 169
+      "count": 173
     },
     {
       "value": "da",
-      "count": 94
+      "count": 95
     },
     {
       "value": "sv",
-      "count": 85
+      "count": 86
     },
     {
       "value": "lv",
@@ -193,11 +193,11 @@
   "tags": [
     {
       "value": "Logistics",
-      "count": 114
+      "count": 116
     },
     {
       "value": "Supply Chain",
-      "count": 92
+      "count": 95
     },
     {
       "value": "People",
@@ -217,7 +217,7 @@
     },
     {
       "value": "Finance",
-      "count": 27
+      "count": 28
     },
     {
       "value": "Python",
@@ -232,24 +232,24 @@
       "count": 10
     },
     {
+      "value": "SaaS only",
+      "count": 10
+    },
+    {
       "value": "Asset Heavy",
       "count": 9
     },
     {
-      "value": "SaaS only",
-      "count": 9
+      "value": "Research",
+      "count": 7
+    },
+    {
+      "value": "University",
+      "count": 7
     },
     {
       "value": "Consulting",
       "count": 7
-    },
-    {
-      "value": "Research",
-      "count": 6
-    },
-    {
-      "value": "University",
-      "count": 6
     },
     {
       "value": "Food",
@@ -268,7 +268,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 442,
-  "withSalaryCount": 69,
-  "withCityCount": 284
+  "classifiedCount": 451,
+  "withSalaryCount": 71,
+  "withCityCount": 307
 }
