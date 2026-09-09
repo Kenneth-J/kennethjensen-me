@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-09T16:49:58.025Z",
-  "dataAsOf": "2026-09-09T16:49:54.795Z",
-  "totalTracked": 518,
+  "generatedAt": "2026-09-09T17:19:27.268Z",
+  "dataAsOf": "2026-09-09T17:19:23.608Z",
+  "totalTracked": 520,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 166,
+    "currentCount": 168,
     "previousCount": 113,
-    "percentChange": 46.902654867256636
+    "percentChange": 48.67256637168141
   },
   "countries": [
     {
@@ -16,7 +16,7 @@
     },
     {
       "value": "Denmark",
-      "count": 153
+      "count": 155
     },
     {
       "value": "Lithuania",
@@ -55,7 +55,7 @@
     },
     {
       "value": "jobnet.dk",
-      "count": 38
+      "count": 40
     },
     {
       "value": "cvbankas.lt",
@@ -131,7 +131,7 @@
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 226
+      "count": 228
     },
     {
       "value": "Part-time",
@@ -141,7 +141,7 @@
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 131
+      "count": 132
     },
     {
       "value": "Entry",
@@ -163,7 +163,7 @@
   "language": [
     {
       "value": "en",
-      "count": 174
+      "count": 176
     },
     {
       "value": "da",
@@ -197,11 +197,11 @@
     },
     {
       "value": "Supply Chain",
-      "count": 95
+      "count": 96
     },
     {
       "value": "People",
-      "count": 59
+      "count": 60
     },
     {
       "value": "Security",
@@ -209,7 +209,7 @@
     },
     {
       "value": "AI",
-      "count": 32
+      "count": 33
     },
     {
       "value": "Defence",
@@ -261,14 +261,14 @@
     },
     {
       "value": "Legal",
-      "count": 2
+      "count": 3
     },
     {
       "value": "Agriculture",
       "count": 1
     }
   ],
-  "classifiedCount": 453,
+  "classifiedCount": 455,
   "withSalaryCount": 71,
-  "withCityCount": 307
+  "withCityCount": 309
 }
