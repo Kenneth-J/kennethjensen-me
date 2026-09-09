@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-09T06:30:40.446Z",
-  "dataAsOf": "2026-09-09T06:30:34.430Z",
-  "totalTracked": 418,
-  "sitesConfigured": 14,
+  "generatedAt": "2026-09-09T07:10:06.328Z",
+  "dataAsOf": "2026-09-09T07:09:50.727Z",
+  "totalTracked": 430,
+  "sitesConfigured": 17,
   "trend": {
     "periodDays": 7,
-    "currentCount": 98,
-    "previousCount": 90,
-    "percentChange": 8.88888888888889
+    "currentCount": 102,
+    "previousCount": 96,
+    "percentChange": 6.25
   },
   "countries": [
     {
@@ -16,11 +16,15 @@
     },
     {
       "value": "Denmark",
-      "count": 146
+      "count": 150
     },
     {
       "value": "Norway",
-      "count": 23
+      "count": 24
+    },
+    {
+      "value": "Greenland",
+      "count": 7
     },
     {
       "value": "Finland",
@@ -35,19 +39,23 @@
     },
     {
       "value": "jobindex.dk",
-      "count": 157
+      "count": 159
     },
     {
       "value": "jobnet.dk",
-      "count": 37
+      "count": 38
     },
     {
       "value": "arbeidsplassen.nav.no",
-      "count": 23
+      "count": 24
     },
     {
       "value": "thehub.io",
       "count": 12
+    },
+    {
+      "value": "sjob.gl",
+      "count": 8
     },
     {
       "value": "tyomarkkinatori.fi",
@@ -91,7 +99,7 @@
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 198
+      "count": 199
     },
     {
       "value": "Part-time",
@@ -101,15 +109,15 @@
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 101
+      "count": 102
     },
     {
       "value": "Entry",
-      "count": 11
+      "count": 12
     },
     {
       "value": "Junior",
-      "count": 4
+      "count": 5
     },
     {
       "value": "Mid",
@@ -123,11 +131,11 @@
   "language": [
     {
       "value": "en",
-      "count": 132
+      "count": 133
     },
     {
       "value": "da",
-      "count": 86
+      "count": 94
     },
     {
       "value": "sv",
@@ -145,15 +153,15 @@
   "tags": [
     {
       "value": "Logistics",
-      "count": 92
+      "count": 93
     },
     {
       "value": "Supply Chain",
-      "count": 74
+      "count": 75
     },
     {
       "value": "People",
-      "count": 45
+      "count": 48
     },
     {
       "value": "Security",
@@ -177,11 +185,15 @@
     },
     {
       "value": "Finance",
-      "count": 13
+      "count": 15
     },
     {
       "value": "Excel",
       "count": 8
+    },
+    {
+      "value": "Consulting",
+      "count": 7
     },
     {
       "value": "Asset Heavy",
@@ -196,12 +208,8 @@
       "count": 6
     },
     {
-      "value": "Consulting",
-      "count": 6
-    },
-    {
       "value": "University",
-      "count": 5
+      "count": 6
     },
     {
       "value": "Food",
@@ -220,7 +228,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 353,
+  "classifiedCount": 365,
   "withSalaryCount": 3,
-  "withCityCount": 251
+  "withCityCount": 256
 }
