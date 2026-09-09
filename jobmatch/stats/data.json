@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-09T09:22:44.613Z",
-  "dataAsOf": "2026-09-09T09:22:41.212Z",
-  "totalTracked": 479,
+  "generatedAt": "2026-09-09T09:35:54.624Z",
+  "dataAsOf": "2026-09-09T09:35:51.603Z",
+  "totalTracked": 505,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 145,
+    "currentCount": 171,
     "previousCount": 100,
-    "percentChange": 45
+    "percentChange": 71
   },
   "countries": [
     {
@@ -19,16 +19,16 @@
       "count": 150
     },
     {
+      "value": "Lithuania",
+      "count": 36
+    },
+    {
       "value": "Latvia",
       "count": 26
     },
     {
       "value": "Norway",
       "count": 24
-    },
-    {
-      "value": "Lithuania",
-      "count": 10
     },
     {
       "value": "Estonia",
@@ -56,6 +56,10 @@
     {
       "value": "jobnet.dk",
       "count": 38
+    },
+    {
+      "value": "cvbankas.lt",
+      "count": 26
     },
     {
       "value": "arbeidsplassen.nav.no",
@@ -137,7 +141,7 @@
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 120
+      "count": 126
     },
     {
       "value": "Entry",
@@ -145,21 +149,21 @@
     },
     {
       "value": "Junior",
-      "count": 7
-    },
-    {
-      "value": "Mid",
-      "count": 1
+      "count": 8
     },
     {
       "value": "C-Level",
+      "count": 2
+    },
+    {
+      "value": "Mid",
       "count": 1
     }
   ],
   "language": [
     {
       "value": "en",
-      "count": 158
+      "count": 167
     },
     {
       "value": "da",
@@ -174,34 +178,34 @@
       "count": 9
     },
     {
+      "value": "lt",
+      "count": 4
+    },
+    {
       "value": "no",
       "count": 3
     },
     {
       "value": "fi",
       "count": 2
-    },
-    {
-      "value": "lt",
-      "count": 2
     }
   ],
   "tags": [
     {
       "value": "Logistics",
-      "count": 102
+      "count": 113
     },
     {
       "value": "Supply Chain",
-      "count": 83
+      "count": 91
     },
     {
       "value": "People",
-      "count": 56
+      "count": 59
     },
     {
       "value": "Security",
-      "count": 49
+      "count": 50
     },
     {
       "value": "AI",
@@ -213,7 +217,7 @@
     },
     {
       "value": "Finance",
-      "count": 24
+      "count": 27
     },
     {
       "value": "Python",
@@ -229,7 +233,7 @@
     },
     {
       "value": "Asset Heavy",
-      "count": 8
+      "count": 9
     },
     {
       "value": "SaaS only",
@@ -253,7 +257,7 @@
     },
     {
       "value": "IoT",
-      "count": 3
+      "count": 4
     },
     {
       "value": "Legal",
@@ -264,7 +268,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 414,
-  "withSalaryCount": 43,
-  "withCityCount": 276
+  "classifiedCount": 440,
+  "withSalaryCount": 67,
+  "withCityCount": 284
 }
