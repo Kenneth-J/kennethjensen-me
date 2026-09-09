@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-09T17:53:33.567Z",
-  "dataAsOf": "2026-09-09T17:36:09.191Z",
-  "totalTracked": 521,
+  "generatedAt": "2026-09-09T18:36:39.136Z",
+  "dataAsOf": "2026-09-09T18:36:34.743Z",
+  "totalTracked": 525,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 169,
+    "currentCount": 173,
     "previousCount": 113,
-    "percentChange": 49.557522123893804
+    "percentChange": 53.09734513274337
   },
   "countries": [
     {
       "value": "Sweden",
-      "count": 179
+      "count": 182
     },
     {
       "value": "Denmark",
-      "count": 156
+      "count": 157
     },
     {
       "value": "Lithuania",
@@ -47,7 +47,7 @@
   "sourceSites": [
     {
       "value": "arbetsformedlingen.se",
-      "count": 175
+      "count": 178
     },
     {
       "value": "jobindex.dk",
@@ -55,7 +55,7 @@
     },
     {
       "value": "jobnet.dk",
-      "count": 40
+      "count": 41
     },
     {
       "value": "cvbankas.lt",
@@ -117,7 +117,7 @@
   "workStyle": [
     {
       "value": "On-site",
-      "count": 190
+      "count": 193
     },
     {
       "value": "Hybrid",
@@ -131,7 +131,7 @@
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 228
+      "count": 232
     },
     {
       "value": "Part-time",
@@ -141,7 +141,7 @@
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 133
+      "count": 134
     },
     {
       "value": "Entry",
@@ -163,15 +163,15 @@
   "language": [
     {
       "value": "en",
-      "count": 176
+      "count": 177
     },
     {
       "value": "da",
-      "count": 97
+      "count": 98
     },
     {
       "value": "sv",
-      "count": 86
+      "count": 88
     },
     {
       "value": "lv",
@@ -221,7 +221,7 @@
     },
     {
       "value": "Python",
-      "count": 20
+      "count": 22
     },
     {
       "value": "Autonomy",
@@ -268,7 +268,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 456,
+  "classifiedCount": 460,
   "withSalaryCount": 71,
-  "withCityCount": 310
+  "withCityCount": 313
 }
