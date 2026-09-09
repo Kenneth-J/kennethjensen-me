@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-09T09:35:54.624Z",
-  "dataAsOf": "2026-09-09T09:35:51.603Z",
-  "totalTracked": 505,
+  "generatedAt": "2026-09-09T11:31:21.145Z",
+  "dataAsOf": "2026-09-09T11:31:18.356Z",
+  "totalTracked": 507,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 171,
-    "previousCount": 100,
-    "percentChange": 71
+    "currentCount": 174,
+    "previousCount": 99,
+    "percentChange": 75.75757575757575
   },
   "countries": [
     {
@@ -24,7 +24,7 @@
     },
     {
       "value": "Latvia",
-      "count": 26
+      "count": 28
     },
     {
       "value": "Norway",
@@ -58,15 +58,15 @@
       "count": 38
     },
     {
+      "value": "cv.lv",
+      "count": 26
+    },
+    {
       "value": "cvbankas.lt",
       "count": 26
     },
     {
       "value": "arbeidsplassen.nav.no",
-      "count": 24
-    },
-    {
-      "value": "cv.lv",
       "count": 24
     },
     {
@@ -117,11 +117,11 @@
   "workStyle": [
     {
       "value": "On-site",
-      "count": 186
+      "count": 187
     },
     {
       "value": "Hybrid",
-      "count": 11
+      "count": 12
     },
     {
       "value": "Remote",
@@ -141,7 +141,7 @@
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 126
+      "count": 127
     },
     {
       "value": "Entry",
@@ -163,7 +163,7 @@
   "language": [
     {
       "value": "en",
-      "count": 167
+      "count": 169
     },
     {
       "value": "da",
@@ -193,11 +193,11 @@
   "tags": [
     {
       "value": "Logistics",
-      "count": 113
+      "count": 114
     },
     {
       "value": "Supply Chain",
-      "count": 91
+      "count": 92
     },
     {
       "value": "People",
@@ -237,7 +237,7 @@
     },
     {
       "value": "SaaS only",
-      "count": 8
+      "count": 9
     },
     {
       "value": "Consulting",
@@ -268,7 +268,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 440,
-  "withSalaryCount": 67,
+  "classifiedCount": 442,
+  "withSalaryCount": 69,
   "withCityCount": 284
 }
