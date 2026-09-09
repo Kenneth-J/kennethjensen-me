@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-09T15:16:50.060Z",
-  "dataAsOf": "2026-09-09T15:16:47.658Z",
-  "totalTracked": 516,
+  "generatedAt": "2026-09-09T16:02:57.531Z",
+  "dataAsOf": "2026-09-09T16:02:53.918Z",
+  "totalTracked": 517,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 164,
+    "currentCount": 165,
     "previousCount": 113,
-    "percentChange": 45.13274336283185
+    "percentChange": 46.017699115044245
   },
   "countries": [
     {
@@ -43,7 +43,7 @@
       "count": 7
     }
   ],
-  "unlocatedCount": 71,
+  "unlocatedCount": 72,
   "sourceSites": [
     {
       "value": "arbetsformedlingen.se",
@@ -99,7 +99,7 @@
     },
     {
       "value": "nodesk.co",
-      "count": 3
+      "count": 4
     },
     {
       "value": "landing.jobs",
@@ -125,7 +125,7 @@
     },
     {
       "value": "Remote",
-      "count": 10
+      "count": 11
     }
   ],
   "employmentType": [
@@ -141,7 +141,7 @@
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 130
+      "count": 131
     },
     {
       "value": "Entry",
@@ -163,7 +163,7 @@
   "language": [
     {
       "value": "en",
-      "count": 173
+      "count": 174
     },
     {
       "value": "da",
@@ -268,7 +268,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 451,
+  "classifiedCount": 452,
   "withSalaryCount": 71,
   "withCityCount": 307
 }
