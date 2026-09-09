@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-09T16:35:06.083Z",
-  "dataAsOf": "2026-09-09T16:35:03.521Z",
-  "totalTracked": 517,
+  "generatedAt": "2026-09-09T16:49:58.025Z",
+  "dataAsOf": "2026-09-09T16:49:54.795Z",
+  "totalTracked": 518,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 165,
+    "currentCount": 166,
     "previousCount": 113,
-    "percentChange": 46.017699115044245
+    "percentChange": 46.902654867256636
   },
   "countries": [
     {
@@ -35,11 +35,11 @@
       "count": 9
     },
     {
-      "value": "Finland",
-      "count": 7
+      "value": "Greenland",
+      "count": 8
     },
     {
-      "value": "Greenland",
+      "value": "Finland",
       "count": 7
     }
   ],
@@ -78,12 +78,12 @@
       "count": 10
     },
     {
-      "value": "cvkeskus.ee",
+      "value": "sjob.gl",
       "count": 9
     },
     {
-      "value": "sjob.gl",
-      "count": 8
+      "value": "cvkeskus.ee",
+      "count": 9
     },
     {
       "value": "tyomarkkinatori.fi",
@@ -167,7 +167,7 @@
     },
     {
       "value": "da",
-      "count": 95
+      "count": 96
     },
     {
       "value": "sv",
@@ -268,7 +268,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 452,
+  "classifiedCount": 453,
   "withSalaryCount": 71,
   "withCityCount": 307
 }
