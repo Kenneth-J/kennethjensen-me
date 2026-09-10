@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-10T10:03:37.545Z",
-  "dataAsOf": "2026-09-10T10:03:34.975Z",
+  "generatedAt": "2026-09-10T10:17:53.134Z",
+  "dataAsOf": "2026-09-10T10:17:50.129Z",
   "totalTracked": 480,
   "sitesConfigured": 22,
   "trend": {
@@ -145,7 +145,7 @@
     },
     {
       "value": "Mid",
-      "count": 6
+      "count": 5
     },
     {
       "value": "C-Level",
