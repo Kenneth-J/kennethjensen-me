@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-09T18:36:39.136Z",
-  "dataAsOf": "2026-09-09T18:36:34.743Z",
-  "totalTracked": 525,
+  "generatedAt": "2026-09-10T01:07:19.729Z",
+  "dataAsOf": "2026-09-10T01:07:16.805Z",
+  "totalTracked": 531,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 173,
-    "previousCount": 113,
-    "percentChange": 53.09734513274337
+    "currentCount": 149,
+    "previousCount": 119,
+    "percentChange": 25.210084033613445
   },
   "countries": [
     {
@@ -16,7 +16,7 @@
     },
     {
       "value": "Denmark",
-      "count": 157
+      "count": 159
     },
     {
       "value": "Lithuania",
@@ -43,7 +43,7 @@
       "count": 7
     }
   ],
-  "unlocatedCount": 72,
+  "unlocatedCount": 76,
   "sourceSites": [
     {
       "value": "arbetsformedlingen.se",
@@ -51,11 +51,11 @@
     },
     {
       "value": "jobindex.dk",
-      "count": 163
+      "count": 164
     },
     {
       "value": "jobnet.dk",
-      "count": 41
+      "count": 42
     },
     {
       "value": "cvbankas.lt",
@@ -90,6 +90,10 @@
       "count": 7
     },
     {
+      "value": "remoteok.com",
+      "count": 6
+    },
+    {
       "value": "cphaihub.com",
       "count": 4
     },
@@ -106,10 +110,6 @@
       "count": 2
     },
     {
-      "value": "remoteok.com",
-      "count": 2
-    },
-    {
       "value": "cvmarket.lv",
       "count": 2
     }
@@ -120,18 +120,18 @@
       "count": 193
     },
     {
-      "value": "Hybrid",
-      "count": 12
+      "value": "Remote",
+      "count": 15
     },
     {
-      "value": "Remote",
-      "count": 11
+      "value": "Hybrid",
+      "count": 12
     }
   ],
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 232
+      "count": 233
     },
     {
       "value": "Part-time",
@@ -141,7 +141,7 @@
   "experienceLevel": [
     {
       "value": "Senior",
-      "count": 134
+      "count": 135
     },
     {
       "value": "Entry",
@@ -163,11 +163,11 @@
   "language": [
     {
       "value": "en",
-      "count": 177
+      "count": 181
     },
     {
       "value": "da",
-      "count": 98
+      "count": 100
     },
     {
       "value": "sv",
@@ -193,7 +193,7 @@
   "tags": [
     {
       "value": "Logistics",
-      "count": 116
+      "count": 117
     },
     {
       "value": "Supply Chain",
@@ -201,11 +201,11 @@
     },
     {
       "value": "People",
-      "count": 60
+      "count": 63
     },
     {
       "value": "Security",
-      "count": 51
+      "count": 52
     },
     {
       "value": "AI",
@@ -228,16 +228,16 @@
       "count": 20
     },
     {
+      "value": "Asset Heavy",
+      "count": 10
+    },
+    {
       "value": "Excel",
       "count": 10
     },
     {
       "value": "SaaS only",
       "count": 10
-    },
-    {
-      "value": "Asset Heavy",
-      "count": 9
     },
     {
       "value": "Research",
@@ -268,7 +268,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 460,
+  "classifiedCount": 466,
   "withSalaryCount": 71,
   "withCityCount": 313
 }
