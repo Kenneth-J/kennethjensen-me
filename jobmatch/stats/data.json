@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-12T08:07:21.020Z",
-  "dataAsOf": "2026-09-12T08:07:15.726Z",
-  "totalTracked": 1197,
+  "generatedAt": "2026-09-12T17:34:08.793Z",
+  "dataAsOf": "2026-09-12T17:33:51.845Z",
+  "totalTracked": 1169,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
     "currentCount": 436,
-    "previousCount": 284,
-    "percentChange": 53.52112676056338
+    "previousCount": 278,
+    "percentChange": 56.83453237410072
   },
   "countries": [
     {
       "value": "Sweden",
-      "count": 476
+      "count": 464
     },
     {
       "value": "Denmark",
-      "count": 300
+      "count": 291
     },
     {
       "value": "Norway",
@@ -24,11 +24,11 @@
     },
     {
       "value": "Lithuania",
-      "count": 113
+      "count": 110
     },
     {
       "value": "Latvia",
-      "count": 59
+      "count": 58
     },
     {
       "value": "Finland",
@@ -43,15 +43,15 @@
       "count": 13
     }
   ],
-  "unlocatedCount": 29,
+  "unlocatedCount": 26,
   "sourceSites": [
     {
       "value": "arbetsformedlingen.se",
-      "count": 468
+      "count": 456
     },
     {
       "value": "jobindex.dk",
-      "count": 244
+      "count": 240
     },
     {
       "value": "arbeidsplassen.nav.no",
@@ -59,15 +59,15 @@
     },
     {
       "value": "cvbankas.lt",
-      "count": 97
+      "count": 94
     },
     {
       "value": "jobnet.dk",
-      "count": 72
+      "count": 67
     },
     {
       "value": "cv.lv",
-      "count": 56
+      "count": 55
     },
     {
       "value": "tyomarkkinatori.fi",
@@ -98,10 +98,6 @@
       "count": 5
     },
     {
-      "value": "deunemployment.com",
-      "count": 3
-    },
-    {
       "value": "cvmarket.lv",
       "count": 3
     },
@@ -117,11 +113,11 @@
   "workStyle": [
     {
       "value": "On-site",
-      "count": 511
+      "count": 498
     },
     {
       "value": "Remote",
-      "count": 16
+      "count": 13
     },
     {
       "value": "Hybrid",
@@ -131,29 +127,29 @@
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 556
+      "count": 545
     },
     {
       "value": "Part-time",
-      "count": 26
+      "count": 22
     }
   ],
   "experienceLevel": [
     {
       "value": "Mid",
-      "count": 124
+      "count": 137
     },
     {
       "value": "Senior",
-      "count": 87
+      "count": 68
     },
     {
       "value": "Entry",
-      "count": 19
+      "count": 22
     },
     {
       "value": "Junior",
-      "count": 10
+      "count": 9
     },
     {
       "value": "C-Level",
@@ -163,15 +159,15 @@
   "language": [
     {
       "value": "sv",
-      "count": 380
+      "count": 372
     },
     {
       "value": "da",
-      "count": 275
+      "count": 270
     },
     {
       "value": "en",
-      "count": 193
+      "count": 180
     },
     {
       "value": "no",
@@ -183,7 +179,7 @@
     },
     {
       "value": "lv",
-      "count": 41
+      "count": 40
     },
     {
       "value": "fi",
@@ -197,19 +193,19 @@
   "tags": [
     {
       "value": "Logistics",
-      "count": 469
+      "count": 461
     },
     {
       "value": "Supply Chain",
-      "count": 357
+      "count": 354
     },
     {
       "value": "People",
-      "count": 151
+      "count": 146
     },
     {
       "value": "Security",
-      "count": 91
+      "count": 86
     },
     {
       "value": "Project Manager",
@@ -217,19 +213,19 @@
     },
     {
       "value": "Defence",
-      "count": 65
+      "count": 64
     },
     {
       "value": "Finance",
-      "count": 41
+      "count": 40
     },
     {
       "value": "AI",
-      "count": 39
+      "count": 37
     },
     {
       "value": "Asset Heavy",
-      "count": 31
+      "count": 30
     },
     {
       "value": "Autonomy",
@@ -238,10 +234,6 @@
     {
       "value": "Python",
       "count": 24
-    },
-    {
-      "value": "Excel",
-      "count": 17
     },
     {
       "value": "Consulting",
@@ -254,6 +246,10 @@
     {
       "value": "University",
       "count": 15
+    },
+    {
+      "value": "Excel",
+      "count": 14
     },
     {
       "value": "Food",
@@ -280,7 +276,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 1197,
-  "withSalaryCount": 175,
-  "withCityCount": 674
+  "classifiedCount": 1169,
+  "withSalaryCount": 171,
+  "withCityCount": 662
 }
