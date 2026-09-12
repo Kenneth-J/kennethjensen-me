@@ -67,6 +67,21 @@ function dot(a, b) {
   return sum;
 }
 
+// Fire-and-forget: lets Kenneth see which existing Tags real search demand
+// is hitting, and which frequent, non-tag search terms are candidates for a
+// new Tag (see jobmatch-worker's /search/terms, viewed from the admin panel
+// at secret.kennethjensen.me). Never awaited by runSearch() and any failure
+// is swallowed — logging a search must never slow down or break showing
+// results for it.
+function logSearch(query, resultCount) {
+  fetch(`${WORKER_URL}/search/log`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query, resultCount }),
+    keepalive: true,
+  }).catch(() => {});
+}
+
 function formatSalary(job) {
   if (job.salaryMin == null && job.salaryMax == null) return null;
   const currency = job.currency || '';
@@ -120,6 +135,8 @@ async function runSearch(query) {
       .map((job) => ({ job, score: dot(queryVec, job.embedding) }))
       .sort((a, b) => b.score - a.score)
       .slice(0, RESULT_LIMIT);
+
+    logSearch(query, ranked.length);
 
     resultsStatus.style.display = 'none';
     if (!ranked.length) {
