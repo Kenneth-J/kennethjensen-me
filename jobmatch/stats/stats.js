@@ -37,11 +37,11 @@ function statCard(value, unit, label, sub, subClass){
 // every other bar chart on this page, so the shape of the funnel/pyramid
 // itself is the point.
 const SENIORITY_TIERS = [
-  { value: 'Entry', color: '#fde3d1' },
-  { value: 'Junior', color: '#f6b78c' },
-  { value: 'Mid', color: '#ef8a47' },
-  { value: 'Senior', color: '#e8631f' },
-  { value: 'C-Level', color: '#a83f10' },
+  { value: 'Entry', color: '#e8e0fc' },
+  { value: 'Junior', color: '#bca5f7' },
+  { value: 'Mid', color: '#906af1' },
+  { value: 'Senior', color: '#6c3aed' },
+  { value: 'C-Level', color: '#442494' },
 ];
 
 function seniorityRow(label, widthPercent, valueText, color){
