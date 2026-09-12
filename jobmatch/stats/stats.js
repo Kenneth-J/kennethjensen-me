@@ -153,34 +153,6 @@ function render(data){
       seniorityBars.appendChild(seniorityRow(tier.value, count > 0 ? Math.max(2, pct) : 0, fmtInt(count) + ' · ' + pct + '%', tier.color));
     });
   }
-
-  // Filling-in panel
-  const pct = data.totalTracked ? Math.round((data.classifiedCount / data.totalTracked) * 100) : 0;
-  document.getElementById('focus-fill').style.width = Math.max(pct, data.classifiedCount > 0 ? 2 : 0) + '%';
-  document.getElementById('focus-figure').textContent = fmtInt(data.classifiedCount) + ' of ' + fmtInt(data.totalTracked) + ' classified (' + pct + '%)';
-
-  const focusBody = document.getElementById('focus-body');
-  if (data.tags.length === 0 && data.language.length === 0 && data.experienceLevel.length === 0) {
-    focusBody.innerHTML = '<p class="empty-state">No roles classified yet, check back soon.</p>';
-  } else {
-    const list = document.createElement('div');
-    list.className = 'focus-list';
-    const topTag = data.tags[0];
-    const topLang = data.language[0];
-    const topLevel = data.experienceLevel[0];
-    if (topTag) list.appendChild(focusItem(topTag.value, fmtCount(topTag.count, 'posting') + ', most common skill'));
-    if (topLang) list.appendChild(focusItem(topLang.value, fmtCount(topLang.count, 'ad') + ', most common language'));
-    if (topLevel) list.appendChild(focusItem(topLevel.value, fmtCount(topLevel.count, 'role') + ', most common level'));
-    if (data.withSalaryCount > 0) list.appendChild(focusItem(fmtInt(data.withSalaryCount), (data.withSalaryCount === 1 ? 'role states' : 'roles state') + ' a salary'));
-    focusBody.appendChild(list);
-  }
-}
-
-function focusItem(bigText, smallText){
-  const el = document.createElement('div');
-  el.className = 'focus-item';
-  el.innerHTML = '<b>' + esc(bigText) + '</b>' + esc(smallText);
-  return el;
 }
 
 fetch('./data.json')

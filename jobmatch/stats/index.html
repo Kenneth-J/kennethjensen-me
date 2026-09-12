@@ -94,14 +94,6 @@
   .chip{border:1px solid var(--line);background:var(--bg-alt);padding:9px 16px;border-radius:999px;font-size:13.5px;color:var(--ink-soft);}
   .chip b{color:var(--ink);font-weight:700;}
 
-  .focus-panel{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);padding:28px 30px;}
-  .focus-progress{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
-  .focus-track{flex:1;height:8px;background:var(--line);border-radius:999px;overflow:hidden;}
-  .focus-fill{height:100%;background:var(--accent);border-radius:999px;}
-  .focus-figure{font-size:13px;font-weight:700;color:var(--ink-soft);white-space:nowrap;}
-  .focus-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:20px;}
-  .focus-item{font-size:13px;color:var(--ink-soft);}
-  .focus-item b{display:block;font-size:20px;color:var(--ink);font-weight:800;margin-bottom:2px;}
 
   .empty-state{color:var(--ink-faint);font-size:14px;font-style:italic;}
 
@@ -196,22 +188,6 @@
     </div>
   </section>
 
-  <section id="filling-in">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow-alt">Coming into focus</span>
-        <h2>Skills, seniority, language and salary</h2>
-        <p class="section-sub">JobMatch's AI reads every role for its tags, seniority, language and pay, then this section fills itself in. No manual curation, it just takes each role a little time to get classified.</p>
-      </div>
-      <div class="focus-panel">
-        <div class="focus-progress">
-          <div class="focus-track"><div class="focus-fill" id="focus-fill" style="width:0%"></div></div>
-          <span class="focus-figure" id="focus-figure">0 of 0 classified</span>
-        </div>
-        <div id="focus-body"></div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer>
