@@ -304,7 +304,15 @@ async function runSearch(query, countries) {
 
   try {
     const corpus = await loadCorpus();
-    const candidates = countries.length ? corpus.filter((job) => countries.includes(job.country)) : corpus;
+    // "Remote" is a pill in the same row as the real countries, but it isn't
+    // one of job.country's own values — a fully remote job gets
+    // country: null there by design (see jobmatch's filter.js detectLocation()
+    // comment: remoteness and geography are deliberately not conflated), so
+    // it's matched against job.remoteType instead, the field that actually
+    // carries it.
+    const candidates = countries.length
+      ? corpus.filter((job) => countries.includes(job.country) || (countries.includes('Remote') && job.remoteType === 'Remote'))
+      : corpus;
 
     let ranked;
     let dividerIndex = -1;
