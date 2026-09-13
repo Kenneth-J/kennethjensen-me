@@ -146,7 +146,7 @@
   footer{border-top:1px solid var(--line);padding:34px 0;}
   footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
   .footer-left{font-size:14px;color:var(--ink-soft);}
-  .footer-right a{font-size:14px;color:var(--ink-soft);text-decoration:none;margin-left:20px;}
+  .footer-right a{font-size:14px;color:var(--ink-soft);text-decoration:none;}
   .footer-right a:hover{color:var(--accent);}
 
   /* Search — the hero's one job, so it's sized and weighted to lead the
@@ -277,13 +277,13 @@
         <button class="search-submit" id="search-submit" type="submit">Search</button>
         <div class="country-suggestions" id="country-suggestions" hidden></div>
       </form>
-      <p class="search-hint">Matching runs entirely in your browser — we log anonymized search terms to see what people are looking for. Type a country name (e.g. "de" for Denmark) to filter by country.</p>
+      <p class="search-hint">Type a country name (e.g. "de" for Denmark) to filter by country.</p>
     </div>
   </section>
 
   <section id="results">
     <div class="wrap">
-      <div id="results-status">Type a role, skill, or company above to search 1,000+ Nordic Operations jobs.</div>
+      <div id="results-status" style="display:none;"></div>
       <div id="results-count" class="results-count" style="display:none;"></div>
       <div id="job-grid" class="job-grid"></div>
       <div id="results-empty" class="empty-state" style="display:none;">No matching jobs right now — try a broader search.</div>
