@@ -49,7 +49,6 @@ const COUNTRIES = [
   { value: 'Estonia', aliases: ['estonia', 'eesti'], text: '#1f3a5f', bg: '#e0e3e9' },
   { value: 'Latvia', aliases: ['latvia', 'latvija'], text: '#8a1f3a', bg: '#efe0e3' },
   { value: 'Lithuania', aliases: ['lithuania', 'lietuva'], text: '#2f7a3d', bg: '#e2ece4' },
-  { value: 'Baltic', aliases: ['baltic', 'baltics'], text: '#6c757d', bg: '#eaeced' },
   { value: 'Remote', aliases: ['remote'], text: '#1a8a5f', bg: '#dfefe9' },
 ];
 
