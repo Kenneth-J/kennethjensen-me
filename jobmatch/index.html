@@ -152,21 +152,64 @@
   /* Search — the hero's one job, so it's sized and weighted to lead the
      page rather than share billing with the copy above it. */
   .search-form{
-    display:flex;gap:12px;margin:0 0 16px;
+    display:flex;gap:12px;margin:0 0 16px;position:relative;
     padding:8px;background:#fff;border:1px solid var(--line);border-radius:999px;
     box-shadow:0 12px 32px -12px rgba(20,20,20,.14);
   }
+  .search-field{
+    flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:6px;
+    padding:0 4px 0 10px;
+  }
   .search-input{
-    flex:1;padding:16px 22px;border:none;border-radius:999px;
+    flex:1;min-width:80px;padding:16px 12px;border:none;border-radius:999px;
     font:inherit;font-size:17px;color:var(--ink);background:transparent;
   }
   .search-input:focus{outline:none;}
-  .search-form:focus-within{border-color:var(--accent);box-shadow:0 14px 36px -12px rgba(232,99,31,.28);}
+  .search-form:focus-within{border-color:var(--accent);box-shadow:0 14px 36px -12px rgba(108,58,237,.28);}
   .search-submit{
     background:var(--accent);color:#fff;border:none;padding:16px 32px;border-radius:999px;
     font-weight:700;font-size:16px;cursor:pointer;transition:opacity .15s;flex:none;
   }
   .search-submit:hover:not(:disabled){opacity:.88;}
+
+  /* Country autocomplete tags — a country name typed in the search box
+     (e.g. "de" for Denmark) becomes a removable, colour-coded pill that
+     hard-filters results by Working Country, separate from the free-text
+     query that still drives semantic ranking. Colors are inline styles
+     (per-country, not a fixed CSS palette), set by jobmatch.js. */
+  .country-tag{
+    display:inline-flex;align-items:center;gap:5px;flex:none;
+    padding:6px 8px 6px 12px;border-radius:999px;font-size:13px;font-weight:700;
+    white-space:nowrap;
+  }
+  .country-tag button{
+    border:none;background:none;cursor:pointer;color:inherit;opacity:.6;
+    font-size:15px;line-height:1;padding:0 2px;font-family:inherit;
+  }
+  .country-tag button:hover{opacity:1;}
+  .country-suggestions{
+    position:absolute;top:calc(100% + 8px);left:8px;right:8px;
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    box-shadow:0 12px 32px -12px rgba(20,20,20,.18);
+    padding:8px;z-index:10;display:flex;flex-wrap:wrap;gap:6px;
+  }
+  .country-suggestion{
+    display:inline-flex;align-items:center;padding:7px 14px;border-radius:999px;
+    font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:inherit;
+  }
+  .country-suggestion:hover{opacity:.82;}
+
+  /* Relevance divider — inserted into the job grid (spanning both/all
+     columns) when there's a real drop-off in match quality, so a handful
+     of weak matches padding out the result count doesn't read as equally
+     confident as the top ones. Absent entirely when results decay smoothly
+     (see jobmatch.js's findRelevanceDividerIndex()). */
+  .results-divider{
+    grid-column:1/-1;display:flex;align-items:center;gap:14px;
+    margin:6px 0 2px;color:var(--ink-soft);font-size:12.5px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.06em;
+  }
+  .results-divider::before,.results-divider::after{content:'';flex:1;height:1px;background:var(--line);}
   .search-submit:disabled{opacity:.6;cursor:default;}
   .search-hint{color:var(--ink-soft);font-size:13.5px;margin:0;}
 
@@ -222,10 +265,14 @@
       <h1>Operations job search, made for the Nordics.</h1>
       <p class="lede">Type a role, skill, or company — JobMatch searches Operations roles tracked across Denmark, Norway, Sweden, Finland, Iceland and the Baltics, and ranks the ones that actually fit.</p>
       <form class="search-form" id="search-form">
-        <input class="search-input" id="search-input" type="text" placeholder="e.g. warehouse operations manager in Copenhagen" autocomplete="off">
+        <div class="search-field" id="search-field">
+          <div class="country-tags" id="country-tags"></div>
+          <input class="search-input" id="search-input" type="text" placeholder="e.g. warehouse operations manager in Copenhagen" autocomplete="off">
+        </div>
         <button class="search-submit" id="search-submit" type="submit">Search</button>
+        <div class="country-suggestions" id="country-suggestions" hidden></div>
       </form>
-      <p class="search-hint">Runs entirely in your browser — your search never leaves your device.</p>
+      <p class="search-hint">Matching runs entirely in your browser — we log anonymized search terms to see what people are looking for. Type a country name (e.g. "de" for Denmark) to filter by country.</p>
     </div>
   </section>
 
