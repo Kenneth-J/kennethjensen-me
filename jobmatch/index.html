@@ -177,6 +177,10 @@
      hard-filters results by Working Country, separate from the free-text
      query that still drives semantic ranking. Colors are inline styles
      (per-country, not a fixed CSS palette), set by jobmatch.js. */
+  .country-tags-label{
+    flex:none;font-size:13px;font-weight:700;color:var(--ink-soft);
+    white-space:nowrap;padding-left:2px;
+  }
   .country-tag{
     display:inline-flex;align-items:center;gap:5px;flex:none;
     padding:6px 8px 6px 12px;border-radius:999px;font-size:13px;font-weight:700;
@@ -266,6 +270,7 @@
       <p class="lede">Type a role, skill, or company — JobMatch searches Operations roles tracked across Denmark, Norway, Sweden, Finland, Iceland and the Baltics, and ranks the ones that actually fit.</p>
       <form class="search-form" id="search-form">
         <div class="search-field" id="search-field">
+          <span class="country-tags-label" id="country-tags-label" hidden>Jobs only in:</span>
           <div class="country-tags" id="country-tags"></div>
           <input class="search-input" id="search-input" type="text" placeholder="e.g. warehouse operations manager in Copenhagen" autocomplete="off">
         </div>

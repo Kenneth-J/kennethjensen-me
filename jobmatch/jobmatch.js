@@ -23,6 +23,7 @@ const searchField = document.getElementById('search-field');
 const searchInput = document.getElementById('search-input');
 const searchSubmit = document.getElementById('search-submit');
 const countryTagsEl = document.getElementById('country-tags');
+const countryTagsLabelEl = document.getElementById('country-tags-label');
 const countrySuggestionsEl = document.getElementById('country-suggestions');
 const resultsStatus = document.getElementById('results-status');
 const resultsCount = document.getElementById('results-count');
@@ -51,7 +52,6 @@ const COUNTRIES = [
   { value: 'Baltic', aliases: ['baltic', 'baltics'], text: '#6c757d', bg: '#eaeced' },
   { value: 'Remote', aliases: ['remote'], text: '#1a8a5f', bg: '#dfefe9' },
 ];
-const MIN_TOKEN_LENGTH = 2; // "d" alone matches too much (Denmark, Danmark...) to be a useful suggestion yet
 
 // Selected country filters — an array of COUNTRIES[].value strings, applied
 // as a hard filter (job.country must be one of these) before ranking,
@@ -75,6 +75,7 @@ function currentToken(value) {
 
 function renderCountryTags() {
   countryTagsEl.innerHTML = '';
+  countryTagsLabelEl.hidden = selectedCountries.length === 0;
   for (const value of selectedCountries) {
     const country = COUNTRIES.find((c) => c.value === value);
     if (!country) continue;
@@ -111,13 +112,15 @@ function hideSuggestions() {
 
 function updateSuggestions() {
   const token = normalizeToken(currentToken(searchInput.value));
-  if (token.length < MIN_TOKEN_LENGTH) {
-    hideSuggestions();
-    return;
-  }
-  const matches = COUNTRIES.filter(
-    (c) => !selectedCountries.includes(c.value) && c.aliases.some((a) => normalizeToken(a).startsWith(token))
-  );
+  // Empty token (nothing typed yet, e.g. right after focusing the box)
+  // shows every unselected country rather than hiding — same list a click
+  // on a native <select> would open.
+  const matches =
+    token.length === 0
+      ? COUNTRIES.filter((c) => !selectedCountries.includes(c.value))
+      : COUNTRIES.filter(
+          (c) => !selectedCountries.includes(c.value) && c.aliases.some((a) => normalizeToken(a).startsWith(token))
+        );
   if (!matches.length) {
     hideSuggestions();
     return;
@@ -140,6 +143,7 @@ function updateSuggestions() {
 }
 
 searchInput.addEventListener('input', updateSuggestions);
+searchInput.addEventListener('focus', updateSuggestions);
 searchInput.addEventListener('keydown', (e) => {
   // Enter/Tab while a suggestion is showing confirms the first (only
   // realistic case in practice — country name prefixes rarely collide)
