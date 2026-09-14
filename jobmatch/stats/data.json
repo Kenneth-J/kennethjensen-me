@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-14T01:19:56.106Z",
-  "dataAsOf": "2026-09-14T01:19:53.969Z",
-  "totalTracked": 1351,
+  "generatedAt": "2026-09-14T01:25:30.765Z",
+  "dataAsOf": "2026-09-14T01:25:23.720Z",
+  "totalTracked": 1352,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 436,
+    "currentCount": 438,
     "previousCount": 390,
-    "percentChange": 11.794871794871794
+    "percentChange": 12.307692307692308
   },
   "countries": [
     {
@@ -16,7 +16,7 @@
     },
     {
       "value": "Sweden",
-      "count": 436
+      "count": 435
     },
     {
       "value": "Norway",
@@ -36,11 +36,11 @@
     },
     {
       "value": "Greenland",
-      "count": 17
+      "count": 18
     },
     {
       "value": "Estonia",
-      "count": 14
+      "count": 15
     }
   ],
   "unlocatedCount": 36,
@@ -51,7 +51,7 @@
     },
     {
       "value": "arbetsformedlingen.se",
-      "count": 428
+      "count": 427
     },
     {
       "value": "arbeidsplassen.nav.no",
@@ -78,16 +78,16 @@
       "count": 15
     },
     {
+      "value": "cvkeskus.ee",
+      "count": 15
+    },
+    {
       "value": "cvmarket.lt",
       "count": 15
     },
     {
       "value": "euremotejobs.com",
       "count": 15
-    },
-    {
-      "value": "cvkeskus.ee",
-      "count": 14
     },
     {
       "value": "remoteok.com",
@@ -103,7 +103,7 @@
     },
     {
       "value": "suli.gl",
-      "count": 2
+      "count": 3
     },
     {
       "value": "nodesk.co",
@@ -113,7 +113,7 @@
   "workStyle": [
     {
       "value": "On-site",
-      "count": 469
+      "count": 468
     },
     {
       "value": "Remote",
@@ -127,7 +127,7 @@
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 532
+      "count": 533
     },
     {
       "value": "Part-time",
@@ -137,7 +137,7 @@
   "experienceLevel": [
     {
       "value": "Mid",
-      "count": 168
+      "count": 169
     },
     {
       "value": "Senior",
@@ -159,7 +159,7 @@
   "language": [
     {
       "value": "sv",
-      "count": 342
+      "count": 341
     },
     {
       "value": "da",
@@ -209,7 +209,7 @@
     },
     {
       "value": "Security",
-      "count": 91
+      "count": 90
     },
     {
       "value": "Defence",
@@ -237,7 +237,7 @@
     },
     {
       "value": "Consulting",
-      "count": 21
+      "count": 20
     },
     {
       "value": "Excel",
@@ -296,7 +296,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 1068,
-  "withSalaryCount": 171,
-  "withCityCount": 614
+  "classifiedCount": 1067,
+  "withSalaryCount": 172,
+  "withCityCount": 615
 }
