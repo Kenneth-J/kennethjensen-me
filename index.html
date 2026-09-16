@@ -7,20 +7,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%236c3aed'%3E%3Ccircle cx='16' cy='16' r='5' stroke-width='4'/%3E%3C/g%3E%3Cg fill='%236c3aed'%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(45 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(90 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(135 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(180 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(225 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(270 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(315 16 16)'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%2312b892'%3E%3Ccircle cx='16' cy='16' r='5' stroke-width='4'/%3E%3C/g%3E%3Cg fill='%2312b892'%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(45 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(90 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(135 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(180 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(225 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(270 16 16)'/%3E%3Crect x='14.4' y='5' width='3.2' height='4' rx='0.8' transform='rotate(315 16 16)'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* Palette inspired by niniaazzopardi.com (Kenneth's reference, 2026-09-16):
+     deep navy-teal ink on white, one vivid mint accent, bold geometric
+     headline type, black CTA pills. Adapted to Kenneth's own content and
+     the "geometric line-art, no photography" rule already established for
+     this site, not a literal copy of that page's own imagery or copy. */
   :root{
-    --ink:#141414;
-    --ink-soft:#5b5f66;
+    --ink:#132a33;
+    --ink-soft:#5c7680;
     --bg:#ffffff;
-    --bg-alt:#faf8f6;
-    --accent:#6c3aed;
-    --accent-light:#9d6bff;
-    --accent-soft:#f1ecfe;
-    --line:#ece8e4;
+    --bg-alt:#f1faf7;
+    --accent:#12b892;
+    --accent-light:#4fe3bf;
+    --accent-soft:#e2f7f1;
+    --cta-bg:#0f2027;
+    --line:#dcf0ea;
     --radius:14px;
     --maxw:1120px;
   }
@@ -37,6 +43,7 @@
   a{color:inherit;}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
   img,svg{display:block;max-width:100%;}
+  .display{font-family:'Space Grotesk','Inter',system-ui,sans-serif;}
 
   /* Header */
   header{
@@ -49,10 +56,10 @@
     display:flex;align-items:center;justify-content:space-between;
     padding:18px 0;
   }
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-0.02em;text-decoration:none;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-0.01em;text-decoration:none;}
   .brand-mark{width:26px;height:26px;flex:none;}
   .nav-links{display:flex;align-items:center;gap:32px;list-style:none;margin:0;padding:0;}
-  .nav-links a{text-decoration:none;font-weight:500;font-size:15px;color:var(--ink-soft);transition:color .15s;}
+  .nav-links a{text-decoration:none;font-weight:600;font-size:15px;color:var(--ink-soft);transition:color .15s;}
   .nav-links a:hover{color:var(--ink);}
 
   /* Services dropdown (mega-menu style) */
@@ -69,7 +76,7 @@
   .nav-dropdown-panel:hover{opacity:1;visibility:visible;}
   .nav-dropdown-panel-inner{
     width:320px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-    box-shadow:0 16px 40px rgba(20,20,20,.1);padding:8px;
+    box-shadow:0 16px 40px rgba(15,32,39,.12);padding:8px;
   }
   .nav-dropdown-link{display:block;padding:12px;border-radius:10px;text-decoration:none;transition:background .15s;}
   .nav-dropdown-link:hover{background:var(--accent-soft);}
@@ -77,11 +84,11 @@
   .nav-dropdown-desc{display:block;font-size:13px;line-height:1.45;color:var(--ink-soft);}
 
   .nav-cta{
-    background:var(--accent);color:#fff;padding:10px 20px;border-radius:999px;
-    font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap;
+    background:var(--cta-bg);color:var(--accent-light);padding:10px 20px;border-radius:999px;
+    font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;
     transition:opacity .15s;
   }
-  .nav-cta:hover{opacity:.88;}
+  .nav-cta:hover{opacity:.85;}
   .nav-toggle{display:none;}
 
   /* Hero / About */
@@ -97,43 +104,53 @@
     color:var(--accent);margin-bottom:18px;
   }
   h1{
-    font-size:clamp(34px,4.6vw,52px);
-    line-height:1.08;
+    font-family:'Space Grotesk','Inter',system-ui,sans-serif;
+    font-size:clamp(36px,4.8vw,54px);
+    line-height:1.06;
     letter-spacing:-0.02em;
-    font-weight:800;
+    font-weight:700;
     margin:0 0 22px;
   }
-  h1 em{
-    font-style:normal;
-    background:linear-gradient(90deg,var(--accent) 0%,var(--accent-light) 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
+  h1 em{font-style:normal;color:var(--accent);}
+  /* Rotating close — mirrors the reference's crossfading headline, with
+     Kenneth's own three closers instead of Ninia's three service lines.
+     Stacked absolutely so the layout never jumps between phrases; see
+     site.js for the crossfade timer. Falls back to just the first phrase
+     shown, permanently, if JS never runs — every phrase is real markup. */
+  .rotator{position:relative;display:block;min-height:1.06em;isolation:isolate;}
+  .rotator span{
+    position:absolute;left:0;top:0;white-space:nowrap;color:var(--accent);
+    opacity:0;transition:opacity .6s ease;
   }
+  .rotator span.is-active{position:relative;opacity:1;}
+  @media (max-width:640px){.rotator span{white-space:normal;}}
   .lede{font-size:18px;color:var(--ink-soft);max-width:52ch;margin:0 0 18px;}
   .body-copy{font-size:16px;color:var(--ink-soft);max-width:56ch;margin:0 0 28px;}
-  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px;}
+  .badges{display:flex;flex-wrap:wrap;align-items:center;gap:22px;margin-bottom:34px;}
+  .stat-badge{display:flex;align-items:baseline;gap:10px;}
+  .stat-badge .stat-num{font-family:'Space Grotesk','Inter',system-ui,sans-serif;font-size:40px;font-weight:700;color:var(--accent);letter-spacing:-0.02em;}
+  .stat-badge .stat-label{font-size:13px;color:var(--ink-soft);max-width:11ch;line-height:1.3;}
   .badge{
     border:1px solid var(--line);background:var(--bg-alt);
     padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-soft);
   }
   .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
   .btn-primary{
-    background:var(--accent);color:#fff;padding:14px 26px;border-radius:999px;
+    background:var(--cta-bg);color:var(--accent-light);padding:14px 26px;border-radius:999px;
     font-weight:700;font-size:15px;text-decoration:none;display:inline-block;
     transition:opacity .15s;
   }
-  .btn-primary:hover{opacity:.88;}
+  .btn-primary:hover{opacity:.85;}
   .btn-ghost{
     padding:14px 26px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;
     display:inline-block;border:1px solid var(--line);color:var(--ink);
     transition:border-color .15s,color .15s;
   }
-  .btn-ghost:hover{border-color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
 
   .hero-art{
     position:relative;aspect-ratio:1/1;border-radius:28px;
-    background:linear-gradient(155deg,#f8f5ff 0%,var(--accent-soft) 55%,#e7dbff 100%);
+    background:linear-gradient(155deg,#f7fffb 0%,var(--accent-soft) 55%,#d7f5ea 100%);
     border:1px solid var(--line);
   }
   .hero-art svg{position:absolute;inset:0;width:100%;height:100%;}
@@ -145,29 +162,43 @@
     display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
     color:var(--accent);margin-bottom:12px;
   }
-  h2{font-size:clamp(26px,3.2vw,36px);letter-spacing:-0.02em;font-weight:800;margin:0 0 12px;}
+  h2{font-family:'Space Grotesk','Inter',system-ui,sans-serif;font-size:clamp(26px,3.2vw,36px);letter-spacing:-0.02em;font-weight:700;margin:0 0 12px;}
   .section-sub{color:var(--ink-soft);font-size:16px;margin:0;}
 
+  /* Services — numbered accordion, echoing the reference's "What I can
+     provide" list instead of the old plain 3-card grid. */
   #services{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .service-card{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-    padding:30px 26px;
+  .accordion{border-top:1px solid var(--line);}
+  .accordion-item{border-bottom:1px solid var(--line);}
+  .accordion-trigger{
+    width:100%;display:flex;align-items:center;gap:20px;
+    background:none;border:none;text-align:left;cursor:pointer;
+    padding:26px 0;font:inherit;color:inherit;
   }
-  .service-icon{
-    width:44px;height:44px;border-radius:12px;background:var(--accent-soft);
-    display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+  .accordion-index{font-family:'Space Grotesk','Inter',system-ui,sans-serif;font-size:15px;font-weight:700;color:var(--accent);flex:none;width:28px;}
+  .accordion-title{font-family:'Space Grotesk','Inter',system-ui,sans-serif;font-size:clamp(20px,2.6vw,28px);font-weight:700;letter-spacing:-0.01em;flex:1;}
+  .accordion-icon{position:relative;width:20px;height:20px;flex:none;}
+  .accordion-icon::before,.accordion-icon::after{
+    content:"";position:absolute;top:50%;left:50%;background:var(--accent);
+    transform:translate(-50%,-50%);transition:transform .2s ease;
   }
-  .service-icon svg{width:22px;height:22px;}
-  .service-card h3{font-size:18px;font-weight:700;margin:0 0 10px;letter-spacing:-0.01em;}
-  .service-card p{font-size:14.5px;color:var(--ink-soft);margin:0;}
+  .accordion-icon::before{width:16px;height:2px;}
+  .accordion-icon::after{width:2px;height:16px;}
+  .accordion-item.is-open .accordion-icon::after{transform:translate(-50%,-50%) rotate(90deg);opacity:0;}
+  .accordion-panel{
+    display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s ease;
+  }
+  .accordion-item.is-open .accordion-panel{grid-template-rows:1fr;}
+  .accordion-panel-inner{overflow:hidden;}
+  .accordion-panel p{margin:0 0 26px;padding-left:48px;max-width:56ch;color:var(--ink-soft);font-size:15.5px;}
 
   /* Contact */
   #contact .wrap{text-align:center;}
   #contact .section-head{margin:0 auto;}
   .contact-email{
     display:inline-flex;align-items:center;gap:12px;margin-top:8px;
-    font-size:clamp(24px,3.4vw,34px);font-weight:800;text-decoration:none;color:var(--ink);
+    font-family:'Space Grotesk','Inter',system-ui,sans-serif;
+    font-size:clamp(24px,3.4vw,34px);font-weight:700;text-decoration:none;color:var(--ink);
     border-bottom:3px solid var(--accent);padding-bottom:6px;letter-spacing:-0.01em;
   }
   .contact-email svg{width:24px;height:24px;flex:none;color:var(--accent);}
@@ -183,7 +214,7 @@
     .nav-links{display:none;}
     .hero .wrap{grid-template-columns:1fr;}
     .hero-art{order:-1;aspect-ratio:16/10;}
-    .services-grid{grid-template-columns:1fr;}
+    .accordion-panel p{padding-left:0;}
   }
 </style>
 </head>
@@ -191,9 +222,9 @@
 
 <header>
   <nav class="nav wrap">
-    <a class="brand" href="#top">
+    <a class="brand display" href="#top">
       <svg class="brand-mark" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13 1L24 7.5V18.5L13 25L2 18.5V7.5L13 1Z" stroke="#6c3aed" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M13 1L24 7.5V18.5L13 25L2 18.5V7.5L13 1Z" stroke="#12b892" stroke-width="2" stroke-linejoin="round"/>
       </svg>
       Kenneth Jensen
     </a>
@@ -229,11 +260,20 @@
     <div class="wrap">
       <div>
         <span class="eyebrow">Senior Operations Consultant</span>
-        <h1>20+ years turning operations<br><em>into an advantage.</em></h1>
+        <h1>20+ years turning operations
+          <span class="rotator" id="hero-rotator">
+            <span class="is-active">into an advantage.</span>
+            <span>into momentum.</span>
+            <span>into a scalable engine.</span>
+          </span>
+        </h1>
         <p class="lede">Hi, I'm Kenneth. For more than two decades I've worked across operational complexities.</p>
         <p class="body-copy">I thrive where I can build operational frameworks, drive operational excellence, and support businesses as a fractional or part-time COO. I like getting my hands into the machinery, but I take just as much pride in shaping the bigger strategy, so day-to-day operations and long-term direction move in the same direction.</p>
         <div class="badges">
-          <span class="badge">20+ Years Experience</span>
+          <div class="stat-badge">
+            <span class="stat-num">20+</span>
+            <span class="stat-label">Years in operations</span>
+          </div>
           <span class="badge">Asset-Heavy &amp; Asset-Light</span>
           <span class="badge">Hands-On + Strategic</span>
         </div>
@@ -244,18 +284,18 @@
       </div>
       <div class="hero-art" aria-hidden="true">
         <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M200 40L340 120V280L200 360L60 280V120L200 40Z" stroke="#6c3aed" stroke-width="1.5" opacity="0.35"/>
-          <path d="M200 100L285 150V250L200 300L115 250V150L200 100Z" stroke="#6c3aed" stroke-width="1.5" opacity="0.55"/>
-          <g opacity="0.9">
-            <circle cx="200" cy="200" r="30" fill="none" stroke="#6c3aed" stroke-width="20"/>
-            <rect x="192" y="140" width="16" height="20" rx="3" fill="#6c3aed"/>
-            <rect x="192" y="140" width="16" height="20" rx="3" fill="#6c3aed" transform="rotate(45 200 200)"/>
-            <rect x="192" y="140" width="16" height="20" rx="3" fill="#6c3aed" transform="rotate(90 200 200)"/>
-            <rect x="192" y="140" width="16" height="20" rx="3" fill="#6c3aed" transform="rotate(135 200 200)"/>
-            <rect x="192" y="140" width="16" height="20" rx="3" fill="#6c3aed" transform="rotate(180 200 200)"/>
-            <rect x="192" y="140" width="16" height="20" rx="3" fill="#6c3aed" transform="rotate(225 200 200)"/>
-            <rect x="192" y="140" width="16" height="20" rx="3" fill="#6c3aed" transform="rotate(270 200 200)"/>
-            <rect x="192" y="140" width="16" height="20" rx="3" fill="#6c3aed" transform="rotate(315 200 200)"/>
+          <path d="M200 40L340 120V280L200 360L60 280V120L200 40Z" stroke="#132a33" stroke-width="1.5" opacity="0.3"/>
+          <path d="M200 100L285 150V250L200 300L115 250V150L200 100Z" stroke="#132a33" stroke-width="1.5" opacity="0.45"/>
+          <g opacity="0.95">
+            <circle cx="200" cy="200" r="30" fill="none" stroke="#12b892" stroke-width="20"/>
+            <rect x="192" y="140" width="16" height="20" rx="3" fill="#12b892"/>
+            <rect x="192" y="140" width="16" height="20" rx="3" fill="#12b892" transform="rotate(45 200 200)"/>
+            <rect x="192" y="140" width="16" height="20" rx="3" fill="#12b892" transform="rotate(90 200 200)"/>
+            <rect x="192" y="140" width="16" height="20" rx="3" fill="#12b892" transform="rotate(135 200 200)"/>
+            <rect x="192" y="140" width="16" height="20" rx="3" fill="#12b892" transform="rotate(180 200 200)"/>
+            <rect x="192" y="140" width="16" height="20" rx="3" fill="#12b892" transform="rotate(225 200 200)"/>
+            <rect x="192" y="140" width="16" height="20" rx="3" fill="#12b892" transform="rotate(270 200 200)"/>
+            <rect x="192" y="140" width="16" height="20" rx="3" fill="#12b892" transform="rotate(315 200 200)"/>
           </g>
         </svg>
       </div>
@@ -269,27 +309,36 @@
         <h2>How I can help</h2>
         <p class="section-sub">Flexible engagement, focused on outcomes, not headcount.</p>
       </div>
-      <div class="services-grid">
-        <div class="service-card" id="service-frameworks">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#6c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-          </div>
-          <h3>Operational Frameworks</h3>
-          <p>Designing and embedding scalable operating frameworks that connect daily execution to long-term strategy.</p>
+      <div class="accordion">
+        <div class="accordion-item is-open" id="service-frameworks">
+          <button class="accordion-trigger" type="button">
+            <span class="accordion-index">01</span>
+            <span class="accordion-title">Operational Frameworks</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-panel"><div class="accordion-panel-inner">
+            <p>Designing and embedding scalable operating frameworks that connect daily execution to long-term strategy.</p>
+          </div></div>
         </div>
-        <div class="service-card" id="service-excellence">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#6c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
-          </div>
-          <h3>Operational Excellence</h3>
-          <p>Driving continuous improvement across asset-heavy and asset-light operations, hands-on, where it matters most.</p>
+        <div class="accordion-item" id="service-excellence">
+          <button class="accordion-trigger" type="button">
+            <span class="accordion-index">02</span>
+            <span class="accordion-title">Operational Excellence</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-panel"><div class="accordion-panel-inner">
+            <p>Driving continuous improvement across asset-heavy and asset-light operations, hands-on, where it matters most.</p>
+          </div></div>
         </div>
-        <div class="service-card" id="service-coo">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#6c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-          </div>
-          <h3>Fractional / Part-Time COO</h3>
-          <p>Senior operational leadership on a flexible basis: strategic oversight without the full-time overhead.</p>
+        <div class="accordion-item" id="service-coo">
+          <button class="accordion-trigger" type="button">
+            <span class="accordion-index">03</span>
+            <span class="accordion-title">Fractional / Part-Time COO</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-panel"><div class="accordion-panel-inner">
+            <p>Senior operational leadership on a flexible basis: strategic oversight without the full-time overhead.</p>
+          </div></div>
         </div>
       </div>
     </div>
