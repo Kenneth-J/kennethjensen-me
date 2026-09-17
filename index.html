@@ -100,7 +100,7 @@
   .accordion-trigger{
     width:100%;display:flex;align-items:center;gap:20px;
     background:none;border:none;text-align:left;cursor:pointer;
-    padding:26px 0;font:inherit;color:inherit;
+    padding:26px 0 10px;font:inherit;color:inherit;
   }
   .accordion-index{font-family:'Space Grotesk','Inter',system-ui,sans-serif;font-size:15px;font-weight:700;color:var(--accent);flex:none;width:28px;}
   .accordion-title{font-family:'Space Grotesk','Inter',system-ui,sans-serif;font-size:clamp(20px,2.6vw,28px);font-weight:700;letter-spacing:-0.01em;flex:1;}
@@ -112,6 +112,15 @@
   .accordion-icon::before{width:16px;height:2px;}
   .accordion-icon::after{width:2px;height:16px;}
   .accordion-item.is-open .accordion-icon::after{transform:translate(-50%,-50%) rotate(90deg);opacity:0;}
+  /* Tag pills — always visible under each headline, outside the collapsible
+     panel, so what each service covers reads at a glance without opening
+     it. Three fixed colour roles rather than one repeated colour, since
+     Kenneth asked for the pills to read as distinct at a glance. */
+  .accordion-tags{display:flex;flex-wrap:wrap;gap:8px;padding:0 0 22px 48px;}
+  .accordion-tag{font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:.01em;}
+  .accordion-tag.tag-mint{background:var(--accent-soft);color:var(--accent-light);}
+  .accordion-tag.tag-gold{background:#f6ecd9;color:#a9741f;}
+  .accordion-tag.tag-blue{background:#e7eef5;color:#35577e;}
   .accordion-panel{
     display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s ease;
   }
@@ -126,6 +135,7 @@
   @media (max-width:860px){
     .nav-links{display:none;}
     .accordion-panel p{padding-left:0;}
+    .accordion-tags{padding-left:0;}
   }
 </style>
 </head>
@@ -158,8 +168,8 @@
               <span class="nav-dropdown-desc">Designing the governed, functioning operation a fast-scaling or never-structured organisation actually needs.</span>
             </a>
             <a class="nav-dropdown-link" href="#service-excellence">
-              <span class="nav-dropdown-heading">End-to-End Operations &amp; Fleet</span>
-              <span class="nav-dropdown-desc">Full-chain ownership of physical, asset-heavy, regulated operations, from supply chain to fleet and asset management.</span>
+              <span class="nav-dropdown-heading">Operations Automation &amp; Reliability</span>
+              <span class="nav-dropdown-desc">Platform-agnostic automation, SOPs that actually get followed, and fixing what's failing in your 24/7 operations centre.</span>
             </a>
             <a class="nav-dropdown-link" href="#service-coo">
               <span class="nav-dropdown-heading">Strategy into Execution</span>
@@ -216,31 +226,46 @@
             <span class="accordion-title">Building and Scaling Operating Models from Scratch</span>
             <span class="accordion-icon" aria-hidden="true"></span>
           </button>
+          <div class="accordion-tags">
+            <span class="accordion-tag tag-mint">Sustainable Operations</span>
+            <span class="accordion-tag tag-gold">Operational Frameworks</span>
+            <span class="accordion-tag tag-blue">Market Entry</span>
+          </div>
           <div class="accordion-panel"><div class="accordion-panel-inner">
-            <p>I specialise in taking organisations from zero structure — or the chaos of rapid growth — to a governed, functioning operation. I've built an operating organisation from a whiteboard to 165 people across 8 European markets, establishing the governance, processes, and ways of working from the ground up. I've scaled a Danish operation from 4 to 35 people while simultaneously supporting the wider Nordic business. And I've led international expansion end-to-end — sites, facilities, supply chain, suppliers, risk, business cases, and implementation frameworks.</p>
-            <p>If your organisation is scaling fast or was never properly structured to begin with, I design the operating model it needs to run — not just manage what's already there.</p>
+            <p>I support the delivery of sustainable operations: frameworks designed to grow with the business, not ones that quietly ossify around how things were done last year. That's meant taking organisations from zero structure — or the chaos of rapid growth — to a governed, functioning operation, building an operating organisation from a whiteboard to 165 people across 8 European markets, and scaling a Danish operation from 4 to 35 people while supporting the wider Nordic business. It's also brought direct market entry experience: sites, facilities, supply chain, suppliers, risk, business cases, and the implementation frameworks that take a new market from decision to delivery.</p>
+            <p>If your operating model is still solving last year's problems, or you're entering a market with nothing to build on, I design frameworks built to keep working as the business changes, not ones that need replacing the moment it does.</p>
           </div></div>
         </div>
         <div class="accordion-item" id="service-excellence">
           <button class="accordion-trigger" type="button">
             <span class="accordion-index">02</span>
-            <span class="accordion-title">End-to-End Operations, Supply Chain &amp; Fleet/Asset Management</span>
+            <span class="accordion-title">Operations Automation &amp; 24/7 Reliability</span>
             <span class="accordion-icon" aria-hidden="true"></span>
           </button>
+          <div class="accordion-tags">
+            <span class="accordion-tag tag-mint">Operations Automations</span>
+            <span class="accordion-tag tag-gold">Operations Auditing &amp; Trailing</span>
+            <span class="accordion-tag tag-blue">Operations Centre</span>
+          </div>
           <div class="accordion-panel"><div class="accordion-panel-inner">
-            <p>My experience spans the full operational chain, not a single function in isolation. I've owned operations across supply chain, sourcing, logistics, production, quality, delivery, IT, and R&amp;D within a single organisation. I've run vehicle and asset management, SOP development, and maintenance operations inside regulated industries. And that expertise extends into fleet category management, maintenance contracts, vendor negotiation, and procurement.</p>
-            <p>If you need someone to take ownership of physical, asset-heavy, regulated operations — fleet, logistics, service delivery — and drive them towards operational excellence, this is where I add the most value.</p>
+            <p>I build platform-agnostic automation flows for operational teams, across both asset-heavy and asset-light organisations — automation that works with the systems you already have, not ones that lock you into a single vendor's stack. SOPs sit at the centre of that: properly built and actually followed, they're what lets automation and operational growth compound instead of colliding, rather than sitting in a folder nobody opens. Where things break down most visibly is the operations centre itself, especially for 24/7, always-on services — I look at what's genuinely failing in those setups (unreliable handoffs, monitoring that only catches problems after the fact, SOPs nobody follows) and fix the mechanism, not just the symptom.</p>
+            <p>If your automation only works with one vendor's tools, your SOPs exist but nobody follows them, or your operations centre can't reliably hold a 24/7 service together, that's exactly where I start.</p>
           </div></div>
         </div>
         <div class="accordion-item" id="service-coo">
           <button class="accordion-trigger" type="button">
             <span class="accordion-index">03</span>
-            <span class="accordion-title">Turning Strategy into Execution Across Complex, Cross-Functional Organizations</span>
+            <span class="accordion-title">Turning Strategy into Execution Across Complex, Cross-Functional Organisations</span>
             <span class="accordion-icon" aria-hidden="true"></span>
           </button>
+          <div class="accordion-tags">
+            <span class="accordion-tag tag-mint">Operational Excellence</span>
+            <span class="accordion-tag tag-gold">Operational Budgeting</span>
+            <span class="accordion-tag tag-blue">Cross-department Integrations</span>
+          </div>
           <div class="accordion-panel"><div class="accordion-panel-inner">
-            <p>This is the thread that runs through everything I do. I've led a transformation across roughly 700 software developers, 70 project managers, and 10 field technicians, shifting an entire organisation from project-driven to product-driven delivery. As a country leader, I connect commercial strategy — partnerships, market development — directly to operational execution. And my background in structured programme leadership brings disciplined governance and risk management to complex, multi-stakeholder environments.</p>
-            <p>If your business has a strategy that isn't landing operationally, I turn it into an executable, measurable programme — and see it through.</p>
+            <p>Operational excellence isn't a slogan, it's the discipline of making the same resources produce more, consistently, without burning out the team doing it. That starts with budgeting: how you allocate resources is also how you set priorities, whether that's said out loud or not, so the budget has to reflect the strategy rather than last year's numbers rolled forward. And it only works cross-functionally. I've led a transformation across roughly 700 software developers, 70 project managers, and 10 field technicians, shifting an entire organisation from project-driven to product-driven delivery, and connected commercial strategy directly to operational execution as a country leader. Operations isn't a line item alongside Sales, Finance, Field Services, R&amp;D, and Legal, it's the thing that makes what those departments commit to actually possible.</p>
+            <p>If your strategy isn't landing operationally, or Operations is treated as an afterthought by the departments it enables, I turn it into an executable, measurable programme, and make sure the rest of the business treats it as the asset it is.</p>
           </div></div>
         </div>
       </div>
