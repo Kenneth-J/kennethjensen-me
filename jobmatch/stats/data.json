@@ -1,105 +1,109 @@
 {
-  "generatedAt": "2026-09-16T01:46:39.427Z",
-  "dataAsOf": "2026-09-16T01:46:31.081Z",
-  "totalTracked": 1440,
+  "generatedAt": "2026-09-17T14:07:47.224Z",
+  "dataAsOf": "2026-09-17T14:07:32.390Z",
+  "totalTracked": 1585,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 449,
-    "previousCount": 403,
-    "percentChange": 11.41439205955335
+    "currentCount": 519,
+    "previousCount": 430,
+    "percentChange": 20.69767441860465
   },
   "countries": [
     {
       "value": "Denmark",
-      "count": 564
+      "count": 613
     },
     {
       "value": "Sweden",
-      "count": 475
+      "count": 517
     },
     {
       "value": "Norway",
-      "count": 133
+      "count": 155
     },
     {
       "value": "Lithuania",
-      "count": 119
-    },
-    {
-      "value": "Latvia",
-      "count": 64
-    },
-    {
-      "value": "Finland",
-      "count": 20
-    },
-    {
-      "value": "Estonia",
-      "count": 19
-    },
-    {
-      "value": "Greenland",
-      "count": 17
-    }
-  ],
-  "unlocatedCount": 29,
-  "sourceSites": [
-    {
-      "value": "jobindex.dk",
-      "count": 511
-    },
-    {
-      "value": "arbetsformedlingen.se",
-      "count": 467
-    },
-    {
-      "value": "arbeidsplassen.nav.no",
       "count": 133
     },
     {
+      "value": "Latvia",
+      "count": 71
+    },
+    {
+      "value": "Finland",
+      "count": 21
+    },
+    {
+      "value": "Estonia",
+      "count": 21
+    },
+    {
+      "value": "Greenland",
+      "count": 18
+    },
+    {
+      "value": "Iceland",
+      "count": 1
+    }
+  ],
+  "unlocatedCount": 35,
+  "sourceSites": [
+    {
+      "value": "jobindex.dk",
+      "count": 554
+    },
+    {
+      "value": "arbetsformedlingen.se",
+      "count": 507
+    },
+    {
+      "value": "arbeidsplassen.nav.no",
+      "count": 155
+    },
+    {
       "value": "cvbankas.lt",
-      "count": 99
+      "count": 109
     },
     {
       "value": "jobnet.dk",
-      "count": 68
+      "count": 75
     },
     {
       "value": "cv.lv",
-      "count": 59
-    },
-    {
-      "value": "tyomarkkinatori.fi",
-      "count": 20
+      "count": 63
     },
     {
       "value": "cvmarket.lt",
-      "count": 20
+      "count": 24
+    },
+    {
+      "value": "tyomarkkinatori.fi",
+      "count": 21
     },
     {
       "value": "cvkeskus.ee",
-      "count": 19
+      "count": 21
     },
     {
       "value": "sjob.gl",
-      "count": 12
+      "count": 13
     },
     {
       "value": "cphaihub.com",
-      "count": 8
+      "count": 12
+    },
+    {
+      "value": "euremotejobs.com",
+      "count": 10
     },
     {
       "value": "remoteok.com",
       "count": 8
     },
     {
-      "value": "euremotejobs.com",
-      "count": 7
-    },
-    {
       "value": "cvmarket.lv",
-      "count": 5
+      "count": 8
     },
     {
       "value": "suli.gl",
@@ -108,44 +112,48 @@
     {
       "value": "nodesk.co",
       "count": 1
+    },
+    {
+      "value": "alfred.is",
+      "count": 1
     }
   ],
   "workStyle": [
     {
       "value": "On-site",
-      "count": 511
+      "count": 553
     },
     {
       "value": "Remote",
-      "count": 16
+      "count": 19
     },
     {
       "value": "Hybrid",
-      "count": 15
+      "count": 17
     }
   ],
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 565
+      "count": 624
     },
     {
       "value": "Part-time",
-      "count": 23
+      "count": 24
     }
   ],
   "experienceLevel": [
     {
       "value": "Mid",
-      "count": 183
+      "count": 208
     },
     {
       "value": "Senior",
-      "count": 77
+      "count": 85
     },
     {
       "value": "Entry",
-      "count": 37
+      "count": 40
     },
     {
       "value": "Junior",
@@ -159,19 +167,19 @@
   "language": [
     {
       "value": "sv",
-      "count": 320
+      "count": 309
     },
     {
       "value": "da",
-      "count": 240
+      "count": 236
     },
     {
       "value": "en",
-      "count": 178
+      "count": 177
     },
     {
       "value": "no",
-      "count": 90
+      "count": 89
     },
     {
       "value": "lt",
@@ -179,7 +187,7 @@
     },
     {
       "value": "lv",
-      "count": 39
+      "count": 38
     },
     {
       "value": "fi",
@@ -188,28 +196,32 @@
     {
       "value": "et",
       "count": 5
+    },
+    {
+      "value": "de",
+      "count": 1
     }
   ],
   "tags": [
     {
       "value": "Logistics",
-      "count": 400
+      "count": 393
     },
     {
       "value": "Supply Chain",
-      "count": 331
+      "count": 324
     },
     {
       "value": "Project Manager",
-      "count": 149
+      "count": 147
     },
     {
       "value": "People",
-      "count": 124
+      "count": 120
     },
     {
       "value": "Security",
-      "count": 87
+      "count": 85
     },
     {
       "value": "Defence",
@@ -217,15 +229,15 @@
     },
     {
       "value": "AI",
-      "count": 42
+      "count": 41
     },
     {
       "value": "Finance",
-      "count": 36
+      "count": 35
     },
     {
       "value": "Asset Heavy",
-      "count": 30
+      "count": 29
     },
     {
       "value": "Autonomy",
@@ -296,7 +308,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 989,
-  "withSalaryCount": 189,
-  "withCityCount": 665
+  "classifiedCount": 971,
+  "withSalaryCount": 212,
+  "withCityCount": 746
 }
