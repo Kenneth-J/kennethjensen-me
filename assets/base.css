@@ -83,6 +83,9 @@ img,svg{display:block;max-width:100%;}
   display:inline-block;background:rgba(79,227,191,.14);color:var(--accent-light);
   padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:700;
 }
+/* Flattening (week-over-week declining) tags — same red already used for
+   .tk-down above, tinted the same way .tk-tag tints the accent colour. */
+.tk-tag-down{background:rgba(255,138,128,.16);color:#ff8a80;}
 .stat-ticker-sep{display:inline-block;flex:none;margin:0 60px;color:rgba(79,227,191,.35);font-size:11px;vertical-align:middle;}
 @keyframes ticker-scroll{
   from{transform:translateX(0);}

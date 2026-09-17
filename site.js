@@ -63,17 +63,57 @@ document.querySelectorAll('.accordion-item').forEach((item) => {
   const track = document.getElementById('stat-ticker-track');
   if (!track) return;
   const STATS_URL = 'https://kennethjensen.me/jobmatch/stats/';
-  fetch('jobmatch/stats/data.json')
-    .then((res) => res.json())
-    .then((data) => {
+
+  // Flattening tags: the 3 tags with the biggest week-over-week drop in
+  // count, as a red-toned counterpart to "trending" (data.json's tags,
+  // sorted by raw current count). Needs jobs.json (per-row, dated) rather
+  // than the pre-aggregated data.json — same file the Stats/Compare pages'
+  // own trend chart already relies on, fetched fresh here since the
+  // homepage doesn't otherwise load it. A rolling 7-day-vs-previous-7-day
+  // window (not calendar-week-aligned), so there's no partial-current-week
+  // artifact, same convention as data.json's own top-level trend field.
+  function flatteningTags(jobs) {
+    const now = Date.now();
+    const thisWeek = {};
+    const lastWeek = {};
+    jobs.forEach((r) => {
+      const d = new Date(r.date).getTime();
+      if (isNaN(d)) return;
+      const bucket = d >= now - 7 * 86400000 && d < now ? thisWeek
+        : d >= now - 14 * 86400000 && d < now - 7 * 86400000 ? lastWeek
+        : null;
+      if (!bucket) return;
+      (r.tags || []).forEach((tag) => { bucket[tag] = (bucket[tag] || 0) + 1; });
+    });
+    const allTags = new Set([...Object.keys(thisWeek), ...Object.keys(lastWeek)]);
+    return Array.from(allTags)
+      .map((tag) => ({ tag, delta: (thisWeek[tag] || 0) - (lastWeek[tag] || 0) }))
+      .filter((t) => t.delta < 0)
+      .sort((a, b) => a.delta - b.delta)
+      .slice(0, 3)
+      .map((t) => t.tag);
+  }
+
+  Promise.all([
+    fetch('jobmatch/stats/data.json').then((res) => res.json()),
+    // Non-fatal if this one fails — the ticker's main content still
+    // renders without a "flattening" clause rather than the whole thing
+    // falling back to the generic link.
+    fetch('jobmatch/stats/jobs.json').then((res) => res.json()).catch(() => null),
+  ])
+    .then(([data, jobs]) => {
       const total = (data.totalTracked || 0).toLocaleString('en-GB');
       const pct = data.trend && typeof data.trend.percentChange === 'number' ? data.trend.percentChange : null;
       const trendHtml = pct === null ? 'steady week on week'
         : pct > 0 ? `<span class="tk-up">&#9650; ${Math.round(pct)}%</span> from last week`
         : pct < 0 ? `<span class="tk-down">&#9660; ${Math.abs(Math.round(pct))}%</span> from last week`
         : 'flat vs last week';
-      const tags = (data.tags || []).slice(0, 3).map((t) => `<span class="tk-tag">#${t.value.replace(/[^a-zA-Z0-9]/g, '')}</span>`).join('');
-      const sentence = `<strong>${total}</strong> ops jobs live right now (${trendHtml})` + (tags ? `, trending skills are <span class="tk-tags">${tags}</span>` : '');
+      const trendingTags = (data.tags || []).slice(0, 3).map((t) => `<span class="tk-tag">#${t.value.replace(/[^a-zA-Z0-9]/g, '')}</span>`).join('');
+      const flattening = jobs ? flatteningTags(jobs) : [];
+      const flatteningTagsHtml = flattening.map((tag) => `<span class="tk-tag tk-tag-down">#${tag.replace(/[^a-zA-Z0-9]/g, '')}</span>`).join('');
+      const sentence = `<strong>${total}</strong> ops jobs live right now (${trendHtml})`
+        + (trendingTags ? `, trending skills are <span class="tk-tags">${trendingTags}</span>` : '')
+        + (flatteningTagsHtml ? `, flattening: <span class="tk-tags">${flatteningTagsHtml}</span>` : '');
       const item = `<a class="stat-ticker-item" href="${STATS_URL}">${sentence}</a><span class="stat-ticker-sep" aria-hidden="true">&#9679;</span>`;
       track.innerHTML = item + item;
     })
