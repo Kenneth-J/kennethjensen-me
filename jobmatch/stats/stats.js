@@ -103,26 +103,7 @@ function render(data){
     countryBars.innerHTML = '<p class="empty-state">No roles tracked yet.</p>';
   }
 
-  // Work style chips
-  const chips = document.getElementById('workstyle-chips');
-  const classifiedWorkStyle = data.workStyle.reduce((sum, w) => sum + w.count, 0);
-  const unclassifiedWorkStyle = data.totalTracked - classifiedWorkStyle;
-  if (data.workStyle.length === 0) {
-    chips.innerHTML = '<p class="empty-state">Not enough roles have a work style noted yet.</p>';
-  } else {
-    data.workStyle.forEach((w) => {
-      const chip = document.createElement('span');
-      chip.className = 'chip';
-      chip.innerHTML = '<b>' + fmtInt(w.count) + '</b> ' + esc(String(w.value).toLowerCase());
-      chips.appendChild(chip);
-    });
-    if (unclassifiedWorkStyle > 0) {
-      const chip = document.createElement('span');
-      chip.className = 'chip';
-      chip.innerHTML = '<b>' + fmtInt(unclassifiedWorkStyle) + '</b> not noted';
-      chips.appendChild(chip);
-    }
-  }
+  renderWorkStyleDonut(data);
 
   // Seniority ladder bars — fixed Entry → C-Level order (see SENIORITY_TIERS)
   const seniorityBars = document.getElementById('seniority-bars');
@@ -138,6 +119,154 @@ function render(data){
       seniorityBars.appendChild(seniorityRow(tier.value, count > 0 ? Math.max(2, pct) : 0, fmtInt(count) + ' · ' + pct + '%', tier.color));
     });
   }
+}
+
+// Work style: donut (composition, right now) + trend (real weekly counts,
+// picked over the plain chip list that used to sit here specifically so
+// the "63% not stated" reality stays visible instead of getting silently
+// dropped once there was finally enough data to justify a chart at all —
+// see the donut's own center label and the section's lede paragraph.
+function renderWorkStyleDonut(data) {
+  const svg = document.getElementById('workstyle-donut');
+  const legend = document.getElementById('workstyle-legend');
+  if (!svg || !legend) return;
+
+  const counts = {};
+  data.workStyle.forEach((w) => { counts[w.value] = w.count; });
+  const onsite = counts['On-site'] || 0;
+  const remote = counts['Remote'] || 0;
+  const hybrid = counts['Hybrid'] || 0;
+  const classified = onsite + remote + hybrid;
+  const total = data.totalTracked || 0;
+  const unstated = Math.max(0, total - classified);
+
+  if (total === 0) {
+    svg.innerHTML = '';
+    legend.innerHTML = '<p class="empty-state">No roles tracked yet.</p>';
+    return;
+  }
+
+  const classifiedPct = Math.round((classified / total) * 100);
+  const segments = [
+    { label: 'On-site', count: onsite, color: 'var(--onsite)' },
+    { label: 'Remote', count: remote, color: 'var(--remote)' },
+    { label: 'Hybrid', count: hybrid, color: 'var(--hybrid)' },
+    { label: 'Not stated', count: unstated, color: 'var(--unstated)' },
+  ];
+
+  const r = 70;
+  const circumference = 2 * Math.PI * r;
+  let offset = 0;
+  const arcs = segments
+    .filter((s) => s.count > 0)
+    .map((s) => {
+      const len = (s.count / total) * circumference;
+      const dashoffset = -offset;
+      offset += len;
+      return `<circle r="${r}" fill="none" stroke="${s.color}" stroke-width="26" stroke-dasharray="${len} ${circumference - len}" stroke-dashoffset="${dashoffset}"/>`;
+    })
+    .join('');
+
+  svg.setAttribute('viewBox', '0 0 200 200');
+  svg.innerHTML =
+    `<g transform="translate(100,100) rotate(-90)">${arcs}</g>` +
+    `<text x="100" y="96" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="30" fill="var(--ink)">${classifiedPct}%</text>` +
+    `<text x="100" y="116" text-anchor="middle" font-size="11" fill="var(--ink-faint)">classified</text>`;
+
+  legend.innerHTML = segments
+    .map(
+      (s) =>
+        `<span class="donut-legend-item"><span class="sw" style="background:${s.color}"></span><b class="num">${fmtInt(s.count)}</b>&nbsp;${esc(s.label)}<span class="pct num">${(
+          (s.count / total) * 100
+        ).toFixed(1)}%</span></span>`
+    )
+    .join('');
+}
+
+const TREND_WEEKS = 8;
+
+function fmtWeekLabel(weekKeyStr) {
+  return new Date(weekKeyStr + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+}
+
+// Sunday-anchored week bucket, same convention as compare.js's own date
+// handling on this same page family — keeps "which week is this row in"
+// consistent if the two ever need to agree on one.
+function workStyleWeekKey(date) {
+  const d0 = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  d0.setUTCDate(d0.getUTCDate() - d0.getUTCDay());
+  return d0.toISOString().slice(0, 10);
+}
+
+// Rounds a chart's y-axis max up to a "nice" gridline value (1/2/5 x a
+// power of ten) rather than the raw max, so the top gridline reads as a
+// round number instead of e.g. "146".
+function niceAxisMax(n) {
+  if (n <= 0) return 10;
+  const magnitude = 10 ** Math.floor(Math.log10(n));
+  const residual = n / magnitude;
+  const niceResidual = residual <= 1 ? 1 : residual <= 2 ? 2 : residual <= 5 ? 5 : 10;
+  return niceResidual * magnitude;
+}
+
+// jobs.json (per-row, dated) is fetched separately from data.json (the
+// pre-aggregated snapshot) purely because a weekly trend needs individual
+// dates data.json doesn't carry — same file the Compare page already
+// relies on, no new export needed.
+function renderWorkStyleTrend(jobs) {
+  const svg = document.getElementById('workstyle-trend');
+  const note = document.getElementById('workstyle-trend-note');
+  if (!svg || !note) return;
+
+  const buckets = new Map();
+  jobs.forEach((r) => {
+    const d = new Date(r.date);
+    if (isNaN(d.getTime())) return;
+    const wk = workStyleWeekKey(d);
+    if (!buckets.has(wk)) buckets.set(wk, { onsite: 0, remoteHybrid: 0 });
+    const b = buckets.get(wk);
+    if (r.workStyle === 'On-site') b.onsite++;
+    else if (r.workStyle === 'Remote' || r.workStyle === 'Hybrid') b.remoteHybrid++;
+  });
+
+  const weekKeys = Array.from(buckets.keys()).sort().slice(-TREND_WEEKS);
+  if (weekKeys.length < 2) {
+    svg.innerHTML = '';
+    note.textContent = 'Not enough weekly history yet to plot a trend.';
+    return;
+  }
+
+  const points = weekKeys.map((wk) => ({ week: wk, ...buckets.get(wk) }));
+  const yMax = niceAxisMax(Math.max(1, ...points.map((p) => Math.max(p.onsite, p.remoteHybrid))));
+
+  const W = 640, H = 220, marginLeft = 36, marginRight = 16, marginTop = 20, marginBottom = 34;
+  const plotW = W - marginLeft - marginRight;
+  const plotH = H - marginTop - marginBottom;
+  const xAt = (i) => marginLeft + (points.length > 1 ? (i / (points.length - 1)) * plotW : 0);
+  const yAt = (v) => marginTop + plotH - (v / yMax) * plotH;
+
+  const linePoints = (getVal) => points.map((p, i) => `${xAt(i)},${yAt(getVal(p))}`).join(' ');
+  const dots = (getVal, color) =>
+    points.map((p, i) => `<circle cx="${xAt(i)}" cy="${yAt(getVal(p))}" r="3" fill="${color}"/>`).join('');
+  const xLabels = points
+    .map((p, i) => `<text x="${xAt(i)}" y="${H - 10}" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">${esc(fmtWeekLabel(p.week))}</text>`)
+    .join('');
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML =
+    `<line x1="${marginLeft}" y1="${marginTop}" x2="${marginLeft}" y2="${yAt(0)}" stroke="var(--line)" stroke-width="1"/>` +
+    `<line x1="${marginLeft}" y1="${yAt(0)}" x2="${W - marginRight}" y2="${yAt(0)}" stroke="var(--line)" stroke-width="1"/>` +
+    `<text x="${marginLeft - 6}" y="${yAt(0) + 3}" text-anchor="end" font-size="10" fill="var(--ink-faint)">0</text>` +
+    `<text x="${marginLeft - 6}" y="${yAt(yMax / 2) + 3}" text-anchor="end" font-size="10" fill="var(--ink-faint)">${fmtInt(Math.round(yMax / 2))}</text>` +
+    `<text x="${marginLeft - 6}" y="${yAt(yMax) + 3}" text-anchor="end" font-size="10" fill="var(--ink-faint)">${fmtInt(yMax)}</text>` +
+    `<polyline points="${linePoints((p) => p.onsite)}" fill="none" stroke="var(--onsite)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` +
+    `<polyline points="${linePoints((p) => p.remoteHybrid)}" fill="none" stroke="var(--remote)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` +
+    dots((p) => p.onsite, 'var(--onsite)') +
+    dots((p) => p.remoteHybrid, 'var(--remote)') +
+    xLabels;
+
+  const last = points[points.length - 1];
+  note.textContent = `Last ${points.length} weeks with tracked postings — latest week: ${fmtInt(last.onsite)} on-site, ${fmtInt(last.remoteHybrid)} remote/hybrid.`;
 }
 
 // Top stat ticker — reuses the same data.json fetch as the stats page below
@@ -163,4 +292,15 @@ fetch('./data.json')
   .then((data) => { render(data); renderTicker(data); })
   .catch(() => {
     document.getElementById('asof-text').textContent = 'Stats are temporarily unavailable, check back shortly.';
+  });
+
+// Fetched independently of data.json above — a slow/failed jobs.json load
+// shouldn't hold up or break the rest of the page, it only feeds the one
+// trend chart.
+fetch('./jobs.json')
+  .then((res) => { if (!res.ok) throw new Error('jobs.json not found'); return res.json(); })
+  .then((jobs) => renderWorkStyleTrend(jobs))
+  .catch(() => {
+    const note = document.getElementById('workstyle-trend-note');
+    if (note) note.textContent = 'Trend data is temporarily unavailable, check back shortly.';
   });
