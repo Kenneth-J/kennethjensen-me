@@ -83,7 +83,7 @@ function render(data){
   grid.appendChild(statCard(fmtInt(data.totalTracked), null, 'Open roles tracked', 'across ' + fmtCount(data.sourceSites.length, 'site') + ' with matches so far'));
   grid.appendChild(statCard(fmtInt(trend.currentCount), null, 'Posted this week', trendText, trendUp ? 'up' : (trendDown ? 'down' : '')));
   grid.appendChild(statCard(
-    topCountry ? fmtInt(topCountry.count) : '—',
+    topCountry ? fmtInt(topCountry.count) : '-',
     null,
     topCountry ? topCountry.value + ' leads' : 'No location data yet',
     topCountryShare !== null ? topCountryShare + '% of all tracked roles' : ''

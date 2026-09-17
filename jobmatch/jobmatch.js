@@ -299,7 +299,7 @@ async function runSearch(query, countries) {
   resultsCount.style.display = 'none';
   resultsEmpty.style.display = 'none';
   resultsStatus.style.display = 'block';
-  resultsStatus.textContent = 'Loading the search model — this only happens once…';
+  resultsStatus.textContent = 'Loading the search model, this only happens once…';
 
   try {
     const corpus = await loadCorpus();
