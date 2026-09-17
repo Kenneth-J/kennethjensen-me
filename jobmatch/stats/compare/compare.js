@@ -290,9 +290,9 @@ fetch('../jobs.json')
         : pct > 0 ? `<span class="tk-up">&#9650; ${Math.round(pct)}%</span> from last week`
         : pct < 0 ? `<span class="tk-down">&#9660; ${Math.abs(Math.round(pct))}%</span> from last week`
         : 'flat vs last week';
-      const tags = (data.tags || []).slice(0, 3).map((t) => '#' + t.value.replace(/[^a-zA-Z0-9]/g, '')).join(' ');
+      const tags = (data.tags || []).slice(0, 3).map((t) => `<span class="tk-tag">#${t.value.replace(/[^a-zA-Z0-9]/g, '')}</span>`).join('');
       const sentence = `<strong>${total}</strong> ops jobs live right now (${trendHtml})` + (tags ? `, trending skills are <span class="tk-tags">${tags}</span>` : '');
-      const item = `<a class="stat-ticker-item" href="${STATS_URL}">${sentence}</a>`;
+      const item = `<a class="stat-ticker-item" href="${STATS_URL}">${sentence}</a><span class="stat-ticker-sep" aria-hidden="true">&#9679;</span>`;
       track.innerHTML = item + item;
     })
     .catch(() => {

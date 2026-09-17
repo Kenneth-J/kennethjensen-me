@@ -51,34 +51,39 @@ img,svg{display:block;max-width:100%;}
 .stat-ticker{
   position:sticky;top:0;z-index:21;
   background:var(--cta-bg);
-  border-bottom:1px solid rgba(79,227,191,.18);
+  border-bottom:1px solid rgba(79,227,191,.22);
   display:flex;align-items:stretch;
 }
 .stat-ticker-label{
   flex:none;display:flex;align-items:center;
-  padding:8px 16px 8px 28px;font-size:13px;font-weight:700;letter-spacing:.01em;
+  padding:11px 20px 11px 28px;font-size:13.5px;font-weight:700;letter-spacing:.01em;
   color:#fff;text-decoration:none;white-space:nowrap;
-  border-right:1px solid rgba(79,227,191,.18);
+  border-right:1px solid rgba(79,227,191,.22);
   transition:color .15s;
 }
 .stat-ticker-label:hover{color:var(--accent-light);}
 .stat-ticker-scroll{flex:1 1 auto;min-width:0;overflow:hidden;}
 .stat-ticker-track{
   display:flex;align-items:center;width:max-content;height:100%;
-  animation:ticker-scroll 24s linear infinite;
+  animation:ticker-scroll 26s linear infinite;
 }
 .stat-ticker:hover .stat-ticker-track{animation-play-state:paused;}
 .stat-ticker-item{
-  display:inline-block;flex:none;
-  padding:8px 48px;font-size:13px;font-weight:600;letter-spacing:.01em;
-  color:var(--accent-light);text-decoration:none;white-space:nowrap;
+  display:inline-block;flex:none;vertical-align:middle;
+  padding:11px 0;font-size:14px;font-weight:500;letter-spacing:.01em;
+  color:rgba(216,238,232,.75);text-decoration:none;white-space:nowrap;
   transition:color .15s;
 }
 .stat-ticker-item:hover{color:#fff;}
 .stat-ticker-item strong{color:#fff;font-weight:700;}
 .tk-up{color:#5ee6a8;font-weight:700;}
 .tk-down{color:#ff8a80;font-weight:700;}
-.tk-tags{opacity:.8;margin-left:6px;}
+.tk-tags{display:inline-flex;align-items:center;gap:6px;margin-left:10px;vertical-align:middle;}
+.tk-tag{
+  display:inline-block;background:rgba(79,227,191,.14);color:var(--accent-light);
+  padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:700;
+}
+.stat-ticker-sep{display:inline-block;flex:none;margin:0 60px;color:rgba(79,227,191,.35);font-size:11px;vertical-align:middle;}
 @keyframes ticker-scroll{
   from{transform:translateX(0);}
   to{transform:translateX(-50%);}
