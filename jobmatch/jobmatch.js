@@ -380,7 +380,7 @@ searchForm.addEventListener('submit', (e) => {
         : pct < 0 ? `<span class="tk-down">&#9660; ${Math.abs(Math.round(pct))}%</span> from last week`
         : 'flat vs last week';
       const tags = (data.tags || []).slice(0, 3).map((t) => '#' + t.value.replace(/[^a-zA-Z0-9]/g, '')).join(' ');
-      const sentence = `Following the Nordic/Baltic job market: <strong>${total}</strong> ops jobs live right now (${trendHtml})` + (tags ? `, trending skills are <span class="tk-tags">${tags}</span>` : '');
+      const sentence = `<strong>${total}</strong> ops jobs live right now (${trendHtml})` + (tags ? `, trending skills are <span class="tk-tags">${tags}</span>` : '');
       const item = `<a class="stat-ticker-item" href="${STATS_URL}">${sentence}</a>`;
       track.innerHTML = item + item;
     })
