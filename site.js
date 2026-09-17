@@ -9,6 +9,37 @@ document.querySelectorAll('.accordion-item').forEach((item) => {
   trigger.addEventListener('click', () => item.classList.toggle('is-open'));
 });
 
+// Mobile menu — the desktop Services panel only opens on :hover, which
+// doesn't work on touch, so this is a separate click-toggled panel (see
+// index.html's own comment on .mobile-menu for why it's always in the DOM
+// rather than hidden/shown).
+(() => {
+  const hamburger = document.getElementById('nav-hamburger');
+  const menu = document.getElementById('mobile-menu');
+  if (!hamburger || !menu) return;
+
+  function closeMenu() {
+    hamburger.setAttribute('aria-expanded', 'false');
+    menu.classList.remove('is-open');
+  }
+  function toggleMenu() {
+    const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', String(!isOpen));
+    menu.classList.toggle('is-open', !isOpen);
+  }
+
+  hamburger.addEventListener('click', toggleMenu);
+  menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && !hamburger.contains(e.target)) closeMenu();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+  // A resize past the mobile breakpoint (rotating a tablet, say) shouldn't
+  // leave the panel open-but-invisible underneath the now-visible desktop
+  // nav — matches this page's own 860px breakpoint.
+  window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
+})();
+
 // Hero headline crossfade — cycles the closing phrase after "20+ years
 // turning operations", inspired by the rotating tagline on the reference
 // site. The first phrase is marked .is-active directly in the HTML so it
