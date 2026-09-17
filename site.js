@@ -72,7 +72,12 @@ document.querySelectorAll('.accordion-item').forEach((item) => {
   // homepage doesn't otherwise load it. A rolling 7-day-vs-previous-7-day
   // window (not calendar-week-aligned), so there's no partial-current-week
   // artifact, same convention as data.json's own top-level trend field.
-  function flatteningTags(jobs) {
+  // excludeTags: the tags already shown as trending — a high-volume tag can
+  // legitimately be both "most common overall" and "biggest raw decline"
+  // (its scale alone makes for a big absolute delta), which read as a
+  // contradiction sitting side by side in the same sentence, so trending
+  // tags are never eligible to also show up as flattening.
+  function flatteningTags(jobs, excludeTags) {
     const now = Date.now();
     const thisWeek = {};
     const lastWeek = {};
@@ -87,6 +92,7 @@ document.querySelectorAll('.accordion-item').forEach((item) => {
     });
     const allTags = new Set([...Object.keys(thisWeek), ...Object.keys(lastWeek)]);
     return Array.from(allTags)
+      .filter((tag) => !excludeTags.includes(tag))
       .map((tag) => ({ tag, delta: (thisWeek[tag] || 0) - (lastWeek[tag] || 0) }))
       .filter((t) => t.delta < 0)
       .sort((a, b) => a.delta - b.delta)
@@ -108,8 +114,9 @@ document.querySelectorAll('.accordion-item').forEach((item) => {
         : pct > 0 ? `<span class="tk-up">&#9650; ${Math.round(pct)}%</span> from last week`
         : pct < 0 ? `<span class="tk-down">&#9660; ${Math.abs(Math.round(pct))}%</span> from last week`
         : 'flat vs last week';
-      const trendingTags = (data.tags || []).slice(0, 3).map((t) => `<span class="tk-tag">#${t.value.replace(/[^a-zA-Z0-9]/g, '')}</span>`).join('');
-      const flattening = jobs ? flatteningTags(jobs) : [];
+      const trendingTagValues = (data.tags || []).slice(0, 3).map((t) => t.value);
+      const trendingTags = trendingTagValues.map((v) => `<span class="tk-tag">#${v.replace(/[^a-zA-Z0-9]/g, '')}</span>`).join('');
+      const flattening = jobs ? flatteningTags(jobs, trendingTagValues) : [];
       const flatteningTagsHtml = flattening.map((tag) => `<span class="tk-tag tk-tag-down">#${tag.replace(/[^a-zA-Z0-9]/g, '')}</span>`).join('');
       const sentence = `<strong>${total}</strong> ops jobs live right now (${trendHtml})`
         + (trendingTags ? `, trending skills are <span class="tk-tags">${trendingTags}</span>` : '')
