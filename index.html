@@ -133,6 +133,20 @@
   .accordion-item.is-open .accordion-panel{grid-template-rows:1fr;}
   .accordion-panel-inner{overflow:hidden;}
   .accordion-panel p{margin:0 0 26px;padding-left:48px;max-width:56ch;color:var(--ink-soft);font-size:15.5px;}
+  /* Contact CTAs at the end of each expanded section. Plain <a> tags with a
+     real href (mailto/wa.me-style deep links and a target="_blank" profile
+     link) rather than anything JS-driven, so they're just normal browser
+     navigation, and "works on iOS/Android" falls out of that for free. */
+  .social-ctas{display:flex;flex-wrap:wrap;gap:10px;padding-left:48px;margin-bottom:36px;}
+  .social-cta{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:9px 16px;border-radius:999px;border:1px solid var(--line);
+    font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none;
+    transition:border-color .15s,color .15s;
+  }
+  .social-cta svg{width:16px;height:16px;flex:none;}
+  .social-cta.linkedin:hover{border-color:#0a66c2;color:#0a66c2;}
+  .social-cta.whatsapp:hover{border-color:#25d366;color:#1c9950;}
 
   /* Contact */
   #contact .wrap{text-align:center;}
@@ -142,10 +156,17 @@
     .nav-links{display:none;}
     .accordion-panel p{padding-left:0;}
     .accordion-tags{padding-left:0;}
+    .social-ctas{padding-left:0;}
   }
 </style>
 </head>
 <body>
+
+<div class="stat-ticker" id="stat-ticker">
+  <div class="stat-ticker-track" id="stat-ticker-track">
+    <a class="stat-ticker-item" href="https://kennethjensen.me/jobmatch/stats/">Loading Nordic/Baltic job market data&hellip;</a>
+  </div>
+</div>
 
 <header>
   <nav class="nav wrap">
@@ -240,6 +261,16 @@
           <div class="accordion-panel"><div class="accordion-panel-inner">
             <p>I support the delivery of sustainable operations: frameworks designed to grow with the business, not ones that quietly ossify around how things were done last year. That's meant taking organisations from zero structure (or the chaos of rapid growth) to a governed, functioning operation, building an operating organisation from a whiteboard to 165 people across 8 European markets, and scaling a Danish operation from 4 to 35 people while supporting the wider Nordic business. It's also brought direct market entry experience: sites, facilities, supply chain, suppliers, risk, business cases, and the implementation frameworks that take a new market from decision to delivery.</p>
             <p>If your operating model is still solving last year's problems, or you're entering a market with nothing to build on, I design frameworks built to keep working as the business changes, not ones that need replacing the moment it does.</p>
+            <div class="social-ctas">
+              <a class="social-cta linkedin" href="https://www.linkedin.com/in/kennethjensen-me/" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+                Ping on LinkedIn
+              </a>
+              <a class="social-cta whatsapp" href="https://wa.me/4560229400?text=Hi%20Kenneth%2C%20I%20found%20your%20site%20and%20wanted%20to%20get%20in%20touch." target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.82 14.15c-.25.7-1.24 1.28-2.02 1.44-.54.11-1.24.2-3.6-.77-2.98-1.23-4.9-4.25-5.05-4.45-.15-.2-1.21-1.61-1.21-3.07 0-1.46.75-2.17 1.02-2.47.27-.3.6-.37.8-.37.2 0 .4 0 .58.01.19.01.44-.07.68.53.25.6.85 2.07.92 2.22.07.15.12.33.02.53-.1.2-.15.32-.3.5-.15.18-.31.4-.44.53-.15.15-.3.31-.13.6.17.3.77 1.27 1.65 2.06 1.14 1.02 2.1 1.34 2.4 1.49.3.15.47.13.65-.07.18-.2.75-.87.95-1.17.2-.3.4-.25.68-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.07.13.07.75-.18 1.45z"/></svg>
+                WhatsApp me
+              </a>
+            </div>
           </div></div>
         </div>
         <div class="accordion-item" id="service-excellence">
@@ -256,6 +287,16 @@
           <div class="accordion-panel"><div class="accordion-panel-inner">
             <p>I build platform-agnostic automation flows for operational teams, across both asset-heavy and asset-light organisations: automation that works with the systems you already have, not ones that lock you into a single vendor's stack. SOPs sit at the centre of that: properly built and actually followed, they're what lets automation and operational growth compound instead of colliding, rather than sitting in a folder nobody opens. Where things break down most visibly is the operations centre itself, especially for 24/7, always-on services. I look at what's genuinely failing in those setups (unreliable handoffs, monitoring that only catches problems after the fact, SOPs nobody follows) and fix the mechanism, not just the symptom.</p>
             <p>If your automation only works with one vendor's tools, your SOPs exist but nobody follows them, or your operations centre can't reliably hold a 24/7 service together, that's exactly where I start.</p>
+            <div class="social-ctas">
+              <a class="social-cta linkedin" href="https://www.linkedin.com/in/kennethjensen-me/" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+                Ping on LinkedIn
+              </a>
+              <a class="social-cta whatsapp" href="https://wa.me/4560229400?text=Hi%20Kenneth%2C%20I%20found%20your%20site%20and%20wanted%20to%20get%20in%20touch." target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.82 14.15c-.25.7-1.24 1.28-2.02 1.44-.54.11-1.24.2-3.6-.77-2.98-1.23-4.9-4.25-5.05-4.45-.15-.2-1.21-1.61-1.21-3.07 0-1.46.75-2.17 1.02-2.47.27-.3.6-.37.8-.37.2 0 .4 0 .58.01.19.01.44-.07.68.53.25.6.85 2.07.92 2.22.07.15.12.33.02.53-.1.2-.15.32-.3.5-.15.18-.31.4-.44.53-.15.15-.3.31-.13.6.17.3.77 1.27 1.65 2.06 1.14 1.02 2.1 1.34 2.4 1.49.3.15.47.13.65-.07.18-.2.75-.87.95-1.17.2-.3.4-.25.68-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.07.13.07.75-.18 1.45z"/></svg>
+                WhatsApp me
+              </a>
+            </div>
           </div></div>
         </div>
         <div class="accordion-item" id="service-coo">
@@ -272,6 +313,16 @@
           <div class="accordion-panel"><div class="accordion-panel-inner">
             <p>Operational excellence isn't a slogan, it's the discipline of making the same resources produce more, consistently, without burning out the team doing it. That starts with budgeting: how you allocate resources is also how you set priorities, whether that's said out loud or not, so the budget has to reflect the strategy rather than last year's numbers rolled forward. And it only works cross-functionally. I've led a transformation across roughly 700 software developers, 70 project managers, and 10 field technicians, shifting an entire organisation from project-driven to product-driven delivery, and connected commercial strategy directly to operational execution as a country leader. Operations isn't a line item alongside Sales, Finance, Field Services, R&amp;D, and Legal, it's the thing that makes what those departments commit to actually possible.</p>
             <p>If your strategy isn't landing operationally, or Operations is treated as an afterthought by the departments it enables, I turn it into an executable, measurable programme, and make sure the rest of the business treats it as the asset it is.</p>
+            <div class="social-ctas">
+              <a class="social-cta linkedin" href="https://www.linkedin.com/in/kennethjensen-me/" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+                Ping on LinkedIn
+              </a>
+              <a class="social-cta whatsapp" href="https://wa.me/4560229400?text=Hi%20Kenneth%2C%20I%20found%20your%20site%20and%20wanted%20to%20get%20in%20touch." target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.82 14.15c-.25.7-1.24 1.28-2.02 1.44-.54.11-1.24.2-3.6-.77-2.98-1.23-4.9-4.25-5.05-4.45-.15-.2-1.21-1.61-1.21-3.07 0-1.46.75-2.17 1.02-2.47.27-.3.6-.37.8-.37.2 0 .4 0 .58.01.19.01.44-.07.68.53.25.6.85 2.07.92 2.22.07.15.12.33.02.53-.1.2-.15.32-.3.5-.15.18-.31.4-.44.53-.15.15-.3.31-.13.6.17.3.77 1.27 1.65 2.06 1.14 1.02 2.1 1.34 2.4 1.49.3.15.47.13.65-.07.18-.2.75-.87.95-1.17.2-.3.4-.25.68-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.07.13.07.75-.18 1.45z"/></svg>
+                WhatsApp me
+              </a>
+            </div>
           </div></div>
         </div>
       </div>

@@ -155,9 +155,27 @@ function render(data){
   }
 }
 
+// Top stat ticker — reuses the same data.json fetch as the stats page below
+// rather than issuing a second request for the same file.
+function renderTicker(data) {
+  const track = document.getElementById('stat-ticker-track');
+  if (!track) return;
+  const STATS_URL = 'https://kennethjensen.me/jobmatch/stats/';
+  const total = (data.totalTracked || 0).toLocaleString('en-GB');
+  const pct = data.trend && typeof data.trend.percentChange === 'number' ? data.trend.percentChange : null;
+  const trendHtml = pct === null ? 'steady week on week'
+    : pct > 0 ? `<span class="tk-up">&#9650; ${Math.round(pct)}%</span> from last week`
+    : pct < 0 ? `<span class="tk-down">&#9660; ${Math.abs(Math.round(pct))}%</span> from last week`
+    : 'flat vs last week';
+  const tags = (data.tags || []).slice(0, 3).map((t) => '#' + t.value.replace(/[^a-zA-Z0-9]/g, '')).join(' ');
+  const sentence = `Following the Nordic/Baltic job market: <strong>${total}</strong> ops jobs live right now (${trendHtml})` + (tags ? `, trending skills are <span class="tk-tags">${tags}</span>` : '');
+  const item = `<a class="stat-ticker-item" href="${STATS_URL}">${sentence}</a>`;
+  track.innerHTML = item + item;
+}
+
 fetch('./data.json')
   .then((res) => { if (!res.ok) throw new Error('data.json not found'); return res.json(); })
-  .then(render)
+  .then((data) => { render(data); renderTicker(data); })
   .catch(() => {
     document.getElementById('asof-text').textContent = 'Stats are temporarily unavailable, check back shortly.';
   });

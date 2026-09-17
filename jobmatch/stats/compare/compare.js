@@ -274,3 +274,28 @@ fetch('../jobs.json')
   .catch(() => {
     document.getElementById('results-sub').textContent = 'Comparison data is temporarily unavailable, check back shortly.';
   });
+
+// Top stat ticker — pulls live headline numbers from the JobMatch scraper's
+// public stats export so it never drifts out of sync with the stats page.
+(() => {
+  const track = document.getElementById('stat-ticker-track');
+  if (!track) return;
+  const STATS_URL = 'https://kennethjensen.me/jobmatch/stats/';
+  fetch('../data.json')
+    .then((res) => res.json())
+    .then((data) => {
+      const total = (data.totalTracked || 0).toLocaleString('en-GB');
+      const pct = data.trend && typeof data.trend.percentChange === 'number' ? data.trend.percentChange : null;
+      const trendHtml = pct === null ? 'steady week on week'
+        : pct > 0 ? `<span class="tk-up">&#9650; ${Math.round(pct)}%</span> from last week`
+        : pct < 0 ? `<span class="tk-down">&#9660; ${Math.abs(Math.round(pct))}%</span> from last week`
+        : 'flat vs last week';
+      const tags = (data.tags || []).slice(0, 3).map((t) => '#' + t.value.replace(/[^a-zA-Z0-9]/g, '')).join(' ');
+      const sentence = `Following the Nordic/Baltic job market: <strong>${total}</strong> ops jobs live right now (${trendHtml})` + (tags ? `, trending skills are <span class="tk-tags">${tags}</span>` : '');
+      const item = `<a class="stat-ticker-item" href="${STATS_URL}">${sentence}</a>`;
+      track.innerHTML = item + item;
+    })
+    .catch(() => {
+      track.innerHTML = `<a class="stat-ticker-item" href="${STATS_URL}">See live Nordic/Baltic operations job market stats &rarr;</a>`;
+    });
+})();
