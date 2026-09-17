@@ -114,13 +114,19 @@
   .accordion-item.is-open .accordion-icon::after{transform:translate(-50%,-50%) rotate(90deg);opacity:0;}
   /* Tag pills — always visible under each headline, outside the collapsible
      panel, so what each service covers reads at a glance without opening
-     it. Three fixed colour roles rather than one repeated colour, since
-     Kenneth asked for the pills to read as distinct at a glance. */
+     it. Nine tags total across the three sections, each its own colour —
+     no colour repeats anywhere on the page, not just within one section. */
   .accordion-tags{display:flex;flex-wrap:wrap;gap:8px;padding:0 0 22px 48px;}
   .accordion-tag{font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:.01em;}
-  .accordion-tag.tag-mint{background:var(--accent-soft);color:var(--accent-light);}
-  .accordion-tag.tag-gold{background:#f6ecd9;color:#a9741f;}
+  .accordion-tag.tag-mint{background:#e2f7f1;color:#0e8f74;}
+  .accordion-tag.tag-teal{background:#dff5f2;color:#0f7a6c;}
   .accordion-tag.tag-blue{background:#e7eef5;color:#35577e;}
+  .accordion-tag.tag-indigo{background:#e8e7fb;color:#4c47a8;}
+  .accordion-tag.tag-purple{background:#f1e6f8;color:#7a3a9e;}
+  .accordion-tag.tag-rose{background:#fbe6ee;color:#a83d6b;}
+  .accordion-tag.tag-coral{background:#fde7e0;color:#c1552e;}
+  .accordion-tag.tag-gold{background:#f6ecd9;color:#a9741f;}
+  .accordion-tag.tag-sage{background:#eef3df;color:#5e7a2e;}
   .accordion-panel{
     display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s ease;
   }
@@ -228,8 +234,8 @@
           </button>
           <div class="accordion-tags">
             <span class="accordion-tag tag-mint">Sustainable Operations</span>
-            <span class="accordion-tag tag-gold">Operational Frameworks</span>
-            <span class="accordion-tag tag-blue">Market Entry</span>
+            <span class="accordion-tag tag-indigo">Operational Frameworks</span>
+            <span class="accordion-tag tag-coral">Market Entry</span>
           </div>
           <div class="accordion-panel"><div class="accordion-panel-inner">
             <p>I support the delivery of sustainable operations: frameworks designed to grow with the business, not ones that quietly ossify around how things were done last year. That's meant taking organisations from zero structure — or the chaos of rapid growth — to a governed, functioning operation, building an operating organisation from a whiteboard to 165 people across 8 European markets, and scaling a Danish operation from 4 to 35 people while supporting the wider Nordic business. It's also brought direct market entry experience: sites, facilities, supply chain, suppliers, risk, business cases, and the implementation frameworks that take a new market from decision to delivery.</p>
@@ -243,9 +249,9 @@
             <span class="accordion-icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-tags">
-            <span class="accordion-tag tag-mint">Operations Automations</span>
+            <span class="accordion-tag tag-teal">Operations Automations</span>
             <span class="accordion-tag tag-gold">Operations Auditing &amp; Trailing</span>
-            <span class="accordion-tag tag-blue">Operations Centre</span>
+            <span class="accordion-tag tag-purple">Operations Centre</span>
           </div>
           <div class="accordion-panel"><div class="accordion-panel-inner">
             <p>I build platform-agnostic automation flows for operational teams, across both asset-heavy and asset-light organisations — automation that works with the systems you already have, not ones that lock you into a single vendor's stack. SOPs sit at the centre of that: properly built and actually followed, they're what lets automation and operational growth compound instead of colliding, rather than sitting in a folder nobody opens. Where things break down most visibly is the operations centre itself, especially for 24/7, always-on services — I look at what's genuinely failing in those setups (unreliable handoffs, monitoring that only catches problems after the fact, SOPs nobody follows) and fix the mechanism, not just the symptom.</p>
@@ -259,9 +265,9 @@
             <span class="accordion-icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-tags">
-            <span class="accordion-tag tag-mint">Operational Excellence</span>
-            <span class="accordion-tag tag-gold">Operational Budgeting</span>
-            <span class="accordion-tag tag-blue">Cross-department Integrations</span>
+            <span class="accordion-tag tag-blue">Operational Excellence</span>
+            <span class="accordion-tag tag-rose">Operational Budgeting</span>
+            <span class="accordion-tag tag-sage">Cross-department Integrations</span>
           </div>
           <div class="accordion-panel"><div class="accordion-panel-inner">
             <p>Operational excellence isn't a slogan, it's the discipline of making the same resources produce more, consistently, without burning out the team doing it. That starts with budgeting: how you allocate resources is also how you set priorities, whether that's said out loud or not, so the budget has to reflect the strategy rather than last year's numbers rolled forward. And it only works cross-functionally. I've led a transformation across roughly 700 software developers, 70 project managers, and 10 field technicians, shifting an entire organisation from project-driven to product-driven delivery, and connected commercial strategy directly to operational execution as a country leader. Operations isn't a line item alongside Sales, Finance, Field Services, R&amp;D, and Legal, it's the thing that makes what those departments commit to actually possible.</p>
