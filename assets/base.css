@@ -62,6 +62,7 @@ img,svg{display:block;max-width:100%;}
   transition:color .15s;
 }
 .stat-ticker-label:hover{color:var(--accent-light);}
+.stat-ticker-label .label-short{display:none;}
 .stat-ticker-scroll{flex:1 1 auto;min-width:0;overflow:hidden;}
 .stat-ticker-track{
   display:flex;align-items:center;width:max-content;height:100%;
@@ -96,7 +97,15 @@ img,svg{display:block;max-width:100%;}
   .stat-ticker-scroll{overflow-x:auto;}
 }
 @media (max-width:640px){
-  .stat-ticker-label{padding-left:16px;font-size:12px;}
+  /* The full label ("Following the Nordic/Baltic job market:") ate close
+     to half the ticker's width on a phone screen, leaving barely any room
+     for the actual scrolling content — swap to a much shorter label
+     rather than just shrinking the font further. */
+  .stat-ticker-label{padding:9px 12px;font-size:12px;}
+  .stat-ticker-label .label-full{display:none;}
+  .stat-ticker-label .label-short{display:inline;}
+  .stat-ticker-item{padding:9px 0;font-size:13px;}
+  .stat-ticker-sep{margin:0 32px;}
 }
 
 header{
@@ -106,6 +115,11 @@ header{
   border-bottom:1px solid var(--line);
 }
 .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+/* Groups the CTA and the mobile hamburger so they sit together on the
+   right — without this wrapper, hiding .nav-links on mobile left .nav
+   with 3 space-between children (brand / cta / hamburger), which put
+   "Get in touch" floating in the dead centre of the header. */
+.nav-actions{display:flex;align-items:center;gap:14px;}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-0.01em;text-decoration:none;}
 .brand-mark{width:26px;height:26px;flex:none;}
 .back-link{font-size:14px;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .15s;}
