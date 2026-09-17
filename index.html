@@ -70,6 +70,24 @@
     padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-soft);
   }
   .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-wide{width:90%;text-align:center;}
+
+  /* Hand-drawn underline on hover, "Get in touch" buttons (nav + hero) —
+     a background-image squiggle revealed via clip-path (animatable, unlike
+     the background-image itself) left-to-right on hover, like it's being
+     drawn. Scoped to this page's own two CTAs rather than added to the
+     shared .btn-primary/.nav-cta in assets/base.css, since it's a flourish
+     for these specific buttons, not a site-wide button convention. */
+  .nav-cta,.btn-primary{position:relative;}
+  .nav-cta::after,.btn-primary::after{
+    content:"";position:absolute;left:16%;right:16%;bottom:9px;height:7px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12'%3E%3Cpath d='M2 9c4-6 8-6 12 0s8 6 12 0 8-6 12 0 8 6 12 0 8-6 12 0 8 6 12 0 8-6 11 0' stroke='%23facc15' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-size:100% 100%;
+    clip-path:inset(0 100% 0 0);transition:clip-path .35s ease;
+    pointer-events:none;transform:rotate(-1deg);
+  }
+  .nav-cta:hover::after,.btn-primary:hover::after{clip-path:inset(0 0 0 0);}
+  .btn-primary::after{bottom:16px;}
 
   /* Services — numbered accordion, echoing the reference's "What I can
      provide" list instead of the old plain 3-card grid. */
@@ -119,22 +137,21 @@
       Kenneth Jensen
     </a>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
       <li class="nav-dropdown">
         <a href="#services" class="nav-dropdown-trigger">Services<span class="nav-dropdown-caret" aria-hidden="true"></span></a>
         <div class="nav-dropdown-panel">
           <div class="nav-dropdown-panel-inner">
             <a class="nav-dropdown-link" href="#service-frameworks">
-              <span class="nav-dropdown-heading">Operational Frameworks</span>
-              <span class="nav-dropdown-desc">Scalable operating frameworks connecting daily execution to long-term strategy.</span>
+              <span class="nav-dropdown-heading">Building &amp; Scaling Operating Models</span>
+              <span class="nav-dropdown-desc">Designing the governed, functioning operation a fast-scaling or never-structured organization actually needs.</span>
             </a>
             <a class="nav-dropdown-link" href="#service-excellence">
-              <span class="nav-dropdown-heading">Operational Excellence</span>
-              <span class="nav-dropdown-desc">Continuous improvement across asset-heavy and asset-light operations.</span>
+              <span class="nav-dropdown-heading">End-to-End Operations &amp; Fleet</span>
+              <span class="nav-dropdown-desc">Full-chain ownership of physical, asset-heavy, regulated operations, from supply chain to fleet and asset management.</span>
             </a>
             <a class="nav-dropdown-link" href="#service-coo">
-              <span class="nav-dropdown-heading">Fractional / Part-Time COO</span>
-              <span class="nav-dropdown-desc">Senior operational leadership on a flexible basis.</span>
+              <span class="nav-dropdown-heading">Strategy into Execution</span>
+              <span class="nav-dropdown-desc">Turning strategy that isn't landing operationally into an executable, measurable programme.</span>
             </a>
           </div>
         </div>
@@ -167,8 +184,7 @@
           <span class="badge">Hands-On + Strategic</span>
         </div>
         <div class="hero-ctas">
-          <a class="btn-primary" href="mailto:k@kennethjensen.me">Get in touch</a>
-          <a class="btn-ghost" href="#services">See services</a>
+          <a class="btn-primary btn-wide" href="mailto:k@kennethjensen.me">Get in touch with a human</a>
         </div>
       </div>
     </div>
@@ -185,31 +201,34 @@
         <div class="accordion-item is-open" id="service-frameworks">
           <button class="accordion-trigger" type="button">
             <span class="accordion-index">01</span>
-            <span class="accordion-title">Operational Frameworks</span>
+            <span class="accordion-title">Building and Scaling Operating Models from Scratch</span>
             <span class="accordion-icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-panel"><div class="accordion-panel-inner">
-            <p>Designing and embedding scalable operating frameworks that connect daily execution to long-term strategy.</p>
+            <p>I specialize in taking organizations from zero structure — or the chaos of rapid growth — to a governed, functioning operation. I've built an operating organization from a whiteboard to 165 people across 8 European markets, establishing the governance, processes, and ways of working from the ground up. I've scaled a Danish operation from 4 to 35 people while simultaneously supporting the wider Nordic business. And I've led international expansion end-to-end — sites, facilities, supply chain, suppliers, risk, business cases, and implementation frameworks.</p>
+            <p>If your organization is scaling fast or was never properly structured to begin with, I design the operating model it needs to run — not just manage what's already there.</p>
           </div></div>
         </div>
         <div class="accordion-item" id="service-excellence">
           <button class="accordion-trigger" type="button">
             <span class="accordion-index">02</span>
-            <span class="accordion-title">Operational Excellence</span>
+            <span class="accordion-title">End-to-End Operations, Supply Chain &amp; Fleet/Asset Management</span>
             <span class="accordion-icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-panel"><div class="accordion-panel-inner">
-            <p>Driving continuous improvement across asset-heavy and asset-light operations, hands-on, where it matters most.</p>
+            <p>My experience spans the full operational chain, not a single function in isolation. I've owned operations across supply chain, sourcing, logistics, production, quality, delivery, IT, and R&amp;D within a single organization. I've run vehicle and asset management, SOP development, and maintenance operations inside regulated industries. And that expertise extends into fleet category management, maintenance contracts, vendor negotiation, and procurement.</p>
+            <p>If you need someone to take ownership of physical, asset-heavy, regulated operations — fleet, logistics, service delivery — and drive them toward operational excellence, this is where I add the most value.</p>
           </div></div>
         </div>
         <div class="accordion-item" id="service-coo">
           <button class="accordion-trigger" type="button">
             <span class="accordion-index">03</span>
-            <span class="accordion-title">Fractional / Part-Time COO</span>
+            <span class="accordion-title">Turning Strategy into Execution Across Complex, Cross-Functional Organizations</span>
             <span class="accordion-icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-panel"><div class="accordion-panel-inner">
-            <p>Senior operational leadership on a flexible basis: strategic oversight without the full-time overhead.</p>
+            <p>This is the thread that runs through everything I do. I've led a transformation across roughly 700 software developers, 70 project managers, and 10 field technicians, shifting an entire organization from project-driven to product-driven delivery. As a country leader, I connect commercial strategy — partnerships, market development — directly to operational execution. And my background in structured programme leadership brings disciplined governance and risk management to complex, multi-stakeholder environments.</p>
+            <p>If your business has a strategy that isn't landing operationally, I turn it into an executable, measurable programme — and see it through.</p>
           </div></div>
         </div>
       </div>
