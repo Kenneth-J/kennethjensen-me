@@ -103,21 +103,6 @@ function render(data){
     countryBars.innerHTML = '<p class="empty-state">No roles tracked yet.</p>';
   }
 
-  // Source site bars
-  const sourceBars = document.getElementById('source-bars');
-  const maxSiteCount = data.sourceSites.length ? data.sourceSites[0].count : 1;
-  data.sourceSites.forEach((s) => {
-    sourceBars.appendChild(barRow(s.value, s.count, Math.max(2, (s.count / maxSiteCount) * 100), fmtInt(s.count)));
-  });
-  const unmatchedSites = (data.sitesConfigured || 0) - data.sourceSites.length;
-  const sourcesSub = document.getElementById('sources-sub');
-  if (unmatchedSites > 0) {
-    sourcesSub.textContent = fmtInt(unmatchedSites) + ' more ' + (unmatchedSites === 1 ? 'site' : 'sites') + ' monitored with no matching roles yet. Bar length shows share of the busiest source.';
-  }
-  if (data.sourceSites.length === 0) {
-    sourceBars.innerHTML = '<p class="empty-state">No roles tracked yet.</p>';
-  }
-
   // Work style chips
   const chips = document.getElementById('workstyle-chips');
   const classifiedWorkStyle = data.workStyle.reduce((sum, w) => sum + w.count, 0);
