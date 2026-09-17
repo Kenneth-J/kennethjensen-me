@@ -89,6 +89,12 @@
 
   .empty-state{color:var(--ink-faint);font-size:14px;font-style:italic;}
 
+  :root{ --onsite:#12b892; --remote:#2e6fa3; }
+  .trend-legend{display:flex;gap:20px;margin-bottom:14px;font-size:13px;color:var(--ink-soft);}
+  .trend-legend span{display:inline-flex;align-items:center;gap:7px;}
+  .trend-legend .ln{width:16px;height:3px;border-radius:2px;flex:none;}
+  .trend-note{font-size:12.5px;color:var(--ink-faint);margin-top:12px;}
+
   @media (max-width:760px){
     .period-picker-grid{grid-template-columns:1fr;}
     .headline-grid{grid-template-columns:1fr;}
@@ -193,6 +199,22 @@
       <div class="headline-grid" id="headline-grid"></div>
 
       <div class="compare-rows" id="compare-rows"></div>
+    </div>
+  </section>
+
+  <section id="workstyle-trend-section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow-alt">Beyond the two periods</span>
+        <h2>Remote, hybrid or on-site &mdash; the last 8 weeks</h2>
+        <p class="section-sub">Independent of Period A/B above: classified roles by week posted, most recent 8 weeks with tracked postings. Same chart as the main <a href="../">Stats</a> page.</p>
+      </div>
+      <div class="trend-legend">
+        <span><span class="ln" style="background:var(--onsite)"></span>On-site</span>
+        <span><span class="ln" style="background:var(--remote)"></span>Remote + Hybrid</span>
+      </div>
+      <svg id="workstyle-trend" width="100%" height="220" role="img" aria-label="Weekly count of classified roles by work style"></svg>
+      <p class="trend-note" id="workstyle-trend-note">Loading&hellip;</p>
     </div>
   </section>
 </main>

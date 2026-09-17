@@ -256,6 +256,91 @@ function wireEvents(){
   });
 }
 
+// Same chart as the main Stats page's "Remote, hybrid or on-site" trend —
+// deliberately independent of the Period A/B picker above (it always
+// shows the most recent 8 weeks, not whatever period is selected), so
+// it's rendered once here off the same `jobs` array this page already
+// loads for the period comparison, rather than tied into render().
+const WORKSTYLE_TREND_WEEKS = 8;
+
+function fmtWeekLabel(weekKeyStr){
+  return new Date(weekKeyStr + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+}
+
+// Sunday-anchored week bucket — same convention this page's own date
+// handling already uses for period boundaries.
+function workStyleWeekKey(date){
+  const d0 = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  d0.setUTCDate(d0.getUTCDate() - d0.getUTCDay());
+  return d0.toISOString().slice(0, 10);
+}
+
+// Rounds a chart's y-axis max up to a "nice" gridline value (1/2/5 x a
+// power of ten) instead of the raw max.
+function niceAxisMax(n){
+  if (n <= 0) return 10;
+  const magnitude = 10 ** Math.floor(Math.log10(n));
+  const residual = n / magnitude;
+  const niceResidual = residual <= 1 ? 1 : residual <= 2 ? 2 : residual <= 5 ? 5 : 10;
+  return niceResidual * magnitude;
+}
+
+function renderWorkStyleTrend(allJobs){
+  const svg = document.getElementById('workstyle-trend');
+  const note = document.getElementById('workstyle-trend-note');
+  if (!svg || !note) return;
+
+  const buckets = new Map();
+  allJobs.forEach((r) => {
+    const d = new Date(r.date);
+    if (isNaN(d.getTime())) return;
+    const wk = workStyleWeekKey(d);
+    if (!buckets.has(wk)) buckets.set(wk, { onsite: 0, remoteHybrid: 0 });
+    const b = buckets.get(wk);
+    if (r.workStyle === 'On-site') b.onsite++;
+    else if (r.workStyle === 'Remote' || r.workStyle === 'Hybrid') b.remoteHybrid++;
+  });
+
+  const weekKeys = Array.from(buckets.keys()).sort().slice(-WORKSTYLE_TREND_WEEKS);
+  if (weekKeys.length < 2) {
+    svg.innerHTML = '';
+    note.textContent = 'Not enough weekly history yet to plot a trend.';
+    return;
+  }
+
+  const points = weekKeys.map((wk) => ({ week: wk, ...buckets.get(wk) }));
+  const yMax = niceAxisMax(Math.max(1, ...points.map((p) => Math.max(p.onsite, p.remoteHybrid))));
+
+  const W = 640, H = 220, marginLeft = 36, marginRight = 16, marginTop = 20, marginBottom = 34;
+  const plotW = W - marginLeft - marginRight;
+  const plotH = H - marginTop - marginBottom;
+  const xAt = (i) => marginLeft + (points.length > 1 ? (i / (points.length - 1)) * plotW : 0);
+  const yAt = (v) => marginTop + plotH - (v / yMax) * plotH;
+
+  const linePoints = (getVal) => points.map((p, i) => `${xAt(i)},${yAt(getVal(p))}`).join(' ');
+  const dots = (getVal, color) =>
+    points.map((p, i) => `<circle cx="${xAt(i)}" cy="${yAt(getVal(p))}" r="3" fill="${color}"/>`).join('');
+  const xLabels = points
+    .map((p, i) => `<text x="${xAt(i)}" y="${H - 10}" text-anchor="middle" font-size="10.5" fill="var(--ink-faint)">${fmtWeekLabel(p.week)}</text>`)
+    .join('');
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML =
+    `<line x1="${marginLeft}" y1="${marginTop}" x2="${marginLeft}" y2="${yAt(0)}" stroke="var(--line)" stroke-width="1"/>` +
+    `<line x1="${marginLeft}" y1="${yAt(0)}" x2="${W - marginRight}" y2="${yAt(0)}" stroke="var(--line)" stroke-width="1"/>` +
+    `<text x="${marginLeft - 6}" y="${yAt(0) + 3}" text-anchor="end" font-size="10" fill="var(--ink-faint)">0</text>` +
+    `<text x="${marginLeft - 6}" y="${yAt(yMax / 2) + 3}" text-anchor="end" font-size="10" fill="var(--ink-faint)">${fmtInt(Math.round(yMax / 2))}</text>` +
+    `<text x="${marginLeft - 6}" y="${yAt(yMax) + 3}" text-anchor="end" font-size="10" fill="var(--ink-faint)">${fmtInt(yMax)}</text>` +
+    `<polyline points="${linePoints((p) => p.onsite)}" fill="none" stroke="var(--onsite)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` +
+    `<polyline points="${linePoints((p) => p.remoteHybrid)}" fill="none" stroke="var(--remote)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` +
+    dots((p) => p.onsite, 'var(--onsite)') +
+    dots((p) => p.remoteHybrid, 'var(--remote)') +
+    xLabels;
+
+  const last = points[points.length - 1];
+  note.textContent = `Last ${points.length} weeks with tracked postings — latest week: ${fmtInt(last.onsite)} on-site, ${fmtInt(last.remoteHybrid)} remote/hybrid.`;
+}
+
 fetch('../jobs.json')
   .then((res) => { if (!res.ok) throw new Error('jobs.json not found'); return res.json(); })
   .then((data) => {
@@ -270,9 +355,12 @@ fetch('../jobs.json')
     initFromUrlOrDefault();
     wireEvents();
     render();
+    renderWorkStyleTrend(jobs);
   })
   .catch(() => {
     document.getElementById('results-sub').textContent = 'Comparison data is temporarily unavailable, check back shortly.';
+    const note = document.getElementById('workstyle-trend-note');
+    if (note) note.textContent = 'Trend data is temporarily unavailable, check back shortly.';
   });
 
 // Top stat ticker — pulls live headline numbers from the JobMatch scraper's
