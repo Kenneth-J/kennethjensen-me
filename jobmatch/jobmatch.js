@@ -160,6 +160,121 @@ document.addEventListener('click', (e) => {
   if (!searchField.contains(e.target) && !countrySuggestionsEl.contains(e.target)) hideSuggestions();
 });
 
+// Tag filter — same pill/autocomplete pattern as the country tags above,
+// plus an Include/Exclude mode covering the whole selected set (not
+// per-tag): "only jobs with any of these" vs "no jobs with any of these".
+// Lives outside <form id="search-form"> as its own control (its Enter key
+// doesn't submit anything), and its selection is read by the search
+// form's own submit handler below — same "trigger on submit, not
+// per-keystroke" rule as the free-text query itself.
+let selectedTags = [];
+let tagFilterMode = 'include';
+
+const tagFilterInput = document.getElementById('tag-filter-input');
+const tagFilterTagsEl = document.getElementById('tag-filter-tags');
+const tagFilterTagsLabelEl = document.getElementById('tag-filter-tags-label');
+const tagFilterSuggestionsEl = document.getElementById('tag-filter-suggestions');
+const tagFilterModeEl = document.getElementById('tag-filter-mode');
+
+function allTagsSortedByCount(corpus) {
+  const counts = new Map();
+  corpus.forEach((job) => (job.tags || []).forEach((t) => counts.set(t, (counts.get(t) || 0) + 1)));
+  return Array.from(counts.keys()).sort((a, b) => counts.get(b) - counts.get(a));
+}
+
+function renderTagFilterTags() {
+  tagFilterTagsEl.innerHTML = '';
+  tagFilterTagsLabelEl.hidden = selectedTags.length === 0;
+  tagFilterTagsLabelEl.textContent = tagFilterMode === 'include' ? 'Must have:' : 'Must not have:';
+  for (const tag of selectedTags) {
+    const el = document.createElement('span');
+    el.className = 'country-tag';
+    el.style.background = tagFilterMode === 'include' ? 'var(--bg-alt)' : '#f6e3e1';
+    el.style.color = tagFilterMode === 'include' ? 'var(--ink)' : '#c0392b';
+    el.innerHTML = `${esc(tag)} <button type="button" aria-label="Remove ${esc(tag)} filter">&times;</button>`;
+    el.querySelector('button').addEventListener('click', () => {
+      selectedTags = selectedTags.filter((v) => v !== tag);
+      renderTagFilterTags();
+      tagFilterInput.focus();
+    });
+    tagFilterTagsEl.appendChild(el);
+  }
+}
+
+function hideTagSuggestions() {
+  tagFilterSuggestionsEl.hidden = true;
+  tagFilterSuggestionsEl.innerHTML = '';
+}
+
+// loadCorpus() is the same lazy, memoized fetch runSearch() uses — cheap
+// (a JSON fetch, not the ~25MB embedding model), so pulling it in on first
+// focus of this filter (rather than waiting for an actual search) is an
+// acceptable eagerness trade for populating tag suggestions.
+async function showTagSuggestions(query) {
+  let corpus;
+  try {
+    corpus = await loadCorpus();
+  } catch {
+    return;
+  }
+  const token = normalizeToken(query);
+  const matches = allTagsSortedByCount(corpus).filter(
+    (t) => !selectedTags.includes(t) && (token === '' || normalizeToken(t).startsWith(token))
+  );
+  if (!matches.length) {
+    hideTagSuggestions();
+    return;
+  }
+  tagFilterSuggestionsEl.innerHTML = '';
+  for (const tag of matches) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'country-suggestion';
+    btn.style.background = 'var(--bg-alt)';
+    btn.style.color = 'var(--ink)';
+    btn.textContent = tag;
+    btn.addEventListener('mousedown', (e) => {
+      e.preventDefault(); // keep focus on the input rather than the button, avoids a blur/hide race
+      selectFilterTag(tag);
+    });
+    tagFilterSuggestionsEl.appendChild(btn);
+  }
+  tagFilterSuggestionsEl.hidden = false;
+}
+
+function selectFilterTag(tag) {
+  if (!selectedTags.includes(tag)) selectedTags.push(tag);
+  tagFilterInput.value = '';
+  tagFilterInput.focus();
+  renderTagFilterTags();
+  hideTagSuggestions();
+}
+
+if (tagFilterModeEl) {
+  tagFilterModeEl.querySelectorAll('.tag-mode-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.mode === tagFilterMode) return;
+      tagFilterMode = btn.dataset.mode;
+      tagFilterModeEl.querySelectorAll('.tag-mode-btn').forEach((b) => b.classList.toggle('active', b === btn));
+      renderTagFilterTags();
+    });
+  });
+}
+
+tagFilterInput.addEventListener('input', () => showTagSuggestions(tagFilterInput.value));
+tagFilterInput.addEventListener('focus', () => showTagSuggestions(tagFilterInput.value));
+tagFilterInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Backspace' && tagFilterInput.value === '' && selectedTags.length > 0) {
+    selectedTags = selectedTags.slice(0, -1);
+    renderTagFilterTags();
+  } else if (e.key === 'Escape') {
+    hideTagSuggestions();
+  }
+});
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#tag-filter-form')) hideTagSuggestions();
+});
+
 // Loaded lazily, on first search, not eagerly on page load — a visitor who
 // never searches shouldn't pay the ~25MB model download at all. Memoizing
 // the promise means a second search reuses the already-loaded model
@@ -293,7 +408,7 @@ function renderDivider() {
   return div;
 }
 
-async function runSearch(query, countries) {
+async function runSearch(query, countries, tags, tagMode) {
   searchSubmit.disabled = true;
   jobGrid.innerHTML = '';
   resultsCount.style.display = 'none';
@@ -309,9 +424,16 @@ async function runSearch(query, countries) {
     // comment: remoteness and geography are deliberately not conflated), so
     // it's matched against job.remoteType instead, the field that actually
     // carries it.
-    const candidates = countries.length
-      ? corpus.filter((job) => countries.includes(job.country) || (countries.includes('Remote') && job.remoteType === 'Remote'))
-      : corpus;
+    const candidates = corpus.filter((job) => {
+      const countryOk =
+        !countries.length || countries.includes(job.country) || (countries.includes('Remote') && job.remoteType === 'Remote');
+      if (!countryOk) return false;
+      if (tags && tags.length) {
+        const hasAnyTag = (job.tags || []).some((t) => tags.includes(t));
+        if (tagMode === 'exclude' ? hasAnyTag : !hasAnyTag) return false;
+      }
+      return true;
+    });
 
     let ranked;
     let dividerIndex = -1;
@@ -326,9 +448,9 @@ async function runSearch(query, countries) {
         .slice(0, RESULT_LIMIT);
       dividerIndex = findRelevanceDividerIndex(ranked);
     } else {
-      // Country tag(s) only, no free text — nothing to rank by relevance,
-      // so most-recently-posted first is the sensible default instead
-      // (and there's no meaningful "relevance" for a divider to mark).
+      // Country/tag filters only, no free text — nothing to rank by
+      // relevance, so most-recently-posted first is the sensible default
+      // instead (and there's no meaningful "relevance" for a divider to mark).
       ranked = candidates
         .filter((job) => job.datePosted)
         .sort((a, b) => new Date(b.datePosted) - new Date(a.datePosted))
@@ -360,8 +482,11 @@ async function runSearch(query, countries) {
 searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
   hideSuggestions();
+  hideTagSuggestions();
   const query = searchInput.value.trim();
-  if (query || selectedCountries.length) runSearch(query, selectedCountries.slice());
+  if (query || selectedCountries.length || selectedTags.length) {
+    runSearch(query, selectedCountries.slice(), selectedTags.slice(), tagFilterMode);
+  }
 });
 
 // Top stat ticker — pulls live headline numbers from the JobMatch scraper's

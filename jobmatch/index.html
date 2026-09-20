@@ -108,11 +108,38 @@
     box-shadow:0 12px 32px -12px rgba(19,42,51,.18);
     padding:8px;z-index:10;display:flex;flex-wrap:wrap;gap:6px;
   }
+  .country-suggestions[hidden]{display:none;}
   .country-suggestion{
     display:inline-flex;align-items:center;padding:7px 14px;border-radius:999px;
     font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:inherit;
   }
   .country-suggestion:hover{opacity:.82;}
+
+  /* Tag filter row — same pill/autocomplete pattern as the country tags
+     above, plus an Include/Exclude mode applied to the whole selected tag
+     set (not per-tag): "only jobs with any of these" vs "no jobs with any
+     of these". Filters the search candidate pool alongside the country
+     tags, before ranking — see jobmatch.js's runSearch(). */
+  .tag-filter-form{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative;justify-content:center;
+    margin:14px auto 0;padding:6px;background:#fff;border:1px solid var(--line);border-radius:999px;
+    box-shadow:0 12px 32px -12px rgba(19,42,51,.14);text-align:left;
+  }
+  .tag-filter-mode{flex:none;display:flex;gap:2px;background:var(--bg-alt);border-radius:999px;padding:3px;}
+  .tag-mode-btn{
+    border:none;background:none;cursor:pointer;font:inherit;font-size:12.5px;font-weight:700;
+    color:var(--ink-soft);padding:7px 14px;border-radius:999px;white-space:nowrap;transition:background .15s,color .15s;
+  }
+  .tag-mode-btn.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(19,42,51,.15);}
+  .tag-filter-form .tag-mode-btn.active[data-mode="exclude"]{color:var(--down);}
+  .tag-filter-form .tag-mode-btn.active[data-mode="include"]{color:var(--up);}
+  #tag-filter-field{padding:0 4px 0 10px;flex:1;min-width:160px;}
+  #tag-filter-field .search-input{padding:10px 6px;font-size:14px;}
+
+  @media (max-width:860px){
+    .tag-filter-form{flex-direction:column;border-radius:24px;align-items:stretch;}
+    .tag-filter-mode{justify-content:center;}
+  }
 
   /* Relevance divider — inserted into the job grid (spanning both/all
      columns) when there's a real drop-off in match quality, so a handful
@@ -223,6 +250,19 @@
         <div class="country-suggestions" id="country-suggestions" hidden></div>
       </form>
       <p class="search-hint">Type a country name (e.g. "de" for Denmark) to filter by country.</p>
+
+      <div class="tag-filter-form" id="tag-filter-form">
+        <div class="tag-filter-mode" id="tag-filter-mode">
+          <button type="button" class="tag-mode-btn active" data-mode="include">Include tags</button>
+          <button type="button" class="tag-mode-btn" data-mode="exclude">Exclude tags</button>
+        </div>
+        <div class="search-field" id="tag-filter-field">
+          <span class="country-tags-label" id="tag-filter-tags-label" hidden></span>
+          <div class="country-tags" id="tag-filter-tags"></div>
+          <input class="search-input" id="tag-filter-input" type="text" placeholder="Filter by tag…" autocomplete="off">
+        </div>
+        <div class="country-suggestions" id="tag-filter-suggestions" hidden></div>
+      </div>
     </div>
   </section>
 

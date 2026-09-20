@@ -432,11 +432,108 @@ function selectFilterCountry(value) {
   applyFilter();
 }
 
+// Tag filter row — same pill/autocomplete pattern as the country filter
+// above, plus an Include/Exclude mode covering the whole selected set
+// (not per-tag). Unlike COUNTRIES, tags aren't a fixed vocabulary here —
+// the suggestion list is built from whatever tags actually appear in
+// allJobs once it's loaded, sorted by how often each one occurs.
+let selectedFilterTags = [];
+let tagFilterMode = 'include';
+
+const tagFilterInput = document.getElementById('tag-filter-input');
+const tagFilterTagsEl = document.getElementById('tag-filter-tags');
+const tagFilterTagsLabelEl = document.getElementById('tag-filter-tags-label');
+const tagFilterSuggestionsEl = document.getElementById('tag-filter-suggestions');
+const tagFilterModeEl = document.getElementById('tag-filter-mode');
+
+function allTagsSortedByCount() {
+  if (!allJobs) return [];
+  const counts = new Map();
+  allJobs.forEach((r) => (r.tags || []).forEach((t) => counts.set(t, (counts.get(t) || 0) + 1)));
+  return Array.from(counts.keys()).sort((a, b) => counts.get(b) - counts.get(a));
+}
+
+function renderTagFilterTags() {
+  if (!tagFilterTagsEl) return;
+  tagFilterTagsEl.innerHTML = '';
+  if (tagFilterTagsLabelEl) {
+    tagFilterTagsLabelEl.hidden = selectedFilterTags.length === 0;
+    tagFilterTagsLabelEl.textContent = tagFilterMode === 'include' ? 'Must have:' : 'Must not have:';
+  }
+  selectedFilterTags.forEach((tag) => {
+    const el = document.createElement('span');
+    el.className = 'country-tag';
+    el.style.background = tagFilterMode === 'include' ? 'var(--bg-alt)' : '#f6e3e1';
+    el.style.color = tagFilterMode === 'include' ? 'var(--ink)' : '#c0392b';
+    el.innerHTML = esc(tag) + ' <button type="button" aria-label="Remove ' + esc(tag) + ' filter">&times;</button>';
+    el.querySelector('button').addEventListener('click', () => {
+      selectedFilterTags = selectedFilterTags.filter((v) => v !== tag);
+      renderTagFilterTags();
+      applyFilter();
+      if (tagFilterInput) tagFilterInput.focus();
+    });
+    tagFilterTagsEl.appendChild(el);
+  });
+}
+
+function hideTagSuggestions() {
+  if (!tagFilterSuggestionsEl) return;
+  tagFilterSuggestionsEl.hidden = true;
+  tagFilterSuggestionsEl.innerHTML = '';
+}
+
+function showTagSuggestions(query) {
+  if (!tagFilterSuggestionsEl) return;
+  const token = normalizeToken(query);
+  const matches = allTagsSortedByCount().filter(
+    (t) => !selectedFilterTags.includes(t) && (token === '' || normalizeToken(t).startsWith(token))
+  );
+  if (matches.length === 0) { hideTagSuggestions(); return; }
+  tagFilterSuggestionsEl.innerHTML = '';
+  matches.forEach((t) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'country-suggestion';
+    btn.style.background = 'var(--bg-alt)';
+    btn.style.color = 'var(--ink)';
+    btn.textContent = t;
+    btn.addEventListener('click', () => selectFilterTag(t));
+    tagFilterSuggestionsEl.appendChild(btn);
+  });
+  tagFilterSuggestionsEl.hidden = false;
+}
+
+function selectFilterTag(tag) {
+  if (!selectedFilterTags.includes(tag)) selectedFilterTags.push(tag);
+  if (tagFilterInput) { tagFilterInput.value = ''; tagFilterInput.focus(); }
+  renderTagFilterTags();
+  hideTagSuggestions();
+  applyFilter();
+}
+
+if (tagFilterModeEl) {
+  tagFilterModeEl.querySelectorAll('.tag-mode-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.mode === tagFilterMode) return;
+      tagFilterMode = btn.dataset.mode;
+      tagFilterModeEl.querySelectorAll('.tag-mode-btn').forEach((b) => b.classList.toggle('active', b === btn));
+      renderTagFilterTags();
+      applyFilter();
+    });
+  });
+}
+
 function applyFilter() {
   if (!allJobs || !statsSnapshot) return; // jobs.json/data.json not loaded yet
-  const jobs = selectedFilterCountries.length === 0
+  let jobs = selectedFilterCountries.length === 0
     ? allJobs
     : allJobs.filter((r) => r.country && selectedFilterCountries.includes(r.country));
+  if (selectedFilterTags.length > 0) {
+    jobs = jobs.filter((r) => {
+      const hasAny = (r.tags || []).some((t) => selectedFilterTags.includes(t));
+      return tagFilterMode === 'include' ? hasAny : !hasAny;
+    });
+  }
   render(computeAggregates(jobs, statsSnapshot.dataAsOf, statsSnapshot.sitesConfigured));
   renderWorkStyleTrend(jobs);
 }
@@ -457,6 +554,25 @@ if (filterInput) {
   });
   document.addEventListener('click', (e) => {
     if (!e.target.closest('#filter-form')) hideSuggestions();
+  });
+}
+
+if (tagFilterInput) {
+  tagFilterInput.addEventListener('input', () => showTagSuggestions(tagFilterInput.value));
+  tagFilterInput.addEventListener('focus', () => showTagSuggestions(tagFilterInput.value));
+  tagFilterInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && tagFilterInput.value === '' && selectedFilterTags.length > 0) {
+      selectedFilterTags = selectedFilterTags.slice(0, -1);
+      renderTagFilterTags();
+      applyFilter();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+    } else if (e.key === 'Escape') {
+      hideTagSuggestions();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#tag-filter-form')) hideTagSuggestions();
   });
 }
 
