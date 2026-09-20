@@ -524,6 +524,10 @@ if (tagFilterModeEl) {
   });
 }
 
+const filterEmptyStateEl = document.getElementById('filter-empty-state');
+const statGridEl = document.getElementById('stat-grid');
+const filterableSections = ['geography', 'how-people-work', 'seniority'].map((id) => document.getElementById(id));
+
 function applyFilter() {
   if (!allJobs || !statsSnapshot) return; // jobs.json/data.json not loaded yet
   let jobs = selectedFilterCountries.length === 0
@@ -535,6 +539,17 @@ function applyFilter() {
       return tagFilterMode === 'include' ? hasAny : !hasAny;
     });
   }
+
+  // A filter combination matching zero jobs gets one clear message instead
+  // of the stat grid and every section below each rendering their own
+  // empty state (0% donut, empty bar lists, etc.) side by side.
+  const filterActive = selectedFilterCountries.length > 0 || selectedFilterTags.length > 0;
+  const isEmpty = filterActive && jobs.length === 0;
+  if (filterEmptyStateEl) filterEmptyStateEl.hidden = !isEmpty;
+  if (statGridEl) statGridEl.hidden = isEmpty;
+  filterableSections.forEach((el) => { if (el) el.hidden = isEmpty; });
+  if (isEmpty) return;
+
   render(computeAggregates(jobs, statsSnapshot.dataAsOf, statsSnapshot.sitesConfigured));
   renderWorkStyleTrend(jobs);
 }
