@@ -54,12 +54,31 @@ function seniorityRow(label, widthPercent, valueText, color){
   return row;
 }
 
-function barRow(label, count, widthPercent, valueText, muted){
+// Same country list, aliases and colours as jobmatch/jobmatch.js's own
+// COUNTRIES — duplicated rather than shared (this is a static site, no
+// build step to import a common module across the two page bundles).
+// Colors are loosely flag-inspired; `bg` is `text` mixed ~14% into white.
+const COUNTRIES = [
+  { value: 'Denmark', aliases: ['denmark', 'danmark'], text: '#c0392b', bg: '#f6e3e1' },
+  { value: 'Norway', aliases: ['norway', 'norge'], text: '#2e5fa3', bg: '#e2e9f2' },
+  { value: 'Sweden', aliases: ['sweden', 'sverige'], text: '#e0a622', bg: '#fbf3e0' },
+  { value: 'Finland', aliases: ['finland', 'suomi'], text: '#2f6fed', bg: '#e2ebfc' },
+  { value: 'Iceland', aliases: ['iceland', 'island', 'ísland'], text: '#1f9e8f', bg: '#e0f1ef' },
+  { value: 'Greenland', aliases: ['greenland', 'gronland', 'grønland', 'kalaallit nunaat'], text: '#4a90c9', bg: '#e6eff7' },
+  { value: 'Estonia', aliases: ['estonia', 'eesti'], text: '#1f3a5f', bg: '#e0e3e9' },
+  { value: 'Latvia', aliases: ['latvia', 'latvija'], text: '#8a1f3a', bg: '#efe0e3' },
+  { value: 'Lithuania', aliases: ['lithuania', 'lietuva'], text: '#2f7a3d', bg: '#e2ece4' },
+];
+const COUNTRY_BY_VALUE = new Map(COUNTRIES.map((c) => [c.value, c]));
+
+function barRow(label, count, widthPercent, valueText, muted, color){
   const row = document.createElement('div');
   row.className = 'bar-row';
+  const dot = color ? '<span class="bar-dot" style="background:' + esc(color) + '"></span>' : '';
+  const fillStyle = 'width:' + esc(widthPercent) + '%' + (color && !muted ? ';background:' + esc(color) : '');
   row.innerHTML =
-    '<span class="bar-label">' + esc(label) + '</span>' +
-    '<span class="bar-track"><span class="bar-fill' + (muted ? ' muted' : '') + '" style="width:' + esc(widthPercent) + '%"></span></span>' +
+    '<span class="bar-label">' + dot + esc(label) + '</span>' +
+    '<span class="bar-track"><span class="bar-fill' + (muted ? ' muted' : '') + '" style="' + fillStyle + '"></span></span>' +
     '<span class="bar-value num">' + esc(valueText) + '</span>';
   return row;
 }
@@ -68,8 +87,14 @@ function render(data){
   const asofEl = document.getElementById('asof-text');
   asofEl.textContent = data.totalTracked + ' open role' + (data.totalTracked === 1 ? '' : 's') + ' tracked · data as of ' + fmtDate(data.dataAsOf);
 
-  // Stat grid
   const grid = document.getElementById('stat-grid');
+  const countryBars = document.getElementById('country-bars');
+  const seniorityBars = document.getElementById('seniority-bars');
+  grid.innerHTML = '';
+  countryBars.innerHTML = '';
+  seniorityBars.innerHTML = '';
+
+  // Stat grid
   const trend = data.trend;
   const trendUp = trend.percentChange !== null && trend.percentChange > 0;
   const trendDown = trend.percentChange !== null && trend.percentChange < 0;
@@ -90,11 +115,13 @@ function render(data){
   ));
   grid.appendChild(statCard(fmtInt(data.sitesConfigured || data.sourceSites.length), null, 'Sites monitored', 'checked every second day'));
 
-  // Country bars
-  const countryBars = document.getElementById('country-bars');
+  // Country bars — colour-coded per country, same palette as the
+  // /jobmatch/ search bar's country pills, so the two pages read as one
+  // visual language.
   const countryTotal = data.totalTracked || 1;
   data.countries.forEach((c) => {
-    countryBars.appendChild(barRow(c.value, c.count, Math.max(2, (c.count / countryTotal) * 100), fmtInt(c.count) + ' · ' + Math.round((c.count / countryTotal) * 100) + '%'));
+    const color = COUNTRY_BY_VALUE.has(c.value) ? COUNTRY_BY_VALUE.get(c.value).text : null;
+    countryBars.appendChild(barRow(c.value, c.count, Math.max(2, (c.count / countryTotal) * 100), fmtInt(c.count) + ' · ' + Math.round((c.count / countryTotal) * 100) + '%', false, color));
   });
   if (data.unlocatedCount > 0) {
     countryBars.appendChild(barRow('Not clear', data.unlocatedCount, Math.max(2, (data.unlocatedCount / countryTotal) * 100), fmtInt(data.unlocatedCount) + ' · ' + Math.round((data.unlocatedCount / countryTotal) * 100) + '%', true));
@@ -106,7 +133,6 @@ function render(data){
   renderWorkStyleDonut(data);
 
   // Seniority ladder bars — fixed Entry → C-Level order (see SENIORITY_TIERS)
-  const seniorityBars = document.getElementById('seniority-bars');
   const levelCounts = {};
   data.experienceLevel.forEach((l) => { levelCounts[l.value] = l.count; });
   const seniorityTotal = SENIORITY_TIERS.reduce((sum, t) => sum + (levelCounts[t.value] || 0), 0);
@@ -287,20 +313,172 @@ function renderTicker(data) {
   track.innerHTML = item + item;
 }
 
+// Recomputes every aggregate render() and renderWorkStyleTrend() need,
+// straight from jobs.json's per-row rows, in the same shape data.json
+// already comes in. Lets the country filter below re-render the whole
+// page from a filtered row subset without a second network request.
+// Checked against a live data.json/jobs.json pair: with no filter applied
+// (i.e. every row), this reproduces data.json's own numbers exactly,
+// including the "posted this week vs last week" trend.
+function computeAggregates(jobs, dataAsOf, sitesConfigured) {
+  const now = new Date(dataAsOf);
+  const dayMs = 86400000;
+  let currentCount = 0, previousCount = 0, unlocatedCount = 0;
+  const countryCounts = new Map();
+  const sourceSiteCounts = new Map();
+  const workStyleCounts = new Map();
+  const experienceLevelCounts = new Map();
+
+  jobs.forEach((r) => {
+    const ageMs = now - new Date(r.date);
+    if (ageMs >= 0 && ageMs <= 7 * dayMs) currentCount++;
+    else if (ageMs > 7 * dayMs && ageMs <= 14 * dayMs) previousCount++;
+
+    if (r.country) countryCounts.set(r.country, (countryCounts.get(r.country) || 0) + 1);
+    else unlocatedCount++;
+    if (r.sourceSite) sourceSiteCounts.set(r.sourceSite, (sourceSiteCounts.get(r.sourceSite) || 0) + 1);
+    if (r.workStyle) workStyleCounts.set(r.workStyle, (workStyleCounts.get(r.workStyle) || 0) + 1);
+    if (r.experienceLevel) experienceLevelCounts.set(r.experienceLevel, (experienceLevelCounts.get(r.experienceLevel) || 0) + 1);
+  });
+
+  const toSortedArray = (map) => Array.from(map, ([value, count]) => ({ value, count })).sort((a, b) => b.count - a.count);
+  const percentChange = previousCount > 0 ? ((currentCount - previousCount) / previousCount) * 100 : null;
+
+  return {
+    dataAsOf,
+    totalTracked: jobs.length,
+    sitesConfigured,
+    trend: { periodDays: 7, currentCount, previousCount, percentChange },
+    countries: toSortedArray(countryCounts),
+    unlocatedCount,
+    sourceSites: toSortedArray(sourceSiteCounts),
+    workStyle: toSortedArray(workStyleCounts),
+    experienceLevel: toSortedArray(experienceLevelCounts),
+  };
+}
+
+// Country filter bar — same interaction pattern as /jobmatch/'s own search
+// bar and its country-tag autocomplete (see jobmatch.js), repurposed here
+// to filter this page's charts instead of a job search: picking a country
+// re-renders every chart from the filtered jobs.json subset, via
+// computeAggregates() above, rather than hard-filtering a list of jobs.
+let allJobs = null;
+let statsSnapshot = null; // { dataAsOf, sitesConfigured }, from data.json
+let selectedFilterCountries = [];
+
+const filterInput = document.getElementById('filter-input');
+const filterTagsEl = document.getElementById('filter-country-tags');
+const filterTagsLabelEl = document.getElementById('filter-tags-label');
+const filterSuggestionsEl = document.getElementById('filter-suggestions');
+
+function normalizeToken(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
+function renderFilterTags() {
+  if (!filterTagsEl) return;
+  filterTagsEl.innerHTML = '';
+  if (filterTagsLabelEl) filterTagsLabelEl.hidden = selectedFilterCountries.length === 0;
+  selectedFilterCountries.forEach((value) => {
+    const country = COUNTRY_BY_VALUE.get(value);
+    if (!country) return;
+    const tag = document.createElement('span');
+    tag.className = 'country-tag';
+    tag.style.background = country.bg;
+    tag.style.color = country.text;
+    tag.innerHTML = esc(country.value) + ' <button type="button" aria-label="Remove ' + esc(country.value) + ' filter">&times;</button>';
+    tag.querySelector('button').addEventListener('click', () => {
+      selectedFilterCountries = selectedFilterCountries.filter((v) => v !== value);
+      renderFilterTags();
+      applyFilter();
+      if (filterInput) filterInput.focus();
+    });
+    filterTagsEl.appendChild(tag);
+  });
+}
+
+function hideSuggestions() {
+  if (!filterSuggestionsEl) return;
+  filterSuggestionsEl.hidden = true;
+  filterSuggestionsEl.innerHTML = '';
+}
+
+function showSuggestions(query) {
+  if (!filterSuggestionsEl) return;
+  const token = normalizeToken(query);
+  const matches = COUNTRIES.filter((c) =>
+    !selectedFilterCountries.includes(c.value) && (token === '' || c.aliases.some((a) => a.startsWith(token)))
+  );
+  if (matches.length === 0) { hideSuggestions(); return; }
+  filterSuggestionsEl.innerHTML = '';
+  matches.forEach((c) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'country-suggestion';
+    btn.style.background = c.bg;
+    btn.style.color = c.text;
+    btn.textContent = c.value;
+    btn.addEventListener('click', () => selectFilterCountry(c.value));
+    filterSuggestionsEl.appendChild(btn);
+  });
+  filterSuggestionsEl.hidden = false;
+}
+
+function selectFilterCountry(value) {
+  if (!selectedFilterCountries.includes(value)) selectedFilterCountries.push(value);
+  if (filterInput) { filterInput.value = ''; filterInput.focus(); }
+  renderFilterTags();
+  hideSuggestions();
+  applyFilter();
+}
+
+function applyFilter() {
+  if (!allJobs || !statsSnapshot) return; // jobs.json/data.json not loaded yet
+  const jobs = selectedFilterCountries.length === 0
+    ? allJobs
+    : allJobs.filter((r) => r.country && selectedFilterCountries.includes(r.country));
+  render(computeAggregates(jobs, statsSnapshot.dataAsOf, statsSnapshot.sitesConfigured));
+  renderWorkStyleTrend(jobs);
+}
+
+if (filterInput) {
+  filterInput.addEventListener('input', () => showSuggestions(filterInput.value));
+  filterInput.addEventListener('focus', () => showSuggestions(filterInput.value));
+  filterInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && filterInput.value === '' && selectedFilterCountries.length > 0) {
+      selectedFilterCountries = selectedFilterCountries.slice(0, -1);
+      renderFilterTags();
+      applyFilter();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+    } else if (e.key === 'Escape') {
+      hideSuggestions();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#filter-form')) hideSuggestions();
+  });
+}
+
 fetch('./data.json')
   .then((res) => { if (!res.ok) throw new Error('data.json not found'); return res.json(); })
-  .then((data) => { render(data); renderTicker(data); })
+  .then((data) => {
+    render(data);
+    renderTicker(data);
+    statsSnapshot = { dataAsOf: data.dataAsOf, sitesConfigured: data.sitesConfigured };
+  })
   .catch(() => {
     document.getElementById('asof-text').textContent = 'Stats are temporarily unavailable, check back shortly.';
   });
 
 // Fetched independently of data.json above — a slow/failed jobs.json load
-// shouldn't hold up or break the rest of the page, it only feeds the one
-// trend chart.
+// shouldn't hold up or break the rest of the page. Feeds the trend chart,
+// and (via allJobs) the country filter bar above.
 fetch('./jobs.json')
   .then((res) => { if (!res.ok) throw new Error('jobs.json not found'); return res.json(); })
-  .then((jobs) => renderWorkStyleTrend(jobs))
+  .then((jobs) => { allJobs = jobs; renderWorkStyleTrend(jobs); })
   .catch(() => {
     const note = document.getElementById('workstyle-trend-note');
     if (note) note.textContent = 'Trend data is temporarily unavailable, check back shortly.';
+    if (filterInput) filterInput.placeholder = 'Filtering unavailable right now';
   });

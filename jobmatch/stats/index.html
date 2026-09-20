@@ -23,6 +23,53 @@
   .asof{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-soft);background:var(--bg-alt);border:1px solid var(--line);padding:8px 14px;border-radius:999px;}
   .asof-dot{width:7px;height:7px;border-radius:50%;background:var(--up);flex:none;}
 
+  /* Colour-coded country name inside the lede — same palette as the
+     /jobmatch/ search bar's country pills (see stats.js's COUNTRIES). */
+  .country-chip{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:700;font-size:0.85em;white-space:nowrap;}
+
+  /* Country filter bar, same visual language as /jobmatch/'s search bar
+     (search-form/search-field there) and its country-tag autocomplete —
+     styles below from country-tags-label down are copied from that page's
+     own <style>, repurposed here to filter this page's charts instead of
+     a job search. See stats.js's applyFilter()/computeAggregates(). */
+  .filter-form{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative;
+    margin:20px 0 0;padding:6px 6px 6px 16px;background:#fff;border:1px solid var(--line);
+    border-radius:999px;box-shadow:0 12px 32px -12px rgba(19,42,51,.14);
+  }
+  .filter-form:focus-within{border-color:var(--accent);box-shadow:0 14px 36px -12px rgba(18,184,146,.28);}
+  .filter-field{flex:1;min-width:180px;display:flex;align-items:center;flex-wrap:wrap;gap:6px;}
+  .filter-input{flex:1;min-width:120px;padding:10px 6px;border:none;border-radius:999px;font:inherit;font-size:14px;color:var(--ink);background:transparent;}
+  .filter-input:focus{outline:none;}
+  .filter-compare-link{
+    flex:none;background:var(--cta-bg);color:var(--accent-light);text-decoration:none;
+    padding:10px 20px;border-radius:999px;font-weight:700;font-size:13.5px;white-space:nowrap;transition:opacity .15s;
+  }
+  .filter-compare-link:hover{opacity:.85;}
+
+  .country-tags-label{flex:none;font-size:13px;font-weight:700;color:var(--ink-soft);white-space:nowrap;padding-left:2px;}
+  .country-tag{
+    display:inline-flex;align-items:center;gap:5px;flex:none;
+    padding:6px 8px 6px 12px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;
+  }
+  .country-tag button{border:none;background:none;cursor:pointer;color:inherit;opacity:.6;font-size:15px;line-height:1;padding:0 2px;font-family:inherit;}
+  .country-tag button:hover{opacity:1;}
+  .country-suggestions{
+    position:absolute;top:calc(100% + 8px);left:6px;right:6px;
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    box-shadow:0 12px 32px -12px rgba(19,42,51,.18);padding:8px;z-index:10;display:flex;flex-wrap:wrap;gap:6px;
+  }
+  .country-suggestion{
+    display:inline-flex;align-items:center;padding:7px 14px;border-radius:999px;
+    font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:inherit;
+  }
+  .country-suggestion:hover{opacity:.82;}
+
+  @media (max-width:640px){
+    .filter-form{border-radius:24px;}
+    .filter-compare-link{width:100%;text-align:center;}
+  }
+
   .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:40px 0 0;}
   .stat-card{background:#fff;padding:26px 24px;}
   .stat-value{font-size:clamp(26px,3vw,34px);font-weight:800;letter-spacing:-0.02em;}
@@ -37,7 +84,8 @@
 
   .bars{display:flex;flex-direction:column;gap:14px;}
   .bar-row{display:grid;grid-template-columns:150px 1fr 90px;align-items:center;gap:14px;}
-  .bar-label{font-size:14px;font-weight:600;}
+  .bar-label{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;}
+  .bar-dot{width:9px;height:9px;border-radius:50%;flex:none;}
   .bar-track{height:10px;background:var(--bg-alt);border-radius:999px;overflow:hidden;}
   .bar-fill{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .5s ease;}
   .bar-fill.muted{background:var(--line);}
@@ -122,8 +170,18 @@
     <div class="wrap">
       <span class="eyebrow">The Numbers</span>
       <h1>How the Nordic Ops market looks right now</h1>
-      <p class="lede">I'm keeping an eye on the operational jobs across Denmark, Estonia, Finland, Iceland, Latvia, Lithuania, Norway, and Sweden. Breakdown on skill trends, seniority split, remote policy development, and much more.</p>
+      <p class="lede">I'm keeping an eye on operational jobs across <span class="country-chip" style="background:#f6e3e1;color:#c0392b">Denmark</span>, <span class="country-chip" style="background:#e0e3e9;color:#1f3a5f">Estonia</span>, <span class="country-chip" style="background:#e2ebfc;color:#2f6fed">Finland</span>, <span class="country-chip" style="background:#e0f1ef;color:#1f9e8f">Iceland</span>, <span class="country-chip" style="background:#efe0e3;color:#8a1f3a">Latvia</span>, <span class="country-chip" style="background:#e2ece4;color:#2f7a3d">Lithuania</span>, <span class="country-chip" style="background:#e2e9f2;color:#2e5fa3">Norway</span>, and <span class="country-chip" style="background:#fbf3e0;color:#e0a622">Sweden</span>. Breakdown on skill trends, seniority split, remote policy development, and much more.</p>
       <span class="asof"><span class="asof-dot"></span><span id="asof-text">Loading latest data…</span></span>
+
+      <div class="filter-form" id="filter-form">
+        <div class="filter-field" id="filter-field">
+          <span class="country-tags-label" id="filter-tags-label" hidden>Showing only:</span>
+          <div class="country-tags" id="filter-country-tags"></div>
+          <input class="filter-input" id="filter-input" type="text" placeholder="Filter by country…" autocomplete="off">
+        </div>
+        <a class="filter-compare-link" href="compare/">Compare periods</a>
+        <div class="country-suggestions" id="filter-suggestions" hidden></div>
+      </div>
 
       <div class="stat-grid" id="stat-grid" aria-live="polite"></div>
     </div>
@@ -134,7 +192,7 @@
       <div class="section-head">
         <span class="eyebrow-alt">Where the roles are</span>
         <h2>A country breakdown of every open role</h2>
-        <p class="section-sub">This is the role's own working country: where the position is based, not the employer's HQ. Roles without a match are counted separately below rather than dropped, since "not clear" is a real category, not zero.</p>
+        <p class="section-sub">Zoom in on where the role is based.</p>
       </div>
       <div class="bars" id="country-bars"></div>
     </div>
