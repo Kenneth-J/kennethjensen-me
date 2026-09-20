@@ -113,7 +113,7 @@ function render(data){
     topCountry ? topCountry.value + ' leads' : 'No location data yet',
     topCountryShare !== null ? topCountryShare + '% of all tracked roles' : ''
   ));
-  grid.appendChild(statCard(fmtInt(data.sitesConfigured || data.sourceSites.length), null, 'Sites monitored', 'checked every second day'));
+  grid.appendChild(statCard(fmtInt(data.sitesConfigured || data.sourceSites.length), null, 'Sites monitored', 'checked every second day, last check on ' + fmtDate(data.dataAsOf)));
 
   // Country bars — colour-coded per country, same palette as the
   // /jobmatch/ search bar's country pills, so the two pages read as one
@@ -370,6 +370,7 @@ const filterInput = document.getElementById('filter-input');
 const filterTagsEl = document.getElementById('filter-country-tags');
 const filterTagsLabelEl = document.getElementById('filter-tags-label');
 const filterSuggestionsEl = document.getElementById('filter-suggestions');
+const filterSearchBtn = document.getElementById('filter-search');
 
 function normalizeToken(s) {
   return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
@@ -548,12 +549,21 @@ if (filterInput) {
       applyFilter();
     } else if (e.key === 'Enter') {
       e.preventDefault();
+      hideSuggestions();
+      applyFilter();
     } else if (e.key === 'Escape') {
       hideSuggestions();
     }
   });
   document.addEventListener('click', (e) => {
     if (!e.target.closest('#filter-form')) hideSuggestions();
+  });
+}
+
+if (filterSearchBtn) {
+  filterSearchBtn.addEventListener('click', () => {
+    hideSuggestions();
+    applyFilter();
   });
 }
 
