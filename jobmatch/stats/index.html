@@ -74,6 +74,16 @@
 
   .empty-state{color:var(--ink-faint);font-size:14px;font-style:italic;}
 
+  /* Hand-drawn downward arrow after the H1, pointing at the "as of" line
+     below it. The anchor span is zero-sized and sits inline right after
+     "now" in the text flow, so wherever that word wraps to, the absolutely
+     positioned arrow hangs off it without adding to the H1's height or
+     shifting the lede/stat grid beneath. */
+  h1{position:relative;}
+  .arrow-anchor{position:relative;display:inline-block;width:0;height:0;}
+  .down-arrow{position:absolute;top:6px;left:8px;width:26px;height:30px;max-width:none;overflow:visible;}
+  .down-arrow path{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
+
   @media (max-width:760px){
     .stat-grid{grid-template-columns:repeat(2,1fr);}
     .bar-row{grid-template-columns:110px 1fr 60px;}
@@ -121,7 +131,7 @@
   <section class="hero">
     <div class="wrap">
       <span class="eyebrow">The Numbers</span>
-      <h1>How the Nordic Ops market looks right now</h1>
+      <h1>How the Nordic Ops market looks right now<span class="arrow-anchor" aria-hidden="true"><svg class="down-arrow" viewBox="0 0 26 30" xmlns="http://www.w3.org/2000/svg"><path d="M13 2 C 10 8, 16 13, 12 19 C 10 22, 14 24, 13 27"/><path d="M5 20 C 7 23, 10 26, 13 28 C 15 25, 18 23, 20 20"/></svg></span></h1>
       <p class="lede">I'm keeping an eye on the operational jobs across Denmark, Estonia, Finland, Iceland, Latvia, Lithuania, Norway, and Sweden. Breakdown on skill trends, seniority split, remote policy development, and much more.</p>
       <span class="asof"><span class="asof-dot"></span><span id="asof-text">Loading latest data…</span></span>
 
