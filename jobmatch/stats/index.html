@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>JobMatch Stats, the Nordic Operations job market</title>
-<meta name="description" content="Live counts from JobMatch's own Operations job tracker: how many roles are open, where they are, who posts them, and how that's moved week over week.">
+<title>Analytics for Operations jobs across Baltic and Nordics</title>
+<meta name="description" content="Analytics for tracking open roles within the operational domain across Denmark, Estonia, Finland, Iceland, Latvia, Lithuania, Norway, and Sweden.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -111,8 +111,7 @@
       JobMatch
     </a>
     <div class="nav-right">
-      <a href="./" class="current">Stats</a>
-      <a href="compare/">Compare</a>
+      <a href="./" class="current">Analytics</a>
       <a href="../../">← kennethjensen.me</a>
     </div>
   </nav>
@@ -122,8 +121,8 @@
   <section class="hero">
     <div class="wrap">
       <span class="eyebrow">The Numbers</span>
-      <h1>How the Nordic Ops market looks right now.</h1>
-      <p class="lede">Every figure on this page comes straight out of JobMatch's own tracker, the same one that scans job sites across the Nordics every second day. Nothing here is curated for the page, it's just the data as it stands.</p>
+      <h1>How the Nordic Ops market looks right now</h1>
+      <p class="lede">I'm keeping an eye on the operational jobs across Denmark, Estonia, Finland, Iceland, Latvia, Lithuania, Norway, and Sweden. Breakdown on skill trends, seniority split, remote policy development, and much more.</p>
       <span class="asof"><span class="asof-dot"></span><span id="asof-text">Loading latest data…</span></span>
 
       <div class="stat-grid" id="stat-grid" aria-live="polite"></div>
@@ -135,7 +134,7 @@
       <div class="section-head">
         <span class="eyebrow-alt">Where the roles are</span>
         <h2>A country breakdown of every open role</h2>
-        <p class="section-sub">This is the role's own working country: where the position is based, not the employer's HQ. Roles without a match are counted separately below rather than dropped, since "not yet placed" is a real category, not zero.</p>
+        <p class="section-sub">This is the role's own working country: where the position is based, not the employer's HQ. Roles without a match are counted separately below rather than dropped, since "not clear" is a real category, not zero.</p>
       </div>
       <div class="bars" id="country-bars"></div>
     </div>
@@ -144,13 +143,13 @@
   <section id="how-people-work">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow-alt">Early signal</span>
+        <span class="eyebrow-alt">Location policy</span>
         <h2>Remote, hybrid or on-site</h2>
-        <p class="section-sub">Only some roles state a work style at all — the donut leads with that share rather than hiding it, and the trend alongside tracks real weekly volume instead of a single static ratio.</p>
+        <p class="section-sub">Only some roles state a work style at all; the donut leads with that share rather than hiding it, and the trend alongside tracks real weekly volume instead of a single static ratio.</p>
       </div>
       <div class="workstyle-grid">
         <div>
-          <h3 class="mini-head">Composition</h3>
+          <h3 class="mini-head">Latest split</h3>
           <div class="donut-wrap">
             <svg id="workstyle-donut" width="180" height="180" role="img" aria-label="Share of roles by work style"></svg>
             <div class="donut-legend" id="workstyle-legend"></div>
@@ -174,7 +173,7 @@
       <div class="section-head">
         <span class="eyebrow-alt">Career ladder</span>
         <h2>Seniority, Entry to C-Level</h2>
-        <p class="section-sub">Every classified role's title gets a seniority read: Entry, Junior, Mid, Senior, or C-Level, always shown in that order rather than by count. Bar length is share of every seniority-classified role.</p>
+        <p class="section-sub">Across all countries, what's the split on seniority?</p>
       </div>
       <div class="seniority-bars" id="seniority-bars"></div>
     </div>

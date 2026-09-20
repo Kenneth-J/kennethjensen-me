@@ -80,7 +80,7 @@ function render(data){
   const topCountry = data.countries[0];
   const topCountryShare = topCountry && data.totalTracked ? Math.round((topCountry.count / data.totalTracked) * 100) : null;
 
-  grid.appendChild(statCard(fmtInt(data.totalTracked), null, 'Open roles tracked', 'across ' + fmtCount(data.sourceSites.length, 'site') + ' with matches so far'));
+  grid.appendChild(statCard(fmtInt(data.totalTracked), null, 'Open roles tracked', 'out of ' + fmtInt(data.sitesConfigured || data.sourceSites.length) + ' sites tracked, ' + fmtCount(data.sourceSites.length, 'site') + ' carried an interesting job'));
   grid.appendChild(statCard(fmtInt(trend.currentCount), null, 'Posted this week', trendText, trendUp ? 'up' : (trendDown ? 'down' : '')));
   grid.appendChild(statCard(
     topCountry ? fmtInt(topCountry.count) : '-',
@@ -97,7 +97,7 @@ function render(data){
     countryBars.appendChild(barRow(c.value, c.count, Math.max(2, (c.count / countryTotal) * 100), fmtInt(c.count) + ' · ' + Math.round((c.count / countryTotal) * 100) + '%'));
   });
   if (data.unlocatedCount > 0) {
-    countryBars.appendChild(barRow('Not yet placed', data.unlocatedCount, Math.max(2, (data.unlocatedCount / countryTotal) * 100), fmtInt(data.unlocatedCount) + ' · ' + Math.round((data.unlocatedCount / countryTotal) * 100) + '%', true));
+    countryBars.appendChild(barRow('Not clear', data.unlocatedCount, Math.max(2, (data.unlocatedCount / countryTotal) * 100), fmtInt(data.unlocatedCount) + ' · ' + Math.round((data.unlocatedCount / countryTotal) * 100) + '%', true));
   }
   if (data.countries.length === 0 && data.unlocatedCount === 0) {
     countryBars.innerHTML = '<p class="empty-state">No roles tracked yet.</p>';
@@ -266,7 +266,7 @@ function renderWorkStyleTrend(jobs) {
     xLabels;
 
   const last = points[points.length - 1];
-  note.textContent = `Last ${points.length} weeks with tracked postings — latest week: ${fmtInt(last.onsite)} on-site, ${fmtInt(last.remoteHybrid)} remote/hybrid.`;
+  note.textContent = `Last ${points.length} weeks with tracked postings; latest week: ${fmtInt(last.onsite)} on-site, ${fmtInt(last.remoteHybrid)} remote/hybrid.`;
 }
 
 // Top stat ticker — reuses the same data.json fetch as the stats page below
