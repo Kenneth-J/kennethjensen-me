@@ -71,7 +71,7 @@ document.querySelectorAll('.accordion-item').forEach((item) => {
   // own trend chart already relies on, fetched fresh here since the
   // homepage doesn't otherwise load it. A rolling 7-day-vs-previous-7-day
   // window (not calendar-week-aligned), so there's no partial-current-week
-  // artifact, same convention as data.json's own top-level trend field.
+  // artefact, same convention as data.json's own top-level trend field.
   // excludeTags: the tags already shown as trending — a high-volume tag can
   // legitimately be both "most common overall" and "biggest raw decline"
   // (its scale alone makes for a big absolute delta), which read as a

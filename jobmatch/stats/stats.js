@@ -57,7 +57,7 @@ function seniorityRow(label, widthPercent, valueText, color){
 // Same country list, aliases and colours as jobmatch/jobmatch.js's own
 // COUNTRIES — duplicated rather than shared (this is a static site, no
 // build step to import a common module across the two page bundles).
-// Colors are loosely flag-inspired; `bg` is `text` mixed ~14% into white.
+// Colours are loosely flag-inspired; `bg` is `text` mixed ~14% into white.
 const COUNTRIES = [
   { value: 'Denmark', aliases: ['denmark', 'danmark'], text: '#c0392b', bg: '#f6e3e1' },
   { value: 'Norway', aliases: ['norway', 'norge'], text: '#2e5fa3', bg: '#e2e9f2' },
@@ -151,7 +151,7 @@ function render(data){
 // picked over the plain chip list that used to sit here specifically so
 // the "63% not stated" reality stays visible instead of getting silently
 // dropped once there was finally enough data to justify a chart at all —
-// see the donut's own center label and the section's lede paragraph.
+// see the donut's own centre label and the section's lede paragraph.
 function renderWorkStyleDonut(data) {
   const svg = document.getElementById('workstyle-donut');
   const legend = document.getElementById('workstyle-legend');

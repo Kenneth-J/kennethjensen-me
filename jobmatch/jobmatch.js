@@ -36,8 +36,8 @@ const resultsEmpty = document.getElementById('results-empty');
 // `aliases` are what a visitor might actually type — English name, native
 // name(s), common alternate spellings — matched as a prefix against the
 // last word being typed, case/diacritic-insensitive (see normalizeToken()).
-// Colors are loosely flag-inspired, for quick visual recognition rather
-// than exact national-color accuracy; `bg` is `text` mixed ~14% into
+// Colours are loosely flag-inspired, for quick visual recognition rather
+// than exact national-colour accuracy; `bg` is `text` mixed ~14% into
 // white, same tint ratio as this site's other soft-accent pills.
 const COUNTRIES = [
   { value: 'Denmark', aliases: ['denmark', 'danmark'], text: '#c0392b', bg: '#f6e3e1' },
@@ -307,7 +307,7 @@ function loadCorpus() {
 }
 
 // Both the query vector (below) and every job's stored embedding
-// (search-data.json, written by src/search.js) are already L2-normalized —
+// (search-data.json, written by src/search.js) are already L2-normalised —
 // normalize: true on both sides — so a plain dot product already IS cosine
 // similarity here; no separate magnitude division needed.
 function dot(a, b) {
