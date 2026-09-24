@@ -171,9 +171,10 @@ section{padding:84px 0;}
 }
 .contact-email svg{width:24px;height:24px;flex:none;color:var(--accent);}
 .contact-note{color:var(--ink-soft);font-size:14.5px;margin-top:22px;}
+#contact .wrap{text-align:center;}
 
 footer{border-top:1px solid var(--line);padding:34px 0;}
-footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+footer .wrap{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:16px;}
 .footer-left{font-size:14px;color:var(--ink-soft);}
 .footer-right a{font-size:14px;color:var(--ink-soft);text-decoration:none;}
 .footer-right a:hover{color:var(--accent);}

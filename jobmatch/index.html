@@ -190,26 +190,11 @@
   .job-salary{font-size:13px;color:var(--ink-soft);margin:0 0 4px;}
   .empty-state{text-align:center;padding:40px 0;color:var(--ink-soft);font-size:15px;}
 
-  #how{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .how-card{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-    padding:30px 26px;
-  }
-  .how-icon{
-    width:44px;height:44px;border-radius:12px;background:var(--accent-soft);
-    display:flex;align-items:center;justify-content:center;margin-bottom:20px;
-  }
-  .how-icon svg{width:22px;height:22px;}
-  .how-card h3{font-size:18px;font-weight:700;margin:0 0 10px;letter-spacing:-0.01em;}
-  .how-card p{font-size:14.5px;color:var(--ink-soft);margin:0;}
-
   #signup .wrap{text-align:center;}
   #signup .section-head{margin:0 auto;}
 
   @media (max-width:860px){
     .brand-text{display:none;}
-    .how-grid{grid-template-columns:1fr;}
     .search-form{flex-direction:column;border-radius:24px;}
     .search-submit{width:100%;}
   }
@@ -232,7 +217,7 @@
 <body>
 
 <div class="stat-ticker" id="stat-ticker">
-  <a class="stat-ticker-label" href="https://kennethjensen.me/jobmatch/stats/"><span class="label-full">Nordic/Baltic open operations jobs right now:</span><span class="label-short">Open ops jobs:</span></a>
+  <a class="stat-ticker-label" href="https://kennethjensen.me/jobmatch/stats/"><span class="label-full">Nordic/Baltic operations jobs right now:</span><span class="label-short">Open ops jobs:</span></a>
   <div class="stat-ticker-scroll">
     <div class="stat-ticker-track" id="stat-ticker-track">
       <a class="stat-ticker-item" href="https://kennethjensen.me/jobmatch/stats/">Loading live data&hellip;</a>
@@ -258,7 +243,7 @@
       <span class="brand-text">JobMatch</span>
     </a>
     <div class="nav-right">
-      <a class="back-link" href="stats/">Live stats</a>
+      <a class="back-link" href="stats/">Job Analytics</a>
       <a class="back-link" href="../">← kennethjensen.me</a>
     </div>
   </nav>
@@ -302,39 +287,6 @@
       <div id="results-count" class="results-count" style="display:none;"></div>
       <div id="job-grid" class="job-grid"></div>
       <div id="results-empty" class="empty-state" style="display:none;">No matching jobs right now. Try a broader search.</div>
-    </div>
-  </section>
-
-  <section id="how">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow-alt">How it works</span>
-        <h2>Three steps, no scrolling required</h2>
-        <p class="section-sub">JobMatch does the searching across the Nordics so you don't have to.</p>
-      </div>
-      <div class="how-grid">
-        <div class="how-card">
-          <div class="how-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#12b892" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-          </div>
-          <h3>Tracked across the Nordics</h3>
-          <p>Operations roles, mobility, automotive, logistics and beyond, are pulled from a set of Nordic and remote-friendly job sites on a regular schedule.</p>
-        </div>
-        <div class="how-card">
-          <div class="how-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#12b892" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m6.8 6.8-2.8-2.8"/><circle cx="12" cy="12" r="6"/><path d="M12 12v-3"/></svg>
-          </div>
-          <h3>Filtered by AI</h3>
-          <p>Each role is checked against Operations-focused criteria and tagged for fit, cutting out roles that would just waste your time.</p>
-        </div>
-        <div class="how-card">
-          <div class="how-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#12b892" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-          </div>
-          <h3>Ranked for what you search</h3>
-          <p>Search finds the roles that actually match what you typed, ranked by fit (not just keywords), so you spend your time applying, not scrolling.</p>
-        </div>
-      </div>
     </div>
   </section>
 
