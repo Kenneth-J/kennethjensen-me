@@ -1,5 +1,5 @@
 /* Shared design tokens + base chrome across kennethjensen.me and every
-   JobMatch page under it (search, stats, compare) — extracted 2026-09-16
+   JobMatch page under it (search, stats) — extracted 2026-09-16
    so a palette/type change (like the niniaazzopardi.com-inspired redesign)
    happens in one file instead of four copies that drift apart over time.
    Page-specific layout (hero art, job cards, stat grids, period pickers,
@@ -22,8 +22,8 @@
   --line:#dcf0ea;
   --up:#1a8a5f;
   --down:#c0392b;
-  /* Compare-page-only pair (period A / period B) — kept here since both
-     pages that use it need the exact same pair, but harmless as unused
+  /* Compare-mode-only pair (period A / period B), used by /jobmatch/stats/
+     when its Compare periods toggle is active — harmless as unused
      custom properties on every other page. */
   --a:#12b892;
   --a-soft:#e2f7f1;

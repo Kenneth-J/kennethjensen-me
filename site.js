@@ -67,8 +67,8 @@ document.querySelectorAll('.accordion-item').forEach((item) => {
   // Flattening tags: the 3 tags with the biggest week-over-week drop in
   // count, as a red-toned counterpart to "trending" (data.json's tags,
   // sorted by raw current count). Needs jobs.json (per-row, dated) rather
-  // than the pre-aggregated data.json — same file the Stats/Compare pages'
-  // own trend chart already relies on, fetched fresh here since the
+  // than the pre-aggregated data.json — same file the Stats page's own
+  // trend chart already relies on, fetched fresh here since the
   // homepage doesn't otherwise load it. A rolling 7-day-vs-previous-7-day
   // window (not calendar-week-aligned), so there's no partial-current-week
   // artefact, same convention as data.json's own top-level trend field.

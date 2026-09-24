@@ -215,9 +215,9 @@ function fmtWeekLabel(weekKeyStr) {
   return new Date(weekKeyStr + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
 }
 
-// Sunday-anchored week bucket, same convention as compare.js's own date
-// handling on this same page family — keeps "which week is this row in"
-// consistent if the two ever need to agree on one.
+// Sunday-anchored week bucket, same convention Compare mode's own period
+// date-math further down this file uses — keeps "which week is this row
+// in" consistent between the two.
 function workStyleWeekKey(date) {
   const d0 = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
   d0.setUTCDate(d0.getUTCDate() - d0.getUTCDay());
@@ -237,8 +237,8 @@ function niceAxisMax(n) {
 
 // jobs.json (per-row, dated) is fetched separately from data.json (the
 // pre-aggregated snapshot) purely because a weekly trend needs individual
-// dates data.json doesn't carry — same file the Compare page already
-// relies on, no new export needed.
+// dates data.json doesn't carry — same file Compare mode further down
+// this file relies on, no new export needed.
 function renderWorkStyleTrend(jobs) {
   const svg = document.getElementById('workstyle-trend');
   const note = document.getElementById('workstyle-trend-note');
@@ -601,6 +601,341 @@ if (tagFilterInput) {
   });
 }
 
+// ---------------------------------------------------------------------
+// Compare mode — ported from the former /jobmatch/stats/compare/ page,
+// now an in-page mode toggled via #mode-toggle instead of a separate
+// route. Reuses this page's own allJobs (already fetched below for the
+// country filter/trend chart) rather than issuing a second jobs.json
+// request the way the old standalone page had to.
+// ---------------------------------------------------------------------
+const MS_PER_DAY = 86400000;
+const DEFAULT_PERIOD_DAYS = 30;
+
+// URL date format is MM-DD-YYYY, matching the old /compare/ page's own
+// links — deliberately not ISO, so a pasted link reads the same way an
+// American calendar date would. Kept as-is so a comparison already shared
+// as a link still parses once opened against this page's own
+// ?compare=1&date1=&date2=&days= params.
+function formatDateParam(date){
+  const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const dd = String(date.getUTCDate()).padStart(2, '0');
+  const yyyy = date.getUTCFullYear();
+  return `${mm}-${dd}-${yyyy}`;
+}
+function parseDateParam(str){
+  const m = /^(\d{1,2})-(\d{1,2})-(\d{4})$/.exec(str || '');
+  if (!m) return null;
+  const [, mm, dd, yyyy] = m;
+  const date = new Date(Date.UTC(Number(yyyy), Number(mm) - 1, Number(dd)));
+  return isNaN(date.getTime()) ? null : date;
+}
+function toDateInputValue(date){ return date.toISOString().slice(0, 10); }
+function fmtDateLabel(date){
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+}
+function addDays(date, days){ return new Date(date.getTime() + days * MS_PER_DAY); }
+function daysBetween(a, b){ return Math.round((b.getTime() - a.getTime()) / MS_PER_DAY); }
+function clamp(n, min, max){ return Math.min(Math.max(n, min), max); }
+function periodWindow(periodDays, endDate){
+  return { start: addDays(endDate, -periodDays), end: endDate };
+}
+
+let compareEarliestDate = null;
+let compareTodayDate = null;
+let compareWired = false;
+let currentMode = 'latest';
+
+const modeToggleBtn = document.getElementById('mode-toggle');
+const compareControlsEl = document.getElementById('compare-controls');
+const compareResultsEl = document.getElementById('compare-results');
+const geographySectionEl = document.getElementById('geography');
+
+const cmp = {
+  periodDays: document.getElementById('period-days'),
+  aSlider: document.getElementById('a-slider'),
+  bSlider: document.getElementById('b-slider'),
+  aDate: document.getElementById('a-date'),
+  bDate: document.getElementById('b-date'),
+  aRangeText: document.getElementById('a-range-text'),
+  bRangeText: document.getElementById('b-range-text'),
+  legendA: document.getElementById('legend-a'),
+  legendB: document.getElementById('legend-b'),
+  headlineGrid: document.getElementById('headline-grid'),
+  compareRows: document.getElementById('compare-rows'),
+  copyLink: document.getElementById('copy-link'),
+  copyLinkText: document.getElementById('copy-link-text'),
+};
+
+function sliderValueToDate(value){ return addDays(compareEarliestDate, Number(value)); }
+function dateToSliderValue(date){ return clamp(daysBetween(compareEarliestDate, date), 0, daysBetween(compareEarliestDate, compareTodayDate)); }
+
+function setCompareSliderRanges(){
+  const max = daysBetween(compareEarliestDate, compareTodayDate);
+  [cmp.aSlider, cmp.bSlider].forEach((el) => { el.min = 0; el.max = Math.max(max, 1); el.step = 1; });
+  [cmp.aDate, cmp.bDate].forEach((el) => {
+    el.min = toDateInputValue(compareEarliestDate);
+    el.max = toDateInputValue(compareTodayDate);
+  });
+}
+
+function currentPeriodDays(){ return Number(cmp.periodDays.value) || DEFAULT_PERIOD_DAYS; }
+
+function endDateFor(which){
+  const slider = which === 'a' ? cmp.aSlider : cmp.bSlider;
+  return sliderValueToDate(slider.value);
+}
+
+function syncCompareFromSlider(which){
+  const date = endDateFor(which);
+  (which === 'a' ? cmp.aDate : cmp.bDate).value = toDateInputValue(date);
+  renderCompare();
+}
+function syncCompareFromDateInput(which){
+  const input = which === 'a' ? cmp.aDate : cmp.bDate;
+  const date = new Date(input.value + 'T00:00:00Z');
+  if (isNaN(date.getTime())) return;
+  (which === 'a' ? cmp.aSlider : cmp.bSlider).value = dateToSliderValue(date);
+  renderCompare();
+}
+
+function updateCompareUrl(){
+  const days = currentPeriodDays();
+  const params = new URLSearchParams();
+  params.set('compare', '1');
+  params.set('date1', formatDateParam(endDateFor('a')));
+  params.set('date2', formatDateParam(endDateFor('b')));
+  if (days !== DEFAULT_PERIOD_DAYS) params.set('days', String(days));
+  history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+}
+
+function countBy(records, getField){
+  const m = new Map();
+  for (const r of records){
+    const v = getField(r);
+    if (v == null) continue;
+    m.set(v, (m.get(v) || 0) + 1);
+  }
+  return Array.from(m.entries()).map(([value, count]) => ({ value, count })).sort((a, b) => b.count - a.count);
+}
+
+function summarizePeriod(start, end){
+  const inPeriod = (allJobs || []).filter((r) => {
+    const d = new Date(r.date);
+    return d >= start && d < end;
+  });
+  const tagCounts = new Map();
+  inPeriod.forEach((r) => (r.tags || []).forEach((t) => tagCounts.set(t, (tagCounts.get(t) || 0) + 1)));
+  const tags = Array.from(tagCounts.entries()).map(([value, count]) => ({ value, count })).sort((a, b) => b.count - a.count);
+  return {
+    total: inPeriod.length,
+    countries: countBy(inPeriod, (r) => r.country),
+    sites: countBy(inPeriod, (r) => r.sourceSite),
+    workStyle: countBy(inPeriod, (r) => r.workStyle),
+    language: countBy(inPeriod, (r) => r.language),
+    tags,
+    withSalary: inPeriod.filter((r) => r.salaryMin != null || r.salaryMax != null).length,
+  };
+}
+
+function deltaText(a, b){
+  if (a === 0 && b === 0) return { text: 'no change', cls: 'flat' };
+  if (a === 0) return { text: `+${fmtInt(b)}`, cls: 'up' };
+  const pct = ((b - a) / a) * 100;
+  const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat';
+  const sign = pct > 0 ? '+' : '';
+  return { text: `${sign}${pct.toFixed(0)}% vs Period A`, cls };
+}
+
+function headlineCard(label, aVal, bVal){
+  const card = document.createElement('div');
+  card.className = 'headline-card';
+  const delta = deltaText(aVal, bVal);
+  card.innerHTML =
+    '<div class="label">' + esc(label) + '</div>' +
+    '<div class="values"><span class="a-val num">' + fmtInt(aVal) + '</span><span class="vs">vs</span><span class="b-val num">' + fmtInt(bVal) + '</span></div>' +
+    '<div class="delta ' + esc(delta.cls) + '">' + esc(delta.text) + '</div>';
+  return card;
+}
+
+function compareBarLine(count, max, cls){
+  const line = document.createElement('div');
+  line.className = 'compare-bar-line';
+  const pct = max > 0 ? Math.max(2, (count / max) * 100) : 0;
+  line.innerHTML =
+    '<span class="compare-track"><span class="compare-fill ' + esc(cls) + '" style="width:' + pct + '%"></span></span>' +
+    '<span class="compare-value num">' + fmtInt(count) + '</span>';
+  return line;
+}
+
+function compareRow(label, aItems, bItems, limit = 5){
+  const row = document.createElement('div');
+  row.className = 'compare-row';
+  const names = new Set([...aItems.slice(0, limit).map((i) => i.value), ...bItems.slice(0, limit).map((i) => i.value)]);
+  if (names.size === 0){
+    row.innerHTML = '<span class="compare-row-label">' + esc(label) + '</span><span class="empty-state">No data in either period yet.</span>';
+    return row;
+  }
+  const aMap = new Map(aItems.map((i) => [i.value, i.count]));
+  const bMap = new Map(bItems.map((i) => [i.value, i.count]));
+  const maxCount = Math.max(1, ...Array.from(names).map((n) => Math.max(aMap.get(n) || 0, bMap.get(n) || 0)));
+  const bars = document.createElement('div');
+  bars.className = 'compare-bars';
+  Array.from(names).slice(0, limit).forEach((name) => {
+    const wrap = document.createElement('div');
+    wrap.style.marginBottom = '4px';
+    const nameEl = document.createElement('div');
+    nameEl.style.fontSize = '12.5px';
+    nameEl.style.color = 'var(--ink-soft)';
+    nameEl.style.marginBottom = '3px';
+    nameEl.textContent = name;
+    wrap.appendChild(nameEl);
+    wrap.appendChild(compareBarLine(aMap.get(name) || 0, maxCount, 'a'));
+    wrap.appendChild(compareBarLine(bMap.get(name) || 0, maxCount, 'b'));
+    bars.appendChild(wrap);
+  });
+  row.innerHTML = '<span class="compare-row-label">' + esc(label) + '</span>';
+  row.appendChild(bars);
+  return row;
+}
+
+function renderCompare(){
+  if (!allJobs || !compareEarliestDate) return; // jobs.json not loaded yet
+  const days = currentPeriodDays();
+  const aEnd = endDateFor('a');
+  const bEnd = endDateFor('b');
+  const aWindow = periodWindow(days, aEnd);
+  const bWindow = periodWindow(days, bEnd);
+
+  cmp.aRangeText.textContent = fmtDateLabel(aWindow.start) + ' – ' + fmtDateLabel(aWindow.end);
+  cmp.bRangeText.textContent = fmtDateLabel(bWindow.start) + ' – ' + fmtDateLabel(bWindow.end);
+  cmp.legendA.textContent = 'Period A · ' + fmtDateLabel(aWindow.start) + ' – ' + fmtDateLabel(aWindow.end);
+  cmp.legendB.textContent = 'Period B · ' + fmtDateLabel(bWindow.start) + ' – ' + fmtDateLabel(bWindow.end);
+
+  const a = summarizePeriod(aWindow.start, aWindow.end);
+  const b = summarizePeriod(bWindow.start, bWindow.end);
+
+  cmp.headlineGrid.innerHTML = '';
+  cmp.headlineGrid.appendChild(headlineCard('Roles tracked', a.total, b.total));
+  cmp.headlineGrid.appendChild(headlineCard('Roles with a salary', a.withSalary, b.withSalary));
+  cmp.headlineGrid.appendChild(headlineCard(
+    'Top working country',
+    a.countries[0] ? a.countries[0].count : 0,
+    b.countries[0] ? b.countries[0].count : 0
+  ));
+
+  cmp.compareRows.innerHTML = '';
+  cmp.compareRows.appendChild(compareRow('Working countries', a.countries, b.countries));
+  cmp.compareRows.appendChild(compareRow('Source sites', a.sites, b.sites));
+  cmp.compareRows.appendChild(compareRow('Work style', a.workStyle, b.workStyle));
+  cmp.compareRows.appendChild(compareRow('Tags', a.tags, b.tags));
+  cmp.compareRows.appendChild(compareRow('Language', a.language, b.language));
+
+  updateCompareUrl();
+}
+
+function initCompareFromUrlOrDefault(){
+  const params = new URLSearchParams(location.search);
+  const days = Number(params.get('days')) || DEFAULT_PERIOD_DAYS;
+  cmp.periodDays.value = String([7, 14, 30, 90].includes(days) ? days : DEFAULT_PERIOD_DAYS);
+
+  const date1 = parseDateParam(params.get('date1'));
+  const date2 = parseDateParam(params.get('date2'));
+
+  const bEnd = date2 && date2 <= compareTodayDate && date2 >= compareEarliestDate ? date2 : compareTodayDate;
+  const aEnd = date1 && date1 <= compareTodayDate && date1 >= compareEarliestDate ? date1 : addDays(bEnd, -currentPeriodDays());
+
+  cmp.aSlider.value = dateToSliderValue(aEnd);
+  cmp.bSlider.value = dateToSliderValue(bEnd);
+  cmp.aDate.value = toDateInputValue(sliderValueToDate(cmp.aSlider.value));
+  cmp.bDate.value = toDateInputValue(sliderValueToDate(cmp.bSlider.value));
+}
+
+function wireCompareEvents(){
+  if (compareWired) return;
+  compareWired = true;
+  cmp.aSlider.addEventListener('input', () => syncCompareFromSlider('a'));
+  cmp.bSlider.addEventListener('input', () => syncCompareFromSlider('b'));
+  cmp.aDate.addEventListener('change', () => syncCompareFromDateInput('a'));
+  cmp.bDate.addEventListener('change', () => syncCompareFromDateInput('b'));
+  cmp.periodDays.addEventListener('change', renderCompare);
+  cmp.copyLink.addEventListener('click', () => {
+    navigator.clipboard.writeText(location.href).then(() => {
+      cmp.copyLink.classList.add('copied');
+      cmp.copyLinkText.textContent = 'Link copied';
+      setTimeout(() => {
+        cmp.copyLink.classList.remove('copied');
+        cmp.copyLinkText.textContent = 'Copy share link';
+      }, 1800);
+    }).catch(() => {});
+  });
+}
+
+// One-time setup once jobs.json has loaded — mirrors the former /compare/
+// page's own onload handler, just triggered from this page's existing
+// jobs.json fetch below instead of a second request.
+function setupCompareControls(jobs){
+  compareTodayDate = new Date(Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), new Date().getUTCDate()));
+  const dates = jobs.map((r) => new Date(r.date)).filter((d) => !isNaN(d.getTime()));
+  compareEarliestDate = dates.length ? new Date(Math.min(...dates.map((d) => d.getTime()))) : addDays(compareTodayDate, -DEFAULT_PERIOD_DAYS);
+  compareEarliestDate = new Date(Date.UTC(compareEarliestDate.getUTCFullYear(), compareEarliestDate.getUTCMonth(), compareEarliestDate.getUTCDate()));
+
+  setCompareSliderRanges();
+  initCompareFromUrlOrDefault();
+  wireCompareEvents();
+  if (currentMode === 'compare') renderCompare();
+}
+
+// Mode toggle — switches the page between the default "Latest snapshot"
+// view (filter bar + stat grid + geography/workstyle/seniority sections)
+// and "Compare periods" (period pickers + headline deltas + compare-rows).
+// Judgement calls: #how-people-work stays visible in both modes since its
+// donut+trend are chrome-only and independent of Period A/B; #geography
+// is hidden in Compare mode since its single-period country bars would
+// otherwise duplicate compare-rows' own "Working countries" line;
+// #seniority has no Compare-mode equivalent, so it stays visible in both.
+function setMode(mode, opts){
+  opts = opts || {};
+  currentMode = mode;
+  const isCompare = mode === 'compare';
+
+  const filterFieldEl = document.getElementById('filter-field');
+  const tagFilterFormEl = document.getElementById('tag-filter-form');
+  if (filterFieldEl) filterFieldEl.hidden = isCompare;
+  if (filterSearchBtn) filterSearchBtn.hidden = isCompare;
+  if (tagFilterFormEl) tagFilterFormEl.hidden = isCompare;
+  if (statGridEl) statGridEl.hidden = isCompare;
+  if (geographySectionEl) geographySectionEl.hidden = isCompare;
+
+  if (compareControlsEl) compareControlsEl.hidden = !isCompare;
+  if (compareResultsEl) compareResultsEl.hidden = !isCompare;
+
+  if (modeToggleBtn) modeToggleBtn.textContent = isCompare ? 'Latest snapshot' : 'Compare periods';
+
+  if (isCompare) {
+    if (compareEarliestDate) renderCompare();
+    if (!opts.fromUrl) updateCompareUrl();
+  } else if (!opts.fromUrl) {
+    history.replaceState(null, '', location.pathname);
+  }
+}
+
+if (modeToggleBtn) {
+  modeToggleBtn.addEventListener('click', () => {
+    hideSuggestions();
+    hideTagSuggestions();
+    setMode(currentMode === 'compare' ? 'latest' : 'compare');
+  });
+}
+
+// Enter Compare mode immediately if the URL already asks for it (e.g. a
+// shared link), so the page opens straight into it instead of flashing
+// Latest mode first. The actual numbers render once jobs.json arrives,
+// via setupCompareControls() above.
+(function initModeFromUrl(){
+  const params = new URLSearchParams(location.search);
+  if (params.get('compare') === '1') setMode('compare', { fromUrl: true });
+})();
+
 fetch('./data.json')
   .then((res) => { if (!res.ok) throw new Error('data.json not found'); return res.json(); })
   .then((data) => {
@@ -614,10 +949,10 @@ fetch('./data.json')
 
 // Fetched independently of data.json above — a slow/failed jobs.json load
 // shouldn't hold up or break the rest of the page. Feeds the trend chart,
-// and (via allJobs) the country filter bar above.
+// the country filter bar above, and (via setupCompareControls) Compare mode.
 fetch('./jobs.json')
   .then((res) => { if (!res.ok) throw new Error('jobs.json not found'); return res.json(); })
-  .then((jobs) => { allJobs = jobs; renderWorkStyleTrend(jobs); })
+  .then((jobs) => { allJobs = jobs; renderWorkStyleTrend(jobs); setupCompareControls(jobs); })
   .catch(() => {
     const note = document.getElementById('workstyle-trend-note');
     if (note) note.textContent = 'Trend data is temporarily unavailable, check back shortly.';
