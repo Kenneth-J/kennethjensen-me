@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>JobMatch API — MCP server for developers</title>
+<meta name="description" content="A read-only MCP server over JobMatch's Nordic/Baltic Operations job data — search_jobs, get_job, and get_market_stats tools, free and anonymous.">
+<link rel="canonical" href="https://kennethjensen.me/jobmatch/mcp/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JobMatch">
+<meta property="og:url" content="https://kennethjensen.me/jobmatch/mcp/">
+<meta property="og:title" content="JobMatch API — MCP server for developers">
+<meta property="og:description" content="A read-only MCP server over JobMatch's Nordic/Baltic Operations job data — search_jobs, get_job, and get_market_stats tools, free and anonymous.">
+<meta property="og:image" content="https://kennethjensen.me/assets/og/jobmatch-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="JobMatch, Nordic Operations job insights">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JobMatch API — MCP server for developers">
+<meta name="twitter:description" content="A read-only MCP server over JobMatch's Nordic/Baltic Operations job data — search_jobs, get_job, and get_market_stats tools, free and anonymous.">
+<meta name="twitter:image" content="https://kennethjensen.me/assets/og/jobmatch-og.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-62 -62 124 124'%3E%3Ccircle r='38' fill='%2312b892'/%3E%3Crect x='-7' y='-56' width='14' height='18' rx='4' fill='%2312b892'/%3E%3Crect x='-7' y='-56' width='14' height='18' rx='4' fill='%2312b892' transform='rotate(45)'/%3E%3Crect x='-7' y='-56' width='14' height='18' rx='4' fill='%2312b892' transform='rotate(90)'/%3E%3Crect x='-7' y='-56' width='14' height='18' rx='4' fill='%2312b892' transform='rotate(135)'/%3E%3Crect x='-7' y='-56' width='14' height='18' rx='4' fill='%2312b892' transform='rotate(180)'/%3E%3Crect x='-7' y='-56' width='14' height='18' rx='4' fill='%2312b892' transform='rotate(225)'/%3E%3Crect x='-7' y='-56' width='14' height='18' rx='4' fill='%2312b892' transform='rotate(270)'/%3E%3Crect x='-7' y='-56' width='14' height='18' rx='4' fill='%2312b892' transform='rotate(315)'/%3E%3Ccircle r='15' fill='%23ffffff' stroke='%23132a33' stroke-width='5'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#132a33">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/base.css">
+<script src="../../assets/framebust.js"></script>
+<style>
+  /* Page-specific only — tokens, resets, header/nav/eyebrow/h1/h2/section
+     shells, contact and footer all live in ../../assets/base.css, shared
+     with the root site and every other JobMatch page. Everything below is
+     specific to a "classical" two-column code-docs layout: nothing else
+     on the site needed a sidebar/code-block/param-table vocabulary before
+     this page. */
+
+  .hero{padding:64px 0 40px;}
+  .hero h1{max-width:16ch;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+  .hero-pill{
+    display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;
+    background:var(--bg-alt);border:1px solid var(--line);color:var(--ink-soft);
+    padding:7px 14px;border-radius:999px;
+  }
+  .hero-pill-dot{width:7px;height:7px;border-radius:50%;background:var(--up);flex:none;}
+  .hero-endpoint{
+    display:flex;align-items:center;gap:10px;margin-top:24px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:14px;
+    background:var(--cta-bg);color:#eaf6f2;border-radius:999px;
+    padding:12px 10px 12px 20px;
+  }
+  .hero-endpoint code{color:var(--accent-light);}
+  .hero-copy-btn{
+    flex:none;background:rgba(79,227,191,.14);color:var(--accent-light);border:none;
+    padding:8px 16px;border-radius:999px;font-family:'Inter',sans-serif;font-weight:700;
+    font-size:12.5px;cursor:pointer;transition:background .15s;
+  }
+  .hero-copy-btn:hover{background:rgba(79,227,191,.24);}
+
+  /* Docs layout: sticky sidebar + content column. Below the breakpoint the
+     sidebar becomes a horizontally-scrolling pill row instead of a column
+     — same "auto-scroll strip" pattern as the site's own .stat-ticker,
+     repurposed here as a jump-to-section nav rather than live data. */
+  .docs{padding:0 0 84px;}
+  .docs-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:56px;align-items:start;}
+  .docs-nav{position:sticky;top:96px;}
+  .docs-nav-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  .docs-nav ul{list-style:none;margin:0;padding:0;border-left:2px solid var(--line);}
+  .docs-nav li{margin:0;}
+  .docs-nav a{
+    display:block;padding:7px 0 7px 16px;margin-left:-2px;border-left:2px solid transparent;
+    font-size:14px;color:var(--ink-soft);text-decoration:none;transition:color .15s,border-color .15s;
+  }
+  .docs-nav a:hover{color:var(--ink);}
+  .docs-nav a.active{color:var(--accent);border-left-color:var(--accent);font-weight:700;}
+  .docs-nav .docs-nav-sub a{padding-left:28px;font-size:13.5px;}
+
+  .docs-content section{padding:0 0 56px;scroll-margin-top:96px;}
+  .docs-content section + section{border-top:1px solid var(--line);padding-top:56px;}
+  .docs-content h2{font-size:24px;margin-bottom:14px;}
+  .docs-content h3{
+    font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:600;
+    letter-spacing:-0.01em;margin:36px 0 6px;color:var(--ink);
+  }
+  .docs-content h3:first-of-type{margin-top:0;}
+  .docs-content p{font-size:15.5px;color:var(--ink-soft);max-width:66ch;margin:0 0 16px;}
+  .docs-content p code, .docs-content li code{
+    font-family:'JetBrains Mono',monospace;font-size:0.88em;background:var(--bg-alt);
+    color:var(--ink);padding:2px 6px;border-radius:5px;
+  }
+  .docs-content ul{color:var(--ink-soft);font-size:15.5px;max-width:66ch;padding-left:20px;margin:0 0 16px;}
+  .docs-content li{margin-bottom:6px;}
+  .tool-desc{color:var(--ink-soft);font-size:15px;max-width:66ch;margin:0 0 18px;}
+
+  .label-tag{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    background:var(--accent-soft);color:var(--accent);padding:3px 9px;border-radius:6px;margin-right:8px;vertical-align:middle;
+  }
+
+  /* Parameter tables — plain, borderless rows rather than a boxed grid,
+     so they read like documentation prose rather than a data export. */
+  .param-table{width:100%;border-collapse:collapse;margin:0 0 24px;font-size:14px;}
+  .param-table th{
+    text-align:left;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--ink-faint);padding:0 12px 10px 0;border-bottom:1px solid var(--line);
+  }
+  .param-table td{padding:12px 12px 12px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft);}
+  .param-table td:first-child{font-family:'JetBrains Mono',monospace;color:var(--ink);white-space:nowrap;}
+  .param-table .param-type{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:12.5px;white-space:nowrap;}
+  .param-table .param-req{font-size:11px;font-weight:700;color:var(--ink-faint);}
+
+  /* Code blocks — the site's existing dark surface (--cta-bg, already
+     used by the ticker/nav-cta) doubles as a terminal/editor background
+     rather than introducing a new colour just for this page. */
+  .code-block{position:relative;margin:0 0 24px;}
+  .code-block pre{
+    margin:0;background:var(--cta-bg);color:#dcece6;border-radius:var(--radius);
+    padding:18px 20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;
+    font-size:13px;line-height:1.65;
+  }
+  .code-block-label{
+    position:absolute;top:0;left:20px;transform:translateY(-50%);
+    background:var(--bg);padding:0 8px;font-size:11px;font-weight:700;
+    letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);
+  }
+  .code-copy-btn{
+    position:absolute;top:12px;right:14px;background:rgba(79,227,191,.14);color:var(--accent-light);
+    border:none;padding:5px 11px;border-radius:7px;font-size:11.5px;font-weight:700;cursor:pointer;
+    font-family:'Inter',sans-serif;transition:background .15s;
+  }
+  .code-copy-btn:hover{background:rgba(79,227,191,.26);}
+  .code-copy-btn.copied{background:var(--accent);color:#06110f;}
+  .tok-key{color:#8fd6c4;}
+  .tok-str{color:#f4c98c;}
+  .tok-num{color:#9fc8f7;}
+  .tok-com{color:#7fa79c;}
+
+  .callout{
+    background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;margin:0 0 24px;font-size:14.5px;color:var(--ink-soft);max-width:66ch;
+  }
+  .callout strong{color:var(--ink);}
+
+  @media (max-width:860px){
+    .docs-layout{grid-template-columns:1fr;gap:28px;}
+    .docs-nav{
+      position:sticky;top:0;z-index:15;background:var(--bg);
+      margin:0 -28px;padding:12px 28px;border-bottom:1px solid var(--line);
+    }
+    .docs-nav-title{display:none;}
+    .docs-nav ul{display:flex;gap:4px;overflow-x:auto;border-left:none;padding-bottom:2px;}
+    .docs-nav li{flex:none;}
+    .docs-nav a{
+      padding:7px 13px;border-left:none;border-radius:999px;white-space:nowrap;
+      background:var(--bg-alt);border:1px solid var(--line);
+    }
+    .docs-nav a.active{background:var(--accent);border-color:var(--accent);color:#06110f;}
+    .docs-nav .docs-nav-sub{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="stat-ticker" id="stat-ticker">
+  <a class="stat-ticker-label" href="https://kennethjensen.me/jobmatch/stats/"><span class="label-full">Nordic/Baltic operations jobs right now:</span><span class="label-short">Open ops jobs:</span></a>
+  <div class="stat-ticker-scroll">
+    <div class="stat-ticker-track" id="stat-ticker-track">
+      <a class="stat-ticker-item" href="https://kennethjensen.me/jobmatch/stats/">Loading live data&hellip;</a>
+    </div>
+  </div>
+</div>
+
+<header>
+  <nav class="nav wrap">
+    <a class="brand display" href="../">
+      <svg class="brand-mark" viewBox="-62 -62 124 124" xmlns="http://www.w3.org/2000/svg">
+        <circle r="38" fill="#12b892"/>
+        <rect x="-7" y="-56" width="14" height="18" rx="4" fill="#12b892"/>
+        <rect x="-7" y="-56" width="14" height="18" rx="4" fill="#12b892" transform="rotate(45)"/>
+        <rect x="-7" y="-56" width="14" height="18" rx="4" fill="#12b892" transform="rotate(90)"/>
+        <rect x="-7" y="-56" width="14" height="18" rx="4" fill="#12b892" transform="rotate(135)"/>
+        <rect x="-7" y="-56" width="14" height="18" rx="4" fill="#12b892" transform="rotate(180)"/>
+        <rect x="-7" y="-56" width="14" height="18" rx="4" fill="#12b892" transform="rotate(225)"/>
+        <rect x="-7" y="-56" width="14" height="18" rx="4" fill="#12b892" transform="rotate(270)"/>
+        <rect x="-7" y="-56" width="14" height="18" rx="4" fill="#12b892" transform="rotate(315)"/>
+        <circle r="15" fill="#ffffff" stroke="#132a33" stroke-width="5"/>
+      </svg>
+      JobMatch
+    </a>
+    <div class="nav-right">
+      <a href="../stats/">Job Analytics</a>
+      <a href="./" class="current">Developers</a>
+      <a href="../../">← kennethjensen.me</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <span class="eyebrow">For developers</span>
+    <h1>Talk to JobMatch's job data directly.</h1>
+    <p class="lede">A free, read-only <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP</a> server over the same Nordic/Baltic Operations job data that powers the search page and analytics — built as the sanctioned alternative to scraping the site.</p>
+    <div class="hero-meta">
+      <span class="hero-pill"><span class="hero-pill-dot"></span>No API key required</span>
+      <span class="hero-pill">3 read-only tools</span>
+      <span class="hero-pill">60 requests / hour / IP</span>
+    </div>
+    <div class="hero-endpoint">
+      <code id="endpoint-text">https://jobmatch-mcp.kennethj.workers.dev/mcp</code>
+      <button class="hero-copy-btn" type="button" data-copy-target="endpoint-text">Copy</button>
+    </div>
+  </section>
+
+  <div class="docs wrap">
+    <div class="docs-layout">
+      <nav class="docs-nav" aria-label="On this page">
+        <div class="docs-nav-title">On this page</div>
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#quickstart">Quickstart</a></li>
+          <li><a href="#auth">Auth &amp; rate limits</a></li>
+          <li><a href="#tools">Tools</a></li>
+          <li class="docs-nav-sub"><a href="#tool-search-jobs">search_jobs</a></li>
+          <li class="docs-nav-sub"><a href="#tool-get-job">get_job</a></li>
+          <li class="docs-nav-sub"><a href="#tool-get-market-stats">get_market_stats</a></li>
+          <li><a href="#data">Data &amp; caching</a></li>
+          <li><a href="#terms">Terms</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+        </ul>
+      </nav>
+
+      <div class="docs-content">
+
+        <section id="overview">
+          <h2>Overview</h2>
+          <p><a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP</a> (Model Context Protocol) is an open standard for connecting an AI agent — Claude, or anything else that speaks it — to an external tool or data source in a structured way, instead of that agent having to scrape or guess at a website's HTML.</p>
+          <p>This server exposes three read-only tools over JobMatch's own listing and market-stats data: search by keyword, country, remote type, or tag; look up a single listing; or pull the aggregate market snapshot shown on the <a href="../stats/">Job Analytics</a> page. It reads only what's already public — nothing here is behind a login, and nothing exposed here isn't already visible on the site itself.</p>
+          <div class="callout"><strong>Why this exists:</strong> rather than fighting scrapers with bot detection and blocking, JobMatch gives anyone a documented, structured, rate-limited way in — one that's genuinely easier to use than parsing HTML. If you're building something on top of JobMatch's data, this is the door to use.</div>
+        </section>
+
+        <section id="quickstart">
+          <h2>Quickstart</h2>
+          <p>The server speaks the MCP <strong>Streamable HTTP</strong> transport. Point any MCP-compatible client at the endpoint above, or call it directly as JSON-RPC over HTTPS.</p>
+
+          <h3>Option A — add it to an MCP client</h3>
+          <p>For Claude Desktop, Claude Code, or any client that supports a remote MCP server by URL, add:</p>
+          <div class="code-block">
+            <span class="code-block-label">config</span>
+            <button class="code-copy-btn" type="button" data-copy-target="cfg-json">Copy</button>
+            <pre id="cfg-json">{
+  <span class="tok-key">"mcpServers"</span>: {
+    <span class="tok-key">"jobmatch"</span>: {
+      <span class="tok-key">"url"</span>: <span class="tok-str">"https://jobmatch-mcp.kennethj.workers.dev/mcp"</span>
+    }
+  }
+}</pre>
+          </div>
+
+          <h3>Option B — call it directly</h3>
+          <p>Any HTTP client works. A tool call is a single JSON-RPC request:</p>
+          <div class="code-block">
+            <span class="code-block-label">curl</span>
+            <button class="code-copy-btn" type="button" data-copy-target="curl-example">Copy</button>
+            <pre id="curl-example"><span class="tok-com"># search_jobs</span>
+curl https://jobmatch-mcp.kennethj.workers.dev/mcp \
+  -H <span class="tok-str">"Content-Type: application/json"</span> \
+  -H <span class="tok-str">"Accept: application/json, text/event-stream"</span> \
+  -d <span class="tok-str">'{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/call",
+    "params": {
+      "name": "search_jobs",
+      "arguments": { "country": "Sweden", "tags": ["Manager"], "limit": 5 }
+    }
+  }'</span></pre>
+          </div>
+          <p>No <code>initialize</code> handshake to manage by hand — the server is stateless, so every request is self-contained. An MCP client library will still perform the standard handshake automatically; that's expected and handled.</p>
+        </section>
+
+        <section id="auth">
+          <h2>Authentication &amp; rate limits</h2>
+          <p>No API key, no login. Every request is anonymous and counted by IP address: <strong>60 requests per hour</strong>, fixed window. Going over it returns an HTTP <code>429</code> with a plain JSON body:</p>
+          <div class="code-block">
+            <pre><span class="tok-key">{</span> <span class="tok-key">"error"</span>: <span class="tok-str">"Too many requests. Try again later."</span> <span class="tok-key">}</span></pre>
+          </div>
+          <p>An opt-in API key for higher limits is planned but not built yet — see <a href="#roadmap">Roadmap</a>.</p>
+        </section>
+
+        <section id="tools">
+          <h2>Tools</h2>
+          <p>All three tools are read-only and side-effect-free. Every job record's <code>applyUrl</code> routes through JobMatch's own click-tracked redirect rather than a raw scraped link — that's deliberate, and it's the same link the site itself renders.</p>
+
+          <h3 id="tool-search-jobs"><span class="label-tag">tool</span>search_jobs</h3>
+          <p class="tool-desc">Search active listings. All parameters are optional and combine with AND. Results are sorted newest-posted-first — this version does plain keyword matching, not semantic ranking (see <a href="#roadmap">Roadmap</a>).</p>
+          <table class="param-table">
+            <thead><tr><th>Parameter</th><th>Type</th><th></th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>query</td><td class="param-type">string</td><td class="param-req">optional</td><td>Free text matched against title, company, tags, and location.</td></tr>
+              <tr><td>country</td><td class="param-type">string</td><td class="param-req">optional</td><td>Exact match, e.g. <code>"Denmark"</code>, <code>"Sweden"</code>.</td></tr>
+              <tr><td>tags</td><td class="param-type">string[]</td><td class="param-req">optional</td><td>Job must have every tag listed.</td></tr>
+              <tr><td>remoteType</td><td class="param-type">string</td><td class="param-req">optional</td><td>Exact match: <code>"Remote"</code>, <code>"Hybrid"</code>, or <code>"On-site"</code>.</td></tr>
+              <tr><td>employmentType</td><td class="param-type">string</td><td class="param-req">optional</td><td>Exact match, e.g. <code>"Full-time"</code>.</td></tr>
+              <tr><td>limit</td><td class="param-type">integer</td><td class="param-req">optional</td><td>1–50. Default 20.</td></tr>
+            </tbody>
+          </table>
+          <div class="code-block">
+            <span class="code-block-label">response (truncated)</span>
+            <pre>{
+  <span class="tok-key">"count"</span>: <span class="tok-num">143</span>,
+  <span class="tok-key">"returned"</span>: <span class="tok-num">1</span>,
+  <span class="tok-key">"results"</span>: [
+    {
+      <span class="tok-key">"id"</span>: <span class="tok-num">2268</span>,
+      <span class="tok-key">"jobTitle"</span>: <span class="tok-str">"Operations Manager"</span>,
+      <span class="tok-key">"company"</span>: <span class="tok-str">"Flow Intimates"</span>,
+      <span class="tok-key">"location"</span>: <span class="tok-str">"Frederiksberg"</span>,
+      <span class="tok-key">"country"</span>: <span class="tok-str">"Denmark"</span>,
+      <span class="tok-key">"city"</span>: <span class="tok-str">"Frederiksberg"</span>,
+      <span class="tok-key">"remoteType"</span>: <span class="tok-key">null</span>,
+      <span class="tok-key">"employmentType"</span>: <span class="tok-key">null</span>,
+      <span class="tok-key">"salaryMin"</span>: <span class="tok-key">null</span>,
+      <span class="tok-key">"salaryMax"</span>: <span class="tok-key">null</span>,
+      <span class="tok-key">"currency"</span>: <span class="tok-key">null</span>,
+      <span class="tok-key">"sourceSite"</span>: <span class="tok-str">"jobindex.dk"</span>,
+      <span class="tok-key">"datePosted"</span>: <span class="tok-str">"2026-09-24"</span>,
+      <span class="tok-key">"tags"</span>: [<span class="tok-str">"Manager"</span>],
+      <span class="tok-key">"applyUrl"</span>: <span class="tok-str">"https://jobmatch-worker.kennethj.workers.dev/go/2268"</span>
+    }
+  ]
+}</pre>
+          </div>
+
+          <h3 id="tool-get-job"><span class="label-tag">tool</span>get_job</h3>
+          <p class="tool-desc">Look up a single listing by id — the same shape <code>search_jobs</code> returns per result.</p>
+          <table class="param-table">
+            <thead><tr><th>Parameter</th><th>Type</th><th></th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>id</td><td class="param-type">integer</td><td class="param-req">required</td><td>A job id, as returned by <code>search_jobs</code>.</td></tr>
+            </tbody>
+          </table>
+          <p>An unknown id doesn't error — it returns <code>isError: true</code> with a plain message, so a bad id is a normal tool result to handle, not an exception.</p>
+
+          <h3 id="tool-get-market-stats"><span class="label-tag">tool</span>get_market_stats</h3>
+          <p class="tool-desc">No parameters. Returns the same aggregate, anonymised snapshot shown on <a href="../stats/">Job Analytics</a> — totals, country/tag/seniority breakdowns, and week-over-week trend. No per-listing detail; use <code>search_jobs</code> for that.</p>
+        </section>
+
+        <section id="data">
+          <h2>Data &amp; caching</h2>
+          <ul>
+            <li>Source data refreshes on JobMatch's own scraping schedule — roughly every 2 days.</li>
+            <li>Responses are cached at the edge for 5 minutes, so a burst of calls doesn't cause redundant fetches. This doesn't affect freshness beyond that window.</li>
+            <li>Embeddings used for the site's own semantic search are never included in tool responses — they're meaningless outside that specific model and would only inflate every response.</li>
+            <li><code>applyUrl</code> is always a tracked redirect, never the raw scraped URL — clicking through counts the same way a click from the site itself does.</li>
+          </ul>
+        </section>
+
+        <section id="terms">
+          <h2>Terms</h2>
+          <p>Free to use. If you build something public on top of this data, an attribution link back to <a href="https://kennethjensen.me/jobmatch/">kennethjensen.me/jobmatch</a> is appreciated, not required. Don't use it to rebuild a competing scrape of the underlying sites JobMatch itself tracks — the point of this server is to be a better way to use JobMatch's own data, not a shortcut around everyone else's.</p>
+        </section>
+
+        <section id="roadmap">
+          <h2>Roadmap</h2>
+          <p>This is a phase-1 build. Not yet done, roughly in order:</p>
+          <ul>
+            <li>An opt-in free API key for higher rate limits.</li>
+            <li>Semantic/embedding-ranked search, matching what the site's own search page does.</li>
+            <li>A "new listings" subscription or webhook tool, so a real-time integration doesn't need to poll.</li>
+          </ul>
+          <p>Something missing, or a rough edge you hit integrating? <a href="#contact">Get in touch</a>.</p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <section id="contact">
+    <div class="wrap">
+      <span class="eyebrow-alt">Contact</span>
+      <h2>Let's talk</h2>
+      <p class="section-sub">Building something with this, or have a request for what it should expose next? Reach out.</p>
+      <div>
+        <a class="contact-email" href="mailto:k@kennethjensen.me">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          k@kennethjensen.me
+        </a>
+      </div>
+      <p class="contact-note">I read every message and reply personally, usually within a few hours.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-left">© <span id="year"></span> Kenneth Jensen, Operations Consulting</div>
+    <div class="footer-right"><a href="mailto:k@kennethjensen.me">k@kennethjensen.me</a></div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "name": "JobMatch API — MCP server for developers",
+  "url": "https://kennethjensen.me/jobmatch/mcp/",
+  "description": "A read-only MCP server over JobMatch's Nordic/Baltic Operations job data.",
+  "publisher": {
+    "@type": "Person",
+    "name": "Kenneth Jensen",
+    "url": "https://kennethjensen.me/"
+  }
+}
+</script>
+<script src="./mcp-docs.js" defer></script>
+</body>
+</html>
