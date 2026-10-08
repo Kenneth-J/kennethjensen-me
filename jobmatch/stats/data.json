@@ -1,97 +1,97 @@
 {
-  "generatedAt": "2026-10-06T03:25:16.265Z",
-  "dataAsOf": "2026-10-06T03:24:58.791Z",
-  "totalTracked": 1601,
+  "generatedAt": "2026-10-08T05:16:09.759Z",
+  "dataAsOf": "2026-10-08T05:15:54.983Z",
+  "totalTracked": 1897,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 436,
-    "previousCount": 502,
-    "percentChange": -13.147410358565736
+    "currentCount": 425,
+    "previousCount": 492,
+    "percentChange": -13.617886178861788
   },
   "countries": [
     {
       "value": "Denmark",
-      "count": 574
+      "count": 547
     },
     {
       "value": "Sweden",
-      "count": 528
-    },
-    {
-      "value": "Norway",
-      "count": 175
-    },
-    {
-      "value": "Lithuania",
-      "count": 126
-    },
-    {
-      "value": "Latvia",
-      "count": 92
-    },
-    {
-      "value": "Estonia",
-      "count": 35
-    },
-    {
-      "value": "Finland",
-      "count": 26
+      "count": 527
     },
     {
       "value": "Greenland",
-      "count": 16
+      "count": 348
+    },
+    {
+      "value": "Norway",
+      "count": 165
+    },
+    {
+      "value": "Lithuania",
+      "count": 132
+    },
+    {
+      "value": "Latvia",
+      "count": 79
+    },
+    {
+      "value": "Estonia",
+      "count": 38
+    },
+    {
+      "value": "Finland",
+      "count": 27
     },
     {
       "value": "Iceland",
       "count": 3
     }
   ],
-  "unlocatedCount": 26,
+  "unlocatedCount": 31,
   "sourceSites": [
     {
       "value": "jobindex.dk",
-      "count": 523
+      "count": 520
     },
     {
       "value": "arbetsformedlingen.se",
-      "count": 506
-    },
-    {
-      "value": "arbeidsplassen.nav.no",
-      "count": 175
-    },
-    {
-      "value": "cvbankas.lt",
-      "count": 95
-    },
-    {
-      "value": "jobnet.dk",
-      "count": 82
-    },
-    {
-      "value": "cv.lv",
-      "count": 55
-    },
-    {
-      "value": "cvmarket.lv",
-      "count": 36
-    },
-    {
-      "value": "cvkeskus.ee",
-      "count": 35
-    },
-    {
-      "value": "cvmarket.lt",
-      "count": 31
-    },
-    {
-      "value": "tyomarkkinatori.fi",
-      "count": 26
+      "count": 508
     },
     {
       "value": "sjob.gl",
-      "count": 10
+      "count": 343
+    },
+    {
+      "value": "arbeidsplassen.nav.no",
+      "count": 165
+    },
+    {
+      "value": "cvbankas.lt",
+      "count": 99
+    },
+    {
+      "value": "jobnet.dk",
+      "count": 60
+    },
+    {
+      "value": "cv.lv",
+      "count": 57
+    },
+    {
+      "value": "cvkeskus.ee",
+      "count": 38
+    },
+    {
+      "value": "cvmarket.lt",
+      "count": 33
+    },
+    {
+      "value": "tyomarkkinatori.fi",
+      "count": 27
+    },
+    {
+      "value": "cvmarket.lv",
+      "count": 21
     },
     {
       "value": "remoteok.com",
@@ -102,15 +102,15 @@
       "count": 8
     },
     {
-      "value": "euremotejobs.com",
-      "count": 3
-    },
-    {
       "value": "alfred.is",
       "count": 3
     },
     {
       "value": "suli.gl",
+      "count": 2
+    },
+    {
+      "value": "euremotejobs.com",
       "count": 2
     },
     {
@@ -125,73 +125,73 @@
   "workStyle": [
     {
       "value": "On-site",
-      "count": 309
+      "count": 286
     },
     {
       "value": "Hybrid",
-      "count": 34
+      "count": 32
     },
     {
       "value": "Remote",
-      "count": 13
+      "count": 12
     }
   ],
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 674
+      "count": 651
     },
     {
       "value": "Part-time",
-      "count": 27
+      "count": 23
     }
   ],
   "experienceLevel": [
     {
       "value": "Mid",
-      "count": 341
-    },
-    {
-      "value": "Entry",
-      "count": 108
+      "count": 340
     },
     {
       "value": "Senior",
       "count": 100
     },
     {
+      "value": "Entry",
+      "count": 99
+    },
+    {
       "value": "Junior",
-      "count": 49
+      "count": 33
     },
     {
       "value": "C-Level",
-      "count": 3
+      "count": 4
     }
   ],
   "language": [
     {
       "value": "da",
-      "count": 534
+      "count": 846
     },
     {
       "value": "sv",
-      "count": 398
+      "count": 399
     },
     {
       "value": "en",
-      "count": 286
+      "count": 272
     },
     {
       "value": "no",
-      "count": 159
+      "count": 149
     },
     {
       "value": "lt",
-      "count": 96
+      "count": 98
     },
     {
       "value": "lv",
-      "count": 51
+      "count": 45
     },
     {
       "value": "fi",
@@ -199,7 +199,11 @@
     },
     {
       "value": "et",
-      "count": 19
+      "count": 22
+    },
+    {
+      "value": "kl",
+      "count": 8
     },
     {
       "value": "is",
@@ -208,195 +212,199 @@
     {
       "value": "de",
       "count": 1
-    },
-    {
-      "value": "kl",
-      "count": 1
     }
   ],
   "tags": [
     {
       "value": "Logistics",
-      "count": 666
+      "count": 667
     },
     {
       "value": "Manager",
-      "count": 423
+      "count": 493
     },
     {
       "value": "Supply Chain",
-      "count": 418
-    },
-    {
-      "value": "Infrastructure",
-      "count": 306
-    },
-    {
-      "value": "Warehouse",
-      "count": 303
+      "count": 415
     },
     {
       "value": "Maintenance",
-      "count": 297
+      "count": 325
     },
     {
-      "value": "Leadership",
-      "count": 255
+      "value": "Infrastructure",
+      "count": 312
+    },
+    {
+      "value": "Warehouse",
+      "count": 309
     },
     {
       "value": "Administration",
-      "count": 244
+      "count": 309
     },
     {
-      "value": "Automation",
-      "count": 142
+      "value": "Leadership",
+      "count": 287
     },
     {
       "value": "Production",
-      "count": 140
+      "count": 157
     },
     {
-      "value": "DevOps",
-      "count": 140
+      "value": "Automation",
+      "count": 141
     },
     {
       "value": "Compliance",
-      "count": 128
+      "count": 138
     },
     {
-      "value": "Automotive",
-      "count": 122
-    },
-    {
-      "value": "Software",
-      "count": 115
+      "value": "DevOps",
+      "count": 132
     },
     {
       "value": "Security",
+      "count": 115
+    },
+    {
+      "value": "Automotive",
       "count": 114
     },
     {
-      "value": "Cloud",
+      "value": "Project Manager",
       "count": 109
     },
     {
-      "value": "Project Manager",
-      "count": 103
-    },
-    {
-      "value": "Transport",
-      "count": 102
-    },
-    {
-      "value": "Autonomy",
-      "count": 100
-    },
-    {
-      "value": "Quality",
-      "count": 87
-    },
-    {
-      "value": "Defence",
-      "count": 87
-    },
-    {
-      "value": "Customer Service",
-      "count": 82
-    },
-    {
-      "value": "Finance",
-      "count": 72
-    },
-    {
-      "value": "Support",
-      "count": 71
+      "value": "Software",
+      "count": 107
     },
     {
       "value": "People",
-      "count": 61
+      "count": 100
+    },
+    {
+      "value": "Transport",
+      "count": 99
+    },
+    {
+      "value": "Cloud",
+      "count": 98
+    },
+    {
+      "value": "Autonomy",
+      "count": 94
+    },
+    {
+      "value": "Support",
+      "count": 90
+    },
+    {
+      "value": "Finance",
+      "count": 88
+    },
+    {
+      "value": "Customer Service",
+      "count": 86
+    },
+    {
+      "value": "Defence",
+      "count": 85
+    },
+    {
+      "value": "Quality",
+      "count": 82
     },
     {
       "value": "Hospitality",
-      "count": 59
-    },
-    {
-      "value": "AI",
-      "count": 39
-    },
-    {
-      "value": "Python",
-      "count": 38
-    },
-    {
-      "value": "Platform",
-      "count": 38
-    },
-    {
-      "value": "Mobility",
-      "count": 31
+      "count": 71
     },
     {
       "value": "Consulting",
-      "count": 29
+      "count": 50
+    },
+    {
+      "value": "Platform",
+      "count": 40
+    },
+    {
+      "value": "AI",
+      "count": 34
+    },
+    {
+      "value": "Legal",
+      "count": 34
+    },
+    {
+      "value": "Python",
+      "count": 31
+    },
+    {
+      "value": "Mobility",
+      "count": 28
+    },
+    {
+      "value": "University",
+      "count": 26
     },
     {
       "value": "Hardware",
-      "count": 27
+      "count": 25
     },
     {
       "value": "Marketing",
-      "count": 25
+      "count": 23
     },
     {
       "value": "Excel",
       "count": 23
     },
     {
-      "value": "Food",
-      "count": 22
-    },
-    {
       "value": "Asset Heavy",
-      "count": 21
-    },
-    {
-      "value": "E-commerce",
-      "count": 19
-    },
-    {
-      "value": "Agriculture",
-      "count": 18
+      "count": 20
     },
     {
       "value": "HealthTech",
-      "count": 17
+      "count": 19
     },
     {
       "value": "Research",
-      "count": 17
+      "count": 19
     },
     {
       "value": "Personnel",
+      "count": 19
+    },
+    {
+      "value": "E-commerce",
+      "count": 18
+    },
+    {
+      "value": "Agriculture",
+      "count": 17
+    },
+    {
+      "value": "Food",
       "count": 16
     },
     {
       "value": "SaaS only",
-      "count": 14
+      "count": 10
+    },
+    {
+      "value": "EdTech",
+      "count": 10
     },
     {
       "value": "MarTech",
       "count": 10
     },
     {
-      "value": "University",
-      "count": 10
-    },
-    {
       "value": "Fintech",
-      "count": 8
+      "count": 9
     },
     {
-      "value": "Legal",
+      "value": "Venue",
       "count": 8
     },
     {
@@ -404,12 +412,8 @@
       "count": 6
     },
     {
-      "value": "Venue",
-      "count": 6
-    },
-    {
       "value": "Event",
-      "count": 5
+      "count": 6
     },
     {
       "value": "Drones",
@@ -424,10 +428,6 @@
       "count": 4
     },
     {
-      "value": "EdTech",
-      "count": 3
-    },
-    {
       "value": "LinkedIn Announced",
       "count": 3
     },
@@ -436,7 +436,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 1601,
-  "withSalaryCount": 236,
-  "withCityCount": 851
+  "classifiedCount": 1897,
+  "withSalaryCount": 228,
+  "withCityCount": 833
 }
