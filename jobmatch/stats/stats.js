@@ -528,6 +528,29 @@ const filterEmptyStateEl = document.getElementById('filter-empty-state');
 const statGridEl = document.getElementById('stat-grid');
 const filterableSections = ['geography', 'how-people-work', 'seniority'].map((id) => document.getElementById(id));
 
+// "Remove filter" buttons — one next to each filterable section's graph(s)
+// above, plus one inside the empty state (whose own graphs are hidden
+// while it's showing, so that one needs its own way back). All of them do
+// the same thing: clear both the country and tag filters entirely, same
+// as removing every pill by hand. Queried once since none of these are
+// re-created after page load.
+const removeFilterBtns = document.querySelectorAll('.remove-filter-btn');
+const sectionFilterNotices = document.querySelectorAll('.section-filter-notice');
+
+function resetAllFilters() {
+  selectedFilterCountries = [];
+  selectedFilterTags = [];
+  if (filterInput) filterInput.value = '';
+  if (tagFilterInput) tagFilterInput.value = '';
+  renderFilterTags();
+  renderTagFilterTags();
+  hideSuggestions();
+  hideTagSuggestions();
+  applyFilter();
+}
+
+removeFilterBtns.forEach((btn) => btn.addEventListener('click', resetAllFilters));
+
 function applyFilter() {
   if (!allJobs || !statsSnapshot) return; // jobs.json/data.json not loaded yet
   let jobs = selectedFilterCountries.length === 0
@@ -548,6 +571,7 @@ function applyFilter() {
   if (filterEmptyStateEl) filterEmptyStateEl.hidden = !isEmpty;
   if (statGridEl) statGridEl.hidden = isEmpty;
   filterableSections.forEach((el) => { if (el) el.hidden = isEmpty; });
+  sectionFilterNotices.forEach((el) => { el.hidden = !filterActive; });
   if (isEmpty) return;
 
   render(computeAggregates(jobs, statsSnapshot.dataAsOf, statsSnapshot.sitesConfigured));

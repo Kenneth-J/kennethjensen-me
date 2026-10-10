@@ -61,6 +61,15 @@
     border-radius:var(--radius);color:var(--ink-soft);font-size:15px;
   }
   .filter-empty-state[hidden]{display:none;}
+  /* "Remove filter" affordance next to each chart below (and inside the
+     empty state above, whose own graphs are hidden while it's showing) —
+     only visible while a country/tag filter is actually narrowing the
+     data, toggled by stats.js's applyFilter(). */
+  .section-filter-notice{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:13.5px;color:var(--ink-soft);}
+  .section-filter-notice[hidden]{display:none;}
+  .remove-filter-btn{flex:none;border:1px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-size:12.5px;font-weight:600;padding:5px 14px;border-radius:999px;cursor:pointer;transition:background .15s,border-color .15s;}
+  .remove-filter-btn:hover{background:var(--bg-alt);border-color:var(--accent);}
+  .filter-empty-state .remove-filter-btn{background:var(--bg-alt);}
   .filter-form:focus-within{border-color:var(--accent);box-shadow:0 14px 36px -12px rgba(18,184,146,.28);}
   .filter-field{flex:1;min-width:180px;display:flex;align-items:center;flex-wrap:wrap;gap:6px;}
   .filter-input{flex:1;min-width:120px;padding:10px 6px;border:none;border-radius:999px;font:inherit;font-size:14px;color:var(--ink);background:transparent;}
@@ -370,6 +379,7 @@
           <line x1="30" y1="30" x2="43" y2="43" stroke="var(--ink-faint)" stroke-width="3" stroke-linecap="round"/>
         </svg>
         <p>This filter returns zero jobs. Try adjusting the filter.</p>
+        <button type="button" class="remove-filter-btn">Remove filter</button>
       </div>
     </div>
   </section>
@@ -400,6 +410,7 @@
         <span class="eyebrow-alt">Where the roles are</span>
         <h2>A country breakdown of every open role</h2>
         <p class="section-sub">Zoom in on where the role is based.</p>
+        <p class="section-filter-notice" id="geography-filter-notice" hidden>Showing filtered results. <button type="button" class="remove-filter-btn">Remove filter</button></p>
       </div>
       <div class="bars" id="country-bars"></div>
     </div>
@@ -411,6 +422,7 @@
         <span class="eyebrow-alt">Location policy</span>
         <h2>Remote, hybrid or on-site</h2>
         <p class="section-sub">Only some roles state a work style at all; the donut leads with that share rather than hiding it, and the trend alongside tracks real weekly volume instead of a single static ratio.</p>
+        <p class="section-filter-notice" id="how-people-work-filter-notice" hidden>Showing filtered results. <button type="button" class="remove-filter-btn">Remove filter</button></p>
       </div>
       <div class="workstyle-grid">
         <div>
@@ -439,6 +451,7 @@
         <span class="eyebrow-alt">Career ladder</span>
         <h2>Seniority, Entry to C-Level</h2>
         <p class="section-sub">Across all countries, what's the split on seniority?</p>
+        <p class="section-filter-notice" id="seniority-filter-notice" hidden>Showing filtered results. <button type="button" class="remove-filter-btn">Remove filter</button></p>
       </div>
       <div class="seniority-bars" id="seniority-bars"></div>
     </div>
