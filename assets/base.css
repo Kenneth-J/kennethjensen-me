@@ -9,6 +9,38 @@
    site is a different origin (secret.kennethjensen.me), so it can't <link>
    this file directly; keep the two in sync by eye when the palette changes. */
 
+/* Self-hosted (2026-10-10, replacing the Google Fonts CDN link every page
+   used to carry): one variable-font WOFF2 per family covers the whole
+   weight range below — Google's own generated CSS was already serving a
+   single variable file per family behind several discrete-weight
+   @font-face buckets, so this is the same files, just fetched from this
+   origin instead of fonts.gstatic.com. Saves a third-party DNS/TLS
+   round-trip and the visitor's IP/UA being sent to Google on every page
+   load — same reasoning as this site's other privacy choices (no
+   third-party form backend, no cookies). Kept in sync with
+   kennethjensen-secret/design-system.css. */
+@font-face{
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400 800;
+  font-display:swap;
+  src:url('fonts/Inter.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Space Grotesk';
+  font-style:normal;
+  font-weight:600 700;
+  font-display:swap;
+  src:url('fonts/SpaceGrotesk.woff2') format('woff2');
+}
+@font-face{
+  font-family:'JetBrains Mono';
+  font-style:normal;
+  font-weight:500 700;
+  font-display:swap;
+  src:url('fonts/JetBrainsMono.woff2') format('woff2');
+}
+
 :root{
   --ink:#132a33;
   --ink-soft:#5c7680;
