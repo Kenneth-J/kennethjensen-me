@@ -958,3 +958,15 @@ fetch('./jobs.json')
     if (note) note.textContent = 'Trend data is temporarily unavailable, check back shortly.';
     if (filterInput) filterInput.placeholder = 'Filtering unavailable right now';
   });
+
+// Visitor-country tracker — fire-and-forget, no cookies, no personal data:
+// jobmatch-worker reads the visiting country straight off Cloudflare's own
+// edge geolocation and tallies it (see that repo's /visit/log), so Kenneth
+// can see where visitors come from on the Visitors tab at
+// secret.kennethjensen.me. Never blocks or breaks page load if it fails.
+fetch('https://jobmatch-worker.kennethj.workers.dev/visit/log', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ page: 'jobmatch-stats' }),
+  keepalive: true,
+}).catch(() => {});

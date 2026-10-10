@@ -128,3 +128,15 @@ document.querySelectorAll('.accordion-item').forEach((item) => {
       track.innerHTML = `<a class="stat-ticker-item" href="${STATS_URL}">See live Nordic/Baltic operations job market stats &rarr;</a>`;
     });
 })();
+
+// Visitor-country tracker — fire-and-forget, no cookies, no personal data:
+// jobmatch-worker reads the visiting country straight off Cloudflare's own
+// edge geolocation and tallies it (see that repo's /visit/log), so Kenneth
+// can see where visitors come from on the Visitors tab at
+// secret.kennethjensen.me. Never blocks or breaks page load if it fails.
+fetch('https://jobmatch-worker.kennethj.workers.dev/visit/log', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ page: 'home' }),
+  keepalive: true,
+}).catch(() => {});
