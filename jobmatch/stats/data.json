@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-10-17T09:15:23.078Z",
-  "dataAsOf": "2026-10-17T09:15:07.159Z",
-  "totalTracked": 693,
+  "generatedAt": "2026-10-18T01:23:33.610Z",
+  "dataAsOf": "2026-10-18T01:23:16.951Z",
+  "totalTracked": 676,
   "sitesConfigured": 22,
   "trend": {
     "periodDays": 7,
-    "currentCount": 183,
-    "previousCount": 169,
-    "percentChange": 8.284023668639055
+    "currentCount": 190,
+    "previousCount": 165,
+    "percentChange": 15.151515151515152
   },
   "countries": [
     {
       "value": "Sweden",
-      "count": 250
+      "count": 240
     },
     {
       "value": "Denmark",
-      "count": 216
+      "count": 212
     },
     {
       "value": "Lithuania",
@@ -24,15 +24,15 @@
     },
     {
       "value": "Norway",
-      "count": 44
+      "count": 40
     },
     {
       "value": "Latvia",
-      "count": 37
+      "count": 38
     },
     {
       "value": "Finland",
-      "count": 25
+      "count": 24
     },
     {
       "value": "Estonia",
@@ -43,15 +43,15 @@
       "count": 6
     }
   ],
-  "unlocatedCount": 4,
+  "unlocatedCount": 5,
   "sourceSites": [
     {
       "value": "arbetsformedlingen.se",
-      "count": 241
+      "count": 231
     },
     {
       "value": "jobindex.dk",
-      "count": 171
+      "count": 166
     },
     {
       "value": "cvbankas.lt",
@@ -59,11 +59,11 @@
     },
     {
       "value": "jobnet.dk",
-      "count": 57
+      "count": 59
     },
     {
       "value": "arbeidsplassen.nav.no",
-      "count": 44
+      "count": 40
     },
     {
       "value": "cv.lv",
@@ -71,7 +71,7 @@
     },
     {
       "value": "tyomarkkinatori.fi",
-      "count": 25
+      "count": 24
     },
     {
       "value": "cvkeskus.ee",
@@ -79,7 +79,7 @@
     },
     {
       "value": "cvmarket.lv",
-      "count": 8
+      "count": 9
     },
     {
       "value": "cvmarket.lt",
@@ -97,7 +97,7 @@
   "workStyle": [
     {
       "value": "On-site",
-      "count": 249
+      "count": 239
     },
     {
       "value": "Hybrid",
@@ -111,29 +111,29 @@
   "employmentType": [
     {
       "value": "Full-time",
-      "count": 320
+      "count": 313
     },
     {
       "value": "Part-time",
-      "count": 12
+      "count": 11
     }
   ],
   "experienceLevel": [
     {
       "value": "Mid",
-      "count": 134
+      "count": 125
     },
     {
       "value": "Entry",
-      "count": 128
+      "count": 124
     },
     {
       "value": "Senior",
-      "count": 33
+      "count": 32
     },
     {
       "value": "Junior",
-      "count": 26
+      "count": 27
     },
     {
       "value": "C-Level",
@@ -143,15 +143,15 @@
   "language": [
     {
       "value": "da",
-      "count": 204
+      "count": 199
     },
     {
       "value": "sv",
-      "count": 191
+      "count": 184
     },
     {
       "value": "en",
-      "count": 93
+      "count": 92
     },
     {
       "value": "lt",
@@ -159,15 +159,15 @@
     },
     {
       "value": "no",
-      "count": 41
+      "count": 37
     },
     {
       "value": "lv",
-      "count": 34
+      "count": 35
     },
     {
       "value": "fi",
-      "count": 24
+      "count": 23
     },
     {
       "value": "et",
@@ -177,51 +177,51 @@
   "tags": [
     {
       "value": "Logistics",
-      "count": 550
+      "count": 535
     },
     {
       "value": "Warehouse",
-      "count": 314
+      "count": 310
     },
     {
       "value": "Supply Chain",
-      "count": 270
+      "count": 261
     },
     {
       "value": "Manager",
-      "count": 163
+      "count": 156
     },
     {
       "value": "Transport",
-      "count": 147
+      "count": 144
     },
     {
       "value": "Automotive",
-      "count": 122
+      "count": 121
     },
     {
       "value": "Administration",
-      "count": 63
+      "count": 58
     },
     {
       "value": "Leadership",
-      "count": 60
+      "count": 55
     },
     {
       "value": "Project Manager",
-      "count": 49
-    },
-    {
-      "value": "Customer Service",
-      "count": 47
+      "count": 48
     },
     {
       "value": "Maintenance",
       "count": 47
     },
     {
-      "value": "Production",
+      "value": "Customer Service",
       "count": 46
+    },
+    {
+      "value": "Production",
+      "count": 44
     },
     {
       "value": "Software",
@@ -233,7 +233,7 @@
     },
     {
       "value": "Mobility",
-      "count": 37
+      "count": 36
     },
     {
       "value": "Automation",
@@ -344,7 +344,7 @@
       "count": 1
     }
   ],
-  "classifiedCount": 693,
-  "withSalaryCount": 138,
-  "withCityCount": 359
+  "classifiedCount": 676,
+  "withSalaryCount": 139,
+  "withCityCount": 351
 }
